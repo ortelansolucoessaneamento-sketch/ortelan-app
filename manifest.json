@@ -1,0 +1,21 @@
+{
+  "name": "Sistema de Manutenção Ortelan",
+  "short_name": "Ortelan App",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#030a06",
+  "theme_color": "#030a06",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "https://drive.google.com/thumbnail?id=1Po1w079UQl5rFoKYa94MIdRP7f4RMPFK&sz=w192",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "https://drive.google.com/thumbnail?id=1Po1w079UQl5rFoKYa94MIdRP7f4RMPFK&sz=w512",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
