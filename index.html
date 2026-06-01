@@ -344,7 +344,7 @@
 </div>
 
 <script>
-  // --- INSTALAÇÃO INTERNA DE INTERFACE PWA OFF-LINE ---
+  // Inicialização do Service Worker para cache estrutural off-line
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js')
       .then(() => console.log("Service Worker ativo para modo Off-line estrutural!"))
@@ -528,7 +528,6 @@
       const tarefasMap = baseDados[local][equip];
       let tIndex = 0;
       let primeiraTarefaPendente = null;
-      let nomeTarefaPendente = "";
       let mensagemErroCustomizada = "";
 
       for (const [categoria, tarefas] of Object.entries(tarefasMap)) {
@@ -597,17 +596,15 @@
     document.getElementById("btnSalvar").innerText = "Enviando...";
     document.getElementById("btnSalvar").disabled = true;
 
-    // LINK DO GOOGLE COPIADO DO PASSO 1
-    const googleUrl = "COLE_AQUI_O_LINK_DA_SUA_IMPLANTACAO_DO_GOOGLE";
+    const googleUrl = "https://script.google.com/macros/s/AKfycbyMuAEf5VTIXz-7mIAVrqTQoo_Gj_oN8v1KnoMG_jElh6OWJw7ui8abO5lusZrkXWYv/exec";
 
     fetch(googleUrl, {
       method: "POST",
-      mode: "no-cors", // Evita bloqueios de segurança do navegador
+      mode: "no-cors",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     })
     .then(() => {
-      // Como o modo 'no-cors' não traz a resposta literal da OS, geramos a interface de sucesso com segurança
       document.getElementById("msgSucesso").innerText = "Relatório processado e enviado com sucesso para a base!";
       limparFormulario();
       verificarFilaOffline();
@@ -650,7 +647,7 @@
     divAviso.innerText = `⚡ Sincronizando ${fila.length} relatórios pendentes com o servidor...`;
     
     const proximoItem = fila[0];
-    const googleUrl = "COLE_AQUI_O_LINK_DA_SUA_IMPLANTACAO_DO_GOOGLE";
+    const googleUrl = "https://script.google.com/macros/s/AKfycbyMuAEf5VTIXz-7mIAVrqTQoo_Gj_oN8v1KnoMG_jElh6OWJw7ui8abO5lusZrkXWYv/exec";
 
     fetch(googleUrl, {
       method: "POST",
