@@ -3,133 +3,157 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ortelan Soluções em Saneamento - App</title>
+  <title>Ordem de Serviço - Ortelan</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --bg-color: #03151a;
-      --card-bg: #052229;
-      --input-bg: #021114;
-      --text-color: #e6f1f3;
-      --accent-color: #00a8e8;
-      --success-color: #4caf50;
-      --border-color: #0a3d4a;
-      --muted-text: #8fa3a6;
+      --bg-color: #060d13;
+      --card-bg: #0b141c;
+      --input-bg: #070e14;
+      --border-color: #122230;
+      --text-main: #f5f6f7;
+      --text-muted: #627282;
+      --accent-blue: #00a8e8;
+      --accent-green: #1a692c;
+      --accent-green-hover: #228438;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
     body {
       background-color: var(--bg-color);
-      color: var(--text-color);
-      min-height: 100vh;
+      color: var(--text-main);
       padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
     }
 
-    header {
-      max-width: 1000px;
-      margin: 0 auto 20px auto;
-      border-bottom: 1px solid var(--border-color);
-      padding-bottom: 15px;
-    }
-
-    .brand {
-      font-size: 24px;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-
-    .brand span {
-      display: block;
-      font-size: 11px;
-      font-weight: normal;
-      color: var(--muted-text);
-      letter-spacing: 2px;
-    }
-
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      background: var(--card-bg);
-      border-radius: 8px;
+    .app-container {
+      width: 100%;
+      max-width: 1200px;
+      background-color: var(--card-bg);
       border: 1px solid var(--border-color);
-      padding: 25px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      border-radius: 8px;
+      padding: 24px;
     }
 
-    /* Etapas / Stepper */
+    /* Cabeçalho da Ordem de Serviço */
+    .app-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 24px;
+      gap: 16px;
+    }
+
+    .back-arrow {
+      background: rgba(255, 255, 255, 0.05);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .header-titles h1 {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .header-titles p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Stepper Superior */
     .stepper {
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      margin-bottom: 35px;
       position: relative;
+      margin-bottom: 32px;
+      padding: 0 8px;
     }
 
     .stepper::before {
       content: '';
       position: absolute;
-      top: 15px;
+      top: 50%;
       left: 0;
       right: 0;
-      height: 2px;
+      height: 1px;
       background-color: var(--border-color);
       z-index: 1;
+      transform: translateY(-50%);
     }
 
-    .step {
+    .step-item {
       position: relative;
       z-index: 2;
-      background: var(--card-bg);
-      padding: 0 15px;
+      background-color: var(--card-bg);
+      padding: 0 16px;
       display: flex;
       align-items: center;
-      gap: 10px;
-      color: var(--muted-text);
+      gap: 8px;
+      color: var(--text-muted);
       font-size: 14px;
     }
 
-    .step-number {
-      width: 32px;
-      height: 32px;
+    .step-item.active {
+      color: var(--text-main);
+    }
+
+    .step-badge {
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
-      background: var(--input-bg);
-      border: 2px solid var(--border-color);
+      background-color: var(--input-bg);
+      border: 1px solid var(--border-color);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: bold;
+      font-size: 12px;
+      font-weight: 600;
     }
 
-    .step.active {
-      color: var(--text-color);
+    .step-item.active .step-badge {
+      background-color: #28a745;
+      border-color: #28a745;
+      color: #fff;
     }
 
-    .step.active .step-number {
-      border-color: var(--success-color);
-      background: var(--success-color);
-    }
-
-    /* Formulários e Seções */
-    .step-section {
+    /* Seções de conteúdo */
+    .step-content {
       display: none;
     }
 
-    .step-section.active {
+    .step-content.active {
       display: block;
     }
 
-    h2 {
-      font-size: 18px;
-      color: var(--accent-color);
-      margin-bottom: 20px;
+    .section-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent-blue);
       text-transform: uppercase;
       letter-spacing: 0.5px;
+      margin-bottom: 20px;
     }
 
+    /* Custom Input Wrapper Estilizado das Imagens */
     .form-group {
       margin-bottom: 20px;
     }
@@ -137,238 +161,301 @@
     .form-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      gap: 16px;
     }
 
-    label {
-      display: block;
-      font-size: 13px;
-      color: var(--muted-text);
+    .field-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
       margin-bottom: 8px;
+      display: block;
     }
 
-    input, select, textarea {
+    .input-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .input-wrapper i {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 16px;
+      pointer-events: none;
+    }
+
+    .input-wrapper input, 
+    .input-wrapper select, 
+    .input-wrapper textarea {
       width: 100%;
       background-color: var(--input-bg);
       border: 1px solid var(--border-color);
-      color: var(--text-color);
-      padding: 12px 15px;
       border-radius: 6px;
+      color: var(--text-main);
+      padding: 14px 16px 14px 48px;
       font-size: 15px;
       outline: none;
+      appearance: none;
+      -webkit-appearance: none;
       transition: border-color 0.2s;
     }
 
-    input:focus, select:focus, textarea:focus {
-      border-color: var(--accent-color);
+    .input-wrapper select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23627282' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: calc(100% - 16px) center;
     }
 
-    /* Cards do Checklist */
-    .checklist-category {
-      background: var(--input-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      padding: 15px;
-      margin-bottom: 20px;
+    .input-wrapper input:focus, 
+    .input-wrapper select:focus, 
+    .input-wrapper textarea:focus {
+      border-color: var(--accent-blue);
     }
 
-    .category-title {
-      font-size: 15px;
-      font-weight: bold;
-      color: var(--accent-color);
-      margin-bottom: 15px;
-      border-bottom: 1px solid var(--border-color);
-      padding-bottom: 5px;
-    }
-
-    .task-item {
+    /* Container de Categorias e Itens do Checklist */
+    .checklist-container {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      padding: 12px 0;
-      border-bottom: 1px solid rgba(10, 61, 74, 0.4);
+      gap: 16px;
     }
 
-    .task-item:last-child {
+    .checklist-group {
+      background-color: var(--input-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 16px;
+    }
+
+    .checklist-group-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent-blue);
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 6px;
+    }
+
+    .checklist-item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(18, 34, 48, 0.5);
+    }
+
+    .checklist-item:last-child {
       border-bottom: none;
     }
 
-    .task-text {
+    .checklist-item-text {
       font-size: 14px;
+      color: var(--text-main);
     }
 
-    /* Resumo */
-    .summary-card {
-      background: var(--input-bg);
-      border: 1px solid var(--border-color);
-      padding: 20px;
-      border-radius: 6px;
-      margin-bottom: 25px;
+    /* Layout da Tela de Resumo */
+    .summary-box {
+      border-left: 3px solid #28a745;
+      padding-left: 16px;
+      margin-bottom: 24px;
     }
 
-    .summary-item {
-      margin-bottom: 12px;
+    .summary-line {
+      margin-bottom: 10px;
       font-size: 15px;
-    }
-
-    .summary-item strong {
-      color: var(--muted-text);
-      display: inline-block;
-      width: 140px;
-    }
-
-    /* Botões */
-    .btn-container {
       display: flex;
-      justify-content: space-between;
-      margin-top: 30px;
-      gap: 15px;
+      gap: 8px;
     }
 
-    .btn {
-      padding: 14px 28px;
+    .summary-line strong {
+      color: var(--text-muted);
+      min-width: 120px;
+    }
+
+    /* Barra de Ações Inferior com Botão Verde */
+    .actions-bar {
+      display: flex;
+      gap: 16px;
+      margin-top: 32px;
+    }
+
+    .btn-action {
+      flex: 1;
+      padding: 16px;
       border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
       font-size: 15px;
-      border: none;
-      transition: opacity 0.2s;
+      font-weight: 600;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
+      transition: background-color 0.2s;
     }
 
-    .btn:hover {
-      opacity: 0.9;
-    }
-
-    .btn-back {
-      background: transparent;
+    .btn-secondary {
+      background-color: transparent;
       border: 1px solid var(--border-color);
-      color: var(--text-color);
+      color: var(--text-main);
     }
 
-    .btn-next {
-      background: var(--success-color);
-      color: white;
-      flex-grow: 1;
+    .btn-secondary:hover {
+      background-color: rgba(255, 255, 255, 0.02);
     }
 
-    @media(max-width: 768px) {
+    .btn-primary {
+      background-color: var(--accent-green);
+      border: none;
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--accent-green-hover);
+    }
+
+    @media (max-width: 768px) {
       .form-row {
         grid-template-columns: 1fr;
       }
       .stepper {
-        flex-direction: column;
-        gap: 10px;
-      }
-      .stepper::before {
-        display: none;
-      }
-      .step {
-        padding: 5px 0;
+        display: none; /* Mobile costuma condensar o topo */
       }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="brand">ORTELAN<span>SOLUÇÕES EM SANEAMENTO</span></div>
-  </header>
-
-  <div class="container">
-    <div class="stepper">
-      <div class="step active" id="step1-header">
-        <div class="step-number">1</div> Dados gerais
-      </div>
-      <div class="step" id="step2-header">
-        <div class="step-number">2</div> Checklist
-      </div>
-      <div class="step" id="step3-header">
-        <div class="step-number">3</div> Finalizar
+  <div class="app-container">
+    
+    <div class="app-header">
+      <button class="back-arrow" id="backArrowBtn" onclick="voltarPasso()" style="visibility: hidden;">
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
+      <div class="header-titles">
+        <h1 id="pageTitle">Nova manutenção</h1>
+        <p id="pageSubtitle">Preencha os dados da manutenção</p>
       </div>
     </div>
 
-    <div class="step-section active" id="section1">
-      <h2>Informações Gerais</h2>
+    <div class="stepper">
+      <div class="step-item active" id="stepIndicator1">
+        <div class="step-badge">1</div> Ativos
+      </div>
+      <div class="step-item" id="stepIndicator2">
+        <div class="step-badge">2</div> Triagem
+      </div>
+      <div class="step-item" id="stepIndicator3">
+        <div class="step-badge">3</div> Finalizar
+      </div>
+    </div>
+
+    <div class="step-content active" id="contentStage1">
+      <div class="section-title">Informações Gerais</div>
       
       <div class="form-group">
-        <label for="dataManutencao">Data da manutenção</label>
-        <input type="date" id="dataManutencao" value="2026-06-02">
+        <span class="field-label">Data da manutenção</span>
+        <div class="input-wrapper">
+          <i class="fa-regular fa-calendar"></i>
+          <input type="date" id="dataManutencao" value="2026-06-02">
+        </div>
       </div>
 
       <div class="form-row">
         <div class="form-group">
-          <label for="horaInicio">Hora de início</label>
-          <input type="time" id="horaInicio" value="08:00">
+          <span class="field-label">Hora de início</span>
+          <div class="input-wrapper">
+            <i class="fa-regular fa-clock"></i>
+            <input type="time" id="horaInicio" value="08:00">
+          </div>
         </div>
         <div class="form-group">
-          <label for="horaTermino">Hora de término (previsão)</label>
-          <input type="time" id="horaTermino" value="10:00">
+          <span class="field-label">Hora de término (previsão)</span>
+          <div class="input-wrapper">
+            <i class="fa-regular fa-clock"></i>
+            <input type="time" id="horaTermino" value="10:00">
+          </div>
         </div>
       </div>
 
       <div class="form-group">
-        <label for="localInstalacao">Local da instalação</label>
-        <select id="localInstalacao" onchange="atualizarEquipamentos()">
-          <option value="">Selecione um local...</option>
-        </select>
+        <span class="field-label">Local da instalação</span>
+        <div class="input-wrapper">
+          <i class="fa-solid fa-map-pin"></i>
+          <select id="localInstalacao" onchange="processarSelecaoLocal()">
+            <option value="">Selecione um local...</option>
+          </select>
+        </div>
       </div>
 
       <div class="form-group">
-        <label for="equipamentoEstrutura">Equipamento / Estrutura</label>
-        <select id="equipamentoEstrutura">
-          <option value="">Selecione o local primeiro...</option>
-        </select>
+        <span class="field-label">Equipamento / Estrutura</span>
+        <div class="input-wrapper">
+          <i class="fa-solid fa-box"></i>
+          <select id="equipamentoEstrutura">
+            <option value="">Selecione o local primeiro...</option>
+          </select>
+        </div>
       </div>
 
       <div class="form-group">
-        <label for="naturezaManutencao">Natureza da manutenção</label>
-        <select id="naturezaManutencao">
-          <option value="Preventiva" selected>Preventiva</option>
-          <option value="Corretiva">Corretiva</option>
-          <option value="Preditiva">Preditiva</option>
-        </select>
+        <span class="field-label">Natureza da manutenção</span>
+        <div class="input-wrapper">
+          <i class="fa-solid fa-wrench"></i>
+          <select id="naturezaManutencao">
+            <option value="Preventiva" selected>Preventiva</option>
+            <option value="Corretiva">Corretiva</option>
+            <option value="Preditiva">Preditiva</option>
+          </select>
+        </div>
       </div>
 
       <div class="form-group">
-        <label for="responsavel">Responsável</label>
-        <input type="text" id="responsavel" value="João da Silva">
+        <span class="field-label">Responsável</span>
+        <div class="input-wrapper">
+          <i class="fa-solid fa-user"></i>
+          <input type="text" id="responsavel" value="João da Silva">
+        </div>
       </div>
 
-      <h2>Detalhes Adicionais</h2>
+      <div class="section-title" style="margin-top: 32px;">Detalhes Adicionais</div>
       <div class="form-group">
-        <label for="observacoes">Observações (opcional)</label>
-        <textarea id="observacoes" rows="3" placeholder="Adicione observações caso necessário..."></textarea>
+        <span class="field-label">Observações (opcional)</span>
+        <div class="input-wrapper" style="padding-left: 0;">
+          <textarea id="observacoes" rows="3" style="padding-left: 16px;" placeholder="Adicione observações caso necessário..."></textarea>
+        </div>
       </div>
     </div>
 
-    <div class="step-section" id="section2">
-      <h2>Checklist de Manutenção</h2>
-      <div id="containerChecklist">
+    <div class="step-content" id="contentStage2">
+      <div class="section-title">Checklist de Manutenção</div>
+      <div class="checklist-container" id="checklistDinamicTarget">
         </div>
     </div>
 
-    <div class="step-section" id="section3">
-      <h2>Resumo Técnico Geral</h2>
-      <div class="summary-card">
-        <div class="summary-item"><strong>🗓️ Data:</strong> <span id="resData"></span></div>
-        <div class="summary-item"><strong>📍 Local:</strong> <span id="resLocal"></span></div>
-        <div class="summary-item"><strong>⚙️ Equipamento:</strong> <span id="resEquip"></span></div>
-        <div class="summary-item"><strong>🛠️ Natureza:</strong> <span id="resNatureza"></span></div>
+    <div class="step-content" id="contentStage3">
+      <div class="section-title">Resumo Técnico Geral</div>
+      <div class="summary-box">
+        <div class="summary-line"><strong>🗓️ Data:</strong> <span id="lblResData"></span></div>
+        <div class="summary-line"><strong>📍 Local:</strong> <span id="lblResLocal"></span></div>
+        <div class="summary-line"><strong>⚙️ Ativo:</strong> <span id="lblResEquip"></span></div>
+        <div class="summary-line"><strong>🛠️ Tipo:</strong> <span id="lblResNatureza"></span></div>
       </div>
     </div>
 
-    <div class="btn-container">
-      <button class="btn btn-back" id="btnVoltar" onclick="voltarPasso()" style="display: none;">VOLTAR</button>
-      <button class="btn btn-next" id="btnAvancar" onclick="avancarPasso()">AVANÇAR</button>
+    <div class="actions-bar">
+      <button class="btn-action btn-secondary" id="btnActionVoltar" onclick="voltarPasso()" style="display: none;">Voltar</button>
+      <button class="btn-action btn-primary" id="btnActionAvancar" onclick="avancarPasso()">Avançar</button>
     </div>
+
   </div>
 
   <script>
-    // --- BANCO DE DADOS TÉCNICO OFICIAL INTEGRADO ---
+    // --- DATABASE ORIGINAL HIGIENIZADA (ORTELAN) ---
     const tGerais = { "Geral": ["Verificar aspectos gerais."] };
     const tFunc = { "Geral": ["Verificar funcionamento.", "Verificar aspectos gerais."] };
     const tMacro = { "Geral": ["Aferir leitura", "Verificar funcionamento.", "Verificar aspectos gerais."] };
@@ -479,121 +566,143 @@
       "Não executado: Não se aplica"
     ];
 
-    // --- CONTROLE DOS PASSOS (ETAPAS) ---
-    let passoAtual = 1;
+    let currentStage = 1;
 
-    // Inicialização do APP
-    window.onload = function() {
+    // Inicializa carregando a lista de locais reais
+    window.addEventListener("DOMContentLoaded", () => {
       const selectLocal = document.getElementById("localInstalacao");
-      for (let local in baseDados) {
-        let opt = document.createElement("option");
-        opt.value = local;
-        opt.innerText = local;
-        selectLocal.appendChild(opt);
-      }
-    };
+      Object.keys(baseDados).forEach(localKey => {
+        let option = document.createElement("option");
+        option.value = localKey;
+        option.textContent = localKey;
+        selectLocal.appendChild(option);
+      });
+    });
 
-    // Atualização Condicional Dinâmica de Equipamentos
-    function atualizarEquipamentos() {
-      const localSel = document.getElementById("localInstalacao").value;
+    // Controla a reatividade em cascata do Local -> Equipamento
+    function processarSelecaoLocal() {
+      const localSelecionado = document.getElementById("localInstalacao").value;
       const selectEquip = document.getElementById("equipamentoEstrutura");
+      
       selectEquip.innerHTML = '<option value="">Selecione um equipamento...</option>';
 
-      if (localSel && baseDados[localSel]) {
-        for (let equip in baseDados[localSel]) {
-          let opt = document.createElement("option");
-          opt.value = equip;
-          opt.innerText = equip;
-          selectEquip.appendChild(opt);
-        }
+      if (localSelecionado && baseDados[localSelecionado]) {
+        Object.keys(baseDados[localSelecionado]).forEach(equipKey => {
+          let option = document.createElement("option");
+          option.value = equipKey;
+          option.textContent = equipKey;
+          selectEquip.appendChild(option);
+        });
       } else {
         selectEquip.innerHTML = '<option value="">Selecione o local primeiro...</option>';
       }
     }
 
-    // Geração Automática das Tarefas do Checklist
-    function gerarChecklist() {
-      const localSel = document.getElementById("localInstalacao").value;
-      const equipSel = document.getElementById("equipamentoEstrutura").value;
-      const container = document.getElementById("containerChecklist");
-      container.innerHTML = "";
+    // Monta a interface interna de checklists conforme o ativo mapeado
+    function construirEstruturaChecklist() {
+      const localVal = document.getElementById("localInstalacao").value;
+      const equipVal = document.getElementById("equipamentoEstrutura").value;
+      const targetContainer = document.getElementById("checklistDinamicTarget");
+      
+      targetContainer.innerHTML = "";
 
-      if (!localSel || !equipSel) return;
+      if (!localVal || !equipVal) return;
 
-      const categorias = baseDados[localSel][equipSel];
+      const gruposDeTarefas = baseDados[localVal][equipVal];
 
-      for (let categoria in categorias) {
-        let catDiv = document.createElement("div");
-        catDiv.className = "checklist-category";
-        catDiv.innerHTML = `<div class="category-title">${categoria}</div>`;
+      Object.keys(gruposDeTarefas).forEach(grupoNome => {
+        const groupWrapper = document.createElement("div");
+        groupWrapper.className = "checklist-group";
+        groupWrapper.innerHTML = `<div class="checklist-group-title">${grupoNome}</div>`;
 
-        categorias[categoria].forEach((tarefa, index) => {
-          let taskDiv = document.createElement("div");
-          taskDiv.className = "task-item";
+        gruposDeTarefas[grupoNome].forEach((txtTarefa, idx) => {
+          const itemWrapper = document.createElement("div");
+          itemWrapper.className = "checklist-item";
           
-          let idSelect = `task_${categoria.replace(/\s+/g, '_')}_${index}`;
-          
-          taskDiv.innerHTML = `
-            <div class="task-text">${tarefa}</div>
-            <select id="${idSelect}">
-              ${opcoesChecklist.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
-            </select>
+          const normalizeId = `chk_${grupoNome.replace(/[^a-zA-Z0-9]/g, '_')}_${idx}`;
+
+          itemWrapper.innerHTML = `
+            <div class="checklist-item-text">${txtTarefa}</div>
+            <div class="input-wrapper" style="padding-left:0;">
+              <select id="${normalizeId}" style="padding-left:16px;">
+                ${opcoesChecklist.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+              </select>
+            </div>
           `;
-          catDiv.appendChild(taskDiv);
+          groupWrapper.appendChild(itemWrapper);
         });
 
-        container.appendChild(catDiv);
-      }
+        targetContainer.appendChild(groupWrapper);
+      });
     }
 
-    // Fluxo do Painel de Navegação
-    function alternarSecoes() {
-      document.querySelectorAll(".step-section").forEach(sec => sec.classList.remove("active"));
-      document.querySelectorAll(".step").forEach(st => st.classList.remove("active"));
+    // Gerenciador de Estados do Fluxo de Navegação (Stages)
+    function atualizarVisualDoFluxo() {
+      document.querySelectorAll(".step-content").forEach(el => el.classList.remove("active"));
+      document.querySelectorAll(".step-item").forEach(el => el.classList.remove("active"));
 
-      document.getElementById(`section${passoAtual}`).classList.add("active");
-      document.getElementById(`step${passoAtual}-header`).classList.add("active");
-
-      // Ajustes visuais de botões
-      document.getElementById("btnVoltar").style.display = passoAtual === 1 ? "none" : "block";
+      document.getElementById(`contentStage${currentStage}`).classList.add("active");
       
-      const btnAvancar = document.getElementById("btnAvancar");
-      if (passoAtual === 3) {
-        btnAvancar.innerText = "SALVAR RELATÓRIO";
-        btnAvancar.style.backgroundColor = "var(--success-color)";
-      } else {
-        btnAvancar.innerText = "AVANÇAR";
-        btnAvancar.style.backgroundColor = "var(--success-color)";
+      // Sincroniza indicadores do topo
+      for (let i = 1; i <= currentStage; i++) {
+        document.getElementById(`stepIndicator${i}`).classList.add("active");
+      }
+
+      const backArrow = document.getElementById("backArrowBtn");
+      const btnBack = document.getElementById("btnActionVoltar");
+      const btnNext = document.getElementById("btnActionAvancar");
+      const titleLbl = document.getElementById("pageTitle");
+      const subTitleLbl = document.getElementById("pageSubtitle");
+
+      // Transições dinâmicas de textos e botões das imagens fornecidas
+      if (currentStage === 1) {
+        backArrow.style.visibility = "hidden";
+        btnBack.style.display = "none";
+        titleLbl.textContent = "Nova manutenção";
+        subTitleLbl.textContent = "Preencha os dados da manutenção";
+        btnNext.textContent = "Avançar";
+      } else if (currentStage === 2) {
+        backArrow.style.visibility = "visible";
+        btnBack.style.display = "block";
+        titleLbl.textContent = "Ordem de Serviço";
+        subTitleLbl.textContent = "Preenchimento do relatório de campo";
+        btnNext.textContent = "Avançar";
+      } else if (currentStage === 3) {
+        backArrow.style.visibility = "visible";
+        btnBack.style.display = "block";
+        titleLbl.textContent = "Concluir Ordem";
+        subTitleLbl.textContent = "Pronto para transmissão e salvamento";
+        btnNext.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Salvar Relatório';
       }
     }
 
     function avancarPasso() {
-      if (passoAtual === 1) {
+      if (currentStage === 1) {
         if (!document.getElementById("localInstalacao").value || !document.getElementById("equipamentoEstrutura").value) {
-          alert("Por favor, preencha o Local e o Equipamento antes de avançar.");
+          alert("Por favor, selecione o Local e o Ativo antes de prosseguir.");
           return;
         }
-        gerarChecklist();
-        passoAtual = 2;
-        alternarSecoes();
-      } else if (passoAtual === 2) {
-        // Alimenta tela de resumo final
-        document.getElementById("resData").innerText = document.getElementById("dataManutencao").value;
-        document.getElementById("resLocal").innerText = document.getElementById("localInstalacao").value;
-        document.getElementById("resEquip").innerText = document.getElementById("equipamentoEstrutura").value;
-        document.getElementById("resNatureza").innerText = document.getElementById("naturezaManutencao").value;
-        
-        passoAtual = 3;
-        alternarSecoes();
-      } else if (passoAtual === 3) {
-        alert("Relatório técnico salvo com sucesso e pronto para sincronização!");
+        construirEstruturaChecklist();
+        currentStage = 2;
+        atualizarVisualDoFluxo();
+      } else if (currentStage === 2) {
+        // Transfere os dados inseridos para a janela de resumo técnico
+        document.getElementById("lblResData").textContent = document.getElementById("dataManutencao").value;
+        document.getElementById("lblResLocal").textContent = document.getElementById("localInstalacao").value;
+        document.getElementById("lblResEquip").textContent = document.getElementById("equipamentoEstrutura").value;
+        document.getElementById("lblResNatureza").textContent = document.getElementById("naturezaManutencao").value;
+
+        currentStage = 3;
+        atualizarVisualDoFluxo();
+      } else if (currentStage === 3) {
+        alert("Sucesso! Ordem de serviço registrada e salva localmente.");
       }
     }
 
     function voltarPasso() {
-      if (passoAtual > 1) {
-        passoAtual--;
-        alternarSecoes();
+      if (currentStage > 1) {
+        currentStage--;
+        atualizarVisualDoFluxo();
       }
     }
   </script>
