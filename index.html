@@ -7,6 +7,7 @@
   <link rel="manifest" href="manifest.json">
   <title>Sistema de Manutenção - Ortelan</title>
   
+  <!-- Fontes e Ícones Premium -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -223,6 +224,33 @@
       box-shadow: 0 0 15px rgba(255, 77, 77, 0.15);
     }
 
+    /* Estilos do Bloco de Resumo Dinâmico */
+    .resumo-detalhes-container {
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px dashed rgba(143, 177, 152, 0.3);
+    }
+    .resumo-item-linha {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+    .resumo-item-linha strong { color: #fff; font-weight: 500; }
+    .resumo-tag-status {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+    .tag-ok { background: rgba(40, 167, 69, 0.15); color: #5ba962; }
+    .tag-alerta { background: rgba(255, 193, 7, 0.15); color: #ffc107; }
+    .tag-falha { background: rgba(220, 53, 69, 0.15); color: #dc3545; }
+    .tag-neutra { background: rgba(255, 255, 255, 0.08); color: var(--text-muted); }
+
     /* Menu Inferior Fixo */
     .nav-bottom { position: fixed; bottom: 0; left: 0; right: 0; height: 75px; background: rgba(3, 10, 6, 0.92); border-top: 1px solid var(--glass-border); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); display: flex; justify-content: space-around; align-items: center; padding: 0 10px; z-index: 999; }
     .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); text-decoration: none; font-size: 11px; font-weight: 500; gap: 5px; cursor: pointer; width: 60px; }
@@ -234,8 +262,12 @@
 </head>
 <body>
 
+  <!-- Status Online Inteligente -->
   <div id="status-conexao" class="status-online"><i class="fa-solid fa-circle"></i> On-line</div>
 
+  <!-- ==========================================
+       🏠 TELA 1: DASHBOARD
+       ========================================== -->
   <div id="tela-dashboard" class="app-screen active">
     <header class="dash-header">
       <div class="company-logo">
@@ -256,6 +288,7 @@
       <p id="data-dashboard-extenso">Carregando informações...</p>
     </section>
 
+    <!-- Indicadores -->
     <div class="metrics-grid">
       <div class="metric-box">
         <i class="fa-regular fa-calendar-check" style="color: #5ba962;"></i>
@@ -274,6 +307,7 @@
       </div>
     </div>
 
+    <!-- Gatilho para Nova OS -->
     <div class="btn-trigger-action" onclick="irParaFormulario()">
       <div class="trigger-info">
         <div class="trigger-circle"><i class="fa-solid fa-plus"></i></div>
@@ -285,10 +319,14 @@
       <i class="fa-solid fa-chevron-right" style="color: #fff;"></i>
     </div>
 
+    <!-- Alerta Interno Interativo de Fila -->
     <div id="avisoOffline" class="sync-alert" style="display: none;"></div>
   </div>
 
 
+  <!-- ==========================================
+       📝 TELA 2: DADOS GERAIS DO FORMULÁRIO
+       ========================================== -->
   <div id="tela-dados-gerais" class="app-screen">
     <header class="app-header">
       <button class="back-btn" onclick="irParaDashboard()"><i class="fa-solid fa-arrow-left"></i></button>
@@ -358,6 +396,9 @@
   </div>
 
 
+  <!-- ==========================================
+       ⚙️ TELA 3: TAREFAS / CHECKLIST DINÂMICO
+       ========================================== -->
   <div id="tela-checklist" class="app-screen">
     <header class="app-header">
       <button class="back-btn" onclick="voltarParaPasso1()"><i class="fa-solid fa-arrow-left"></i></button>
@@ -375,6 +416,7 @@
       <div class="step-item"><div class="step-number">3</div><span>Finalizar</span></div>
     </section>
 
+    <!-- Bloco Corretiva Oculto -->
     <div id="containerCorretiva" style="display: none;" class="glass-card">
       <div class="card-title">Relatório Técnico Corretivo</div>
       <div class="form-group">
@@ -383,6 +425,7 @@
       </div>
     </div>
 
+    <!-- Bloco Preventiva Dinâmica -->
     <div id="containerPreventiva" style="display: none;">
       <div id="listaTarefas"></div>
     </div>
@@ -396,6 +439,9 @@
   </div>
 
 
+  <!-- ==========================================
+       🚀 TELA 4: FINALIZAR E SALVAR
+       ========================================== -->
   <div id="tela-finalizar" class="app-screen">
     <header class="app-header">
       <button class="back-btn" onclick="voltarParaPasso2()"><i class="fa-solid fa-arrow-left"></i></button>
@@ -420,6 +466,9 @@
         <p>📍 <strong style="color: #fff;">Local:</strong> <span id="resumo-local">--</span></p>
         <p>⚙️ <strong style="color: #fff;">Equipamento:</strong> <span id="resumo-equipamento">--</span></p>
         <p>🛠️ <strong style="color: #fff;">Natureza:</strong> <span id="resumo-tipo">--</span></p>
+        
+        <!-- Bloco Dinâmico Injetado com o Resumo Técnico das Respostas -->
+        <div id="resumo-detalhes-checklist" class="resumo-detalhes-container"></div>
       </div>
       <div id="msgSucesso" style="font-size: 14px; text-align: center; font-weight: 500; margin-top: 10px;"></div>
     </main>
@@ -433,6 +482,7 @@
   </div>
 
 
+  <!-- Menu de Navegação Global Inferior -->
   <nav class="nav-bottom">
     <div class="nav-item active" id="nav-home" onclick="irParaDashboard()">
       <i class="fa-solid fa-house"></i>
@@ -456,20 +506,21 @@
   </nav>
 
 
+  <!-- ==========================================
+       ⚙️ SCRIPT E LÓGICA DE NEGÓCIO CORRIGIDA E INTEGRADA
+       ========================================== -->
   <script>
-    // SISTEMA INTELEGENTE DE FORÇAR ATUALIZAÇÃO RECORRENTE (PWA BYPASS)
+    // SISTEMA INTELIGENTE DE FORÇAR ATUALIZAÇÃO RECORRENTE (PWA BYPASS)
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js')
         .then((reg) => {
           console.log("Service Worker ativo!");
-          // Verifica se há novas atualizações de código no servidor
           reg.update();
           
           reg.onupdatefound = () => {
             const instalandoWorker = reg.installing;
             instalandoWorker.onstatechange = () => {
               if (instalandoWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                // Nova versão instalada com sucesso em background, força o reload instantâneo
                 window.location.reload();
               }
             };
@@ -487,7 +538,7 @@
     const tMotobomba = {
       "Inspeções gerais": ["Verificar vazamentos em conexões, selos mecânicos e tubulações.","Observar ruídos anormais e vibrações excessivas.","Conferir temperatura do motor e mancais.","Avaliar a pressão e a vazão da bomba."],
       "Limpeza": ["Limpar filtros, peneiras e válvulas.","Remover sujeira acumulada na carcaça e nas entradas de água.","Em bombas submersas, verificar incrustações e resíduos."],
-      "Lubrificação": ["Lubrificar rolamentos e mancais conforme recomendação do fabricante.","Verificar nível e condição do óleo, when aplicável."],
+      "Lubrificação": ["Lubrificar rolamentos e mancais conforme recomendação do fabricante.","Verificar nível e condição do óleo, quando aplicável."],
       "Verificação elétrica": ["Inspecionar cabos, conexões e bornes elétricos.","Medir corrente elétrica e tensão do motor.","Testar funcionamento de disjuntores, relés e proteção térmica.","Verificar aterramento."],
       "Componentes mecânicos": ["Conferir alinhamento entre motor e bomba.","Verificar desgaste de rotor, eixo e acoplamentos.","Inspecionar selo mecânico e gaxetas.","Ajustar parafusos e fixações."],
       "Sistema hidráulico": ["Verificar obstruções na tubulação.","Conferir válvulas de retenção e registros.","Avaliar ocorrência de cavitação."],
@@ -527,22 +578,18 @@
       }
     }
 
-    // Inicialização da Aplicação
     window.onload = function() {
       atualizarStatusRede();
       
-      // Carrega data por extenso no Dashboard
       const opcoesData = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
       document.getElementById("data-dashboard-extenso").innerText = new Date().toLocaleDateString('pt-BR', opcoesData);
       
-      // Injeta todos os 12 locais no select original
       const selLocal = document.getElementById("local");
       selLocal.innerHTML = '<option value="">Selecione o local...</option>';
       for (const local in baseDados) {
         selLocal.options.add(new Option(local, local));
       }
 
-      // Conta quantidade total de pontos
       document.getElementById("dash-locais-qtd").innerText = Object.keys(baseDados).length;
       
       atualizarContadoresDashboard();
@@ -557,7 +604,6 @@
       document.getElementById("dash-completas").innerText = enviadas;
     }
 
-    /* SISTEMA DE NAVEGAÇÃO DE TELAS */
     function ocultarTodasTelas() {
       document.getElementById("tela-dashboard").classList.remove("active");
       document.getElementById("tela-dados-gerais").classList.remove("active");
@@ -584,10 +630,6 @@
       }
     }
 
-    function navegarParaDashboard() { irParaDashboard(); }
-    function navegarParaFormulario() { irParaFormulario(); }
-
-    /* EVENTOS E REGRAS DO FORMULÁRIO ORIGINAL */
     function atualizarEquipamentos() {
       const local = document.getElementById("local").value;
       const selEquip = document.getElementById("equipamento");
@@ -703,7 +745,6 @@
       }
     }
 
-    /* NAVEGAÇÃO INTERNA DO FLUXO DO FORMULÁRIO */
     function avancarParaPasso2() {
       const data = document.getElementById("data").value;
       const local = document.getElementById("local").value;
@@ -723,11 +764,110 @@
       document.getElementById("tela-dados-gerais").classList.add("active");
     }
 
+    // NOVA LÓGICA: CRIA O RESUMO COMPLETO DO CHECKLIST ANTES DE EXIBIR A TELA FINAL
     function avancarParaPasso3() {
       const tipo = document.getElementById("tipo").value;
-      if (tipo === "Corretiva" && !document.getElementById("textoCorretiva").value.trim()) {
-        alert("Por favor, preencha a descrição da manutenção corretiva.");
-        return;
+      const containerResumoChecklist = document.getElementById("resumo-detalhes-checklist");
+      containerResumoChecklist.innerHTML = ""; // Limpa revisões passadas
+
+      if (tipo === "Corretiva") {
+        const textoCorr = document.getElementById("textoCorretiva").value.trim();
+        if (!textoCorr) {
+          alert("Por favor, preencha a descrição da manutenção corretiva.");
+          return;
+        }
+        containerResumoChecklist.innerHTML = `
+          <div style="margin-top:10px;">
+            <strong style="color:#fff; display:block; margin-bottom:5px; text-transform:uppercase; font-size:11px; letter-spacing:0.5px;">Serviço Executado:</strong>
+            <div style="background:rgba(255,255,255,0.04); padding:12px; border-radius:10px; font-size:13px; color:#fff; white-space:pre-wrap; border:1px solid var(--glass-border);">${textoCorr}</div>
+          </div>`;
+      } else if (tipo === "Preventiva") {
+        const local = document.getElementById("local").value;
+        const equip = document.getElementById("equipamento").value;
+        const tarefasMap = baseDados[local][equip];
+        let tIndex = 0;
+        let htmlResumoPreventiva = `<strong style="color:#fff; display:block; margin-bottom:10px; text-transform:uppercase; font-size:11px; letter-spacing:0.5px;">Status das Tarefas do Checklist:</strong>`;
+        let algumaPendente = false;
+        let primeiraTarefaPendente = null;
+        let mensagemErroCustomizada = "";
+
+        // Primeiro valida em lote se tudo foi respondido em conformidade antes de mudar de tela
+        for (const [categoria, tarefas] of Object.entries(tarefasMap)) {
+          for (const tarefa of tarefas) {
+            const selecionado = document.querySelector(`input[name="tarefa_${tIndex}"]:checked`);
+            const elementoTaskItem = document.querySelectorAll('.task-item')[tIndex];
+
+            if (!selecionado) {
+              algumaPendente = true;
+              if (!primeiraTarefaPendente) {
+                primeiraTarefaPendente = elementoTaskItem;
+                mensagemErroCustomizada = `Falta responder a tarefa:\n\n"${tarefa}"`;
+              }
+            } else {
+              let valorRadio = selecionado.value;
+              const campoLeitura = document.getElementById(`leitura_${tIndex}`);
+              if (campoLeitura && campoLeitura.style.display !== "none" && !campoLeitura.value.trim()) {
+                algumaPendente = true;
+                if (!primeiraTarefaPendente) {
+                  primeiraTarefaPendente = elementoTaskItem;
+                  mensagemErroCustomizada = `Por favor, preencha o valor da leitura para a tarefa:\n\n"${tarefa}"`;
+                }
+              }
+              const campoObsTarefa = document.getElementById(`obs_tarefa_${tIndex}`);
+              if (campoObsTarefa && campoObsTarefa.style.display !== "none" && !campoObsTarefa.value.trim()) {
+                algumaPendente = true;
+                if (!primeiraTarefaPendente) {
+                  primeiraTarefaPendente = elementoTaskItem;
+                  mensagemErroCustomizada = `Como este item foi marcado como Alerta ou Falha, descreva o problema na tarefa:\n\n"${tarefa}"`;
+                }
+              }
+            }
+            tIndex++;
+          }
+        }
+
+        if (algumaPendente) {
+          setTimeout(() => {
+            primeiraTarefaPendente.classList.add('task-item-pendente');
+            primeiraTarefaPendente.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            alert(mensagemErroCustomizada);
+          }, 50);
+          return;
+        }
+
+        // Se estiver tudo 100% preenchido, renderiza o resumo visual delas
+        tIndex = 0;
+        for (const [categoria, tarefas] of Object.entries(tarefasMap)) {
+          for (const tarefa of tarefas) {
+            const selecionado = document.querySelector(`input[name="tarefa_${tIndex}"]:checked`);
+            let respostaTexto = selecionado.value;
+            let tagClasse = "tag-neutra";
+
+            if (respostaTexto.includes("OK ✅")) tagClasse = "tag-ok";
+            else if (respostaTexto.includes("alerta ⚠️")) tagClasse = "tag-alerta";
+            else if (respostaTexto.includes("falha ❌")) tagClasse = "tag-falha";
+
+            const campoLeitura = document.getElementById(`leitura_${tIndex}`);
+            if (campoLeitura && campoLeitura.style.display !== "none") {
+              respostaTexto += ` (Leitura: ${campoLeitura.value})`;
+            }
+
+            const campoObsTarefa = document.getElementById(`obs_tarefa_${tIndex}`);
+            let blocoObsHtml = "";
+            if (campoObsTarefa && campoObsTarefa.style.display !== "none" && campoObsTarefa.value.trim()) {
+              blocoObsHtml = `<div style="margin-top:5px; color:#ffcc00; font-size:12px; padding-left:10px; border-left:2px solid #ffc107;">Obs: ${campoObsTarefa.value.trim()}</div>`;
+            }
+
+            htmlResumoPreventiva += `
+              <div class="resumo-item-linha">
+                <strong>${tarefa}</strong><br>
+                <span class="resumo-tag-status ${tagClasse}">${respostaTexto}</span>
+                ${blocoObsHtml}
+              </div>`;
+            tIndex++;
+          }
+        }
+        containerResumoChecklist.innerHTML = htmlResumoPreventiva;
       }
       
       document.getElementById("resumo-data").innerText = document.getElementById("data").value;
@@ -744,7 +884,6 @@
       document.getElementById("tela-checklist").classList.add("active");
     }
 
-    /* ENVIO E CRIAÇÃO DO PAYLOAD ORIGINAL */
     function enviarFormulario() {
       const data = document.getElementById("data").value;
       const local = document.getElementById("local").value;
@@ -752,65 +891,30 @@
       const tipo = document.getElementById("tipo").value;
 
       const payload = { dataManutencao: data, local: local, equipamento: equip, tipo: tipo, observacoes: "", tarefas: {}, corretivaTexto: "" };
-      document.querySelectorAll('.task-item').forEach(el => el.classList.remove('task-item-pendente'));
 
       if (tipo === "Preventiva") {
-        const local = document.getElementById("local").value;
-        const equip = document.getElementById("equipamento").value;
         const tarefasMap = baseDados[local][equip];
         let tIndex = 0;
-        let primeiraTarefaPendente = null;
-        let mensagemErroCustomizada = "";
 
         for (const [categoria, tarefas] of Object.entries(tarefasMap)) {
           for (const tarefa of tarefas) {
             const selecionado = document.querySelector(`input[name="tarefa_${tIndex}"]:checked`);
-            const elementoTaskItem = document.querySelectorAll('.task-item')[tIndex];
-
-            if (selecionado) {
-              let valorResposta = selecionado.value;
-              const campoLeitura = document.getElementById(`leitura_${tIndex}`);
-              if (campoLeitura && campoLeitura.style.display !== "none") {
-                if (!campoLeitura.value) {
-                  if (!primeiraTarefaPendente) {
-                    primeiraTarefaPendente = elementoTaskItem;
-                    mensagemErroCustomizada = `Por favor, preencha o valor da leitura para a tarefa:\n\n"${tarefa}"`;
-                  }
-                }
-                valorResposta += ` - Leitura: ${campoLeitura.value}`;
-              }
-
-              const campoObsTarefa = document.getElementById(`obs_tarefa_${tIndex}`);
-              let textoObs = "";
-              if (campoObsTarefa && campoObsTarefa.style.display !== "none") {
-                textoObs = campoObsTarefa.value.trim();
-                if (!textoObs) {
-                  if (!primeiraTarefaPendente) {
-                    primeiraTarefaPendente = elementoTaskItem;
-                    mensagemErroCustomizada = `Como este item foi marcado como Alerta ou Falha, descreva o problema na tarefa:\n\n"${tarefa}"`;
-                  }
-                }
-              }
-
-              payload.tarefas[tarefa] = { resposta: valorResposta, observacaoItem: textoObs };
-            } else {
-              if (!primeiraTarefaPendente) {
-                primeiraTarefaPendente = elementoTaskItem;
-                mensagemErroCustomizada = `Falta responder a tarefa:\n\n"${tarefa}"`;
-              }
+            let valorResposta = selecionado.value;
+            
+            const campoLeitura = document.getElementById(`leitura_${tIndex}`);
+            if (campoLeitura && campoLeitura.style.display !== "none") {
+              valorResposta += ` - Leitura: ${campoLeitura.value}`;
             }
+
+            const campoObsTarefa = document.getElementById(`obs_tarefa_${tIndex}`);
+            let textoObs = "";
+            if (campoObsTarefa && campoObsTarefa.style.display !== "none") {
+              textoObs = campoObsTarefa.value.trim();
+            }
+
+            payload.tarefas[tarefa] = { resposta: valorResposta, observacaoItem: textoObs };
             tIndex++;
           }
-        }
-        
-        if (primeiraTarefaPendente) {
-          voltarParaPasso2();
-          setTimeout(() => {
-            primeiraTarefaPendente.classList.add('task-item-pendente');
-            primeiraTarefaPendente.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            alert(mensagemErroCustomizada);
-          }, 200);
-          return; 
         }
       } else {
         payload.corretivaTexto = document.getElementById("textoCorretiva").value;
@@ -823,7 +927,7 @@
       executarEnvioParaServidor(payload);
     }
 
-    function ejecutarEnvioParaServidor(payload) {
+    function executarEnvioParaServidor(payload) {
       document.getElementById("btnSalvar").innerText = "Enviando...";
       document.getElementById("btnSalvar").disabled = true;
       document.getElementById("btn-final-voltar").disabled = true;
