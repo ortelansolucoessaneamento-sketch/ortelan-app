@@ -661,7 +661,7 @@
 
   <script>
     // Sistema Avançado de Controle de Cache e Atualização Forçada (iOS/Android)
-    const VERSAO_APP = "2026.06.02.v5"; // Mude esse sufixo final sempre que alterar o código
+    const VERSAO_APP = "2026.06.02.v6"; // Mude esse sufixo final sempre que alterar o código
 
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js?v=' + VERSAO_APP).then((reg) => {
@@ -1013,7 +1013,8 @@
         tipo: document.getElementById("tipo").value,
         observacoes: "",
         tarefas: {},
-        corretivaTexto: ""
+        corretivaTexto: "",
+        leitura: "" // Campo adicionado para o Apps Script mapear para "Leitura_Macros"
       };
 
       if (payload.tipo === "Preventiva") {
@@ -1024,7 +1025,11 @@
             let valorResp = radioSel.value;
             
             const fLeitura = document.getElementById(`leitura_${tIndex}`);
-            if (fLeitura && fLeitura.style.display !== "none") valorResp += ` - Medição: ${fLeitura.value}`;
+            // Se o campo de leitura existir e estiver visível, isola o valor no payload principal
+            if (fLeitura && fLeitura.style.display !== "none" && fLeitura.value.trim() !== "") {
+              payload.leitura = fLeitura.value.trim(); 
+              valorResp += ` - Medição: ${fLeitura.value}`;
+            }
 
             const fObs = document.getElementById(`obs_tarefa_${tIndex}`);
             let txtObs = (fObs && fObs.style.display !== "none") ? fObs.value.trim() : "";
@@ -1068,7 +1073,6 @@
         salvarNoEstoqueOffline(payload);
       });
     }
-
     function salvarNoEstoqueOffline(payload) {
       let fila = JSON.parse(localStorage.getItem("ortelan_manutencao_offline")) || [];
       fila.push(payload);
