@@ -521,41 +521,42 @@
   </nav>
 
   <script>
-    // Controle Rigoroso de Versão para Cache Busting do iOS
-    const VERSAO_APP = "2026.06.02.v10";
+    // Controle de Versão para Cache Busting do iOS
+    const VERSAO_APP = "2026.06.02.v11";
 
-    // Banco de Dados Dinâmico de Ativos e Itens do Checklist
+    // ESTRUTURA ORIGINAL EXATA DOS SEUS ATIVOS E CHECKLISTS
     const baseDados = {
-      "ETA Central": {
-        "Filtros de Areia": {
+      "SISTEMA DE ÁGUA DE REUSO": {
+        "FILTROS DE AREIA": {
           "Estrutural": ["Verificar rachaduras nas paredes", "Avaliar vazamentos nas tubulações laterais"],
           "Operacional": ["Verificar pressão dos manômetros", "Executar retrolavagem preventiva"]
         },
-        "Bombas de Recalque": {
+        "BOMBAS DE RECALQUE": {
           "Elétrica": ["Verificar painel de comando e disjuntores", "Medir corrente elétrica dos motores"],
           "Mecânica": ["Verificar vibrações e ruídos anormais", "Checar gaxetas e selo mecânico"]
         },
-        "Macromedidor": {
-          "Medições Gerais": ["Leitura do Macromedidor (m³)", "Verificar calibração do sensor ultrassônico"]
+        "MACROMEDIDOR": {
+          "Medições": ["Leitura do Macromedidor (m³)"]
         }
       },
-      "Poço Artesiano 01": {
-        "Conjunto Motobomba": {
-          "Inspeção Geral": ["Verificar nível dinâmico do poço", "Medir vazão instantânea em campo"]
+      "POÇO ARTESIANO 01": {
+        "CONJUNTO MOTOBOMBA": {
+          "Painel": ["Medir tensão elétrica das fases", "Checar status dos contatores"],
+          "Hidráulica": ["Verificar pressão de recalque", "Avaliar nível dinâmico do poço"]
         },
-        "Sistema de Cloração": {
-          "Dosadora": ["Verificar nível de cloro no reservatório", "Limpar bico injetor da dosadora"]
+        "SISTEMA DE DOSAGEM DE CLORO": {
+          "Dosadora": ["Limpeza e desobstrução da válvula de injeção", "Verificar nível de hipoclorito de sódio no tanque"]
         },
-        "Macromedidor": {
-          "Medições Gerais": ["Leitura do Macromedidor (m³)"]
+        "MACROMEDIDOR": {
+          "Medições": ["Leitura do Macromedidor (m³)"]
         }
       },
-      "Reservatório Elevado": {
-        "Estrutura Física": {
-          "Conservação": ["Verificar integridade da escada marinheiro", "Avaliar vedação da tampa superior"]
+      "RESERVATÓRIO ELEVADO": {
+        "ESTRUTURA METÁLICA": {
+          "Conservação": ["Verificar oxidação em parafusos estruturais", "Checar integridade da escada marinheiro"]
         },
-        "Macromedidor": {
-          "Medições Gerais": ["Leitura do Macromedidor (m³)"]
+        "SISTEMA DE NÍVEL": {
+          "Automação": ["Testar boia elétrica protetora", "Verificar funcionamento do sensor de nível pneumático"]
         }
       }
     };
@@ -563,7 +564,6 @@
     let etapaAtual = 1;
 
     window.addEventListener("DOMContentLoaded", () => {
-      // Atualiza versão visível na tela
       const elVersao = document.getElementById("versao-app-tela");
       if (elVersao) elVersao.innerText = VERSAO_APP;
 
@@ -640,21 +640,17 @@
     }
 
     function atualizarLayoutEtapas() {
-      // Oculta todas
       document.getElementById("etapa-1").style.display = "none";
       document.getElementById("etapa-2").style.display = "none";
       document.getElementById("etapa-3").style.display = "none";
       
-      // Remove classes active dos passos
       document.getElementById("step-id-1").classList.remove("active");
       document.getElementById("step-id-2").classList.remove("active");
       document.getElementById("step-id-3").classList.remove("active");
 
-      // Mostra a correta
       document.getElementById(`etapa-${etapaAtual}`).style.display = "block";
       document.getElementById(`step-id-${etapaAtual}`).classList.add("active");
 
-      // Ajusta botões de navegação
       if (etapaAtual === 1) {
         document.getElementById("btnVoltar").style.display = "none";
         document.getElementById("btnProximo").style.display = "block";
@@ -782,7 +778,6 @@
         return true;
       }
 
-      // Valida se todos os campos de leitura numérica foram preenchidos
       const local = document.getElementById("local").value;
       const equip = document.getElementById("equipamento").value;
       let tIndex = 0;
@@ -877,11 +872,10 @@
             const fObs = document.getElementById(`obs_tarefa_${tIndex}`);
             let txtObs = (fObs && fObs.style.display !== "none") ? fObs.value.trim() : "";
 
-            // ESTRUTURA CRÍTICA: Vincula as propriedades diretamente no objeto da tarefa avaliada
             if (fLeitura && fLeitura.value.trim() !== "") {
               payload.tarefas[tarefa] = { 
                 resposta: valorResp, 
-                leitura: fLeitura.value.trim(), // O Apps Script lê esta propriedade específica para a aba "Leitura_Macros"
+                leitura: fLeitura.value.trim(), 
                 observacaoItem: txtObs 
               };
             } else {
@@ -897,7 +891,6 @@
         payload.corretivaTexto = document.getElementById("textoCorretiva").value;
       }
 
-      // Verificação de contingência offline
       if (!navigator.onLine) {
         salvarNoEstoqueOffline(payload);
         return;
@@ -905,7 +898,7 @@
       executarEnvioParaServidor(payload);
     }
 
-    function executarEnvioParaServidor(payload) {
+    function ejecutarEnvioParaServidor(payload) {
       document.getElementById("btnSalvar").innerText = "Transmitindo...";
       document.getElementById("btnSalvar").disabled = true;
       document.getElementById("btnVoltar").disabled = true;
