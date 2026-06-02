@@ -457,10 +457,24 @@
 
 
   <script>
-    // Inicialização estrutural PWA
+    // SISTEMA INTELEGENTE DE FORÇAR ATUALIZAÇÃO RECORRENTE (PWA BYPASS)
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js')
-        .then(() => console.log("Service Worker ativo!"))
+        .then((reg) => {
+          console.log("Service Worker ativo!");
+          // Verifica se há novas atualizações de código no servidor
+          reg.update();
+          
+          reg.onupdatefound = () => {
+            const instalandoWorker = reg.installing;
+            instalandoWorker.onstatechange = () => {
+              if (instalandoWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                // Nova versão instalada com sucesso em background, força o reload instantâneo
+                window.location.reload();
+              }
+            };
+          };
+        })
         .catch((err) => console.log("Falha no SW: ", err));
     }
 
@@ -473,7 +487,7 @@
     const tMotobomba = {
       "Inspeções gerais": ["Verificar vazamentos em conexões, selos mecânicos e tubulações.","Observar ruídos anormais e vibrações excessivas.","Conferir temperatura do motor e mancais.","Avaliar a pressão e a vazão da bomba."],
       "Limpeza": ["Limpar filtros, peneiras e válvulas.","Remover sujeira acumulada na carcaça e nas entradas de água.","Em bombas submersas, verificar incrustações e resíduos."],
-      "Lubrificação": ["Lubrificar rolamentos e mancais conforme recomendação do fabricante.","Verificar nível e condição do óleo, quando aplicável."],
+      "Lubrificação": ["Lubrificar rolamentos e mancais conforme recomendação do fabricante.","Verificar nível e condição do óleo, when aplicável."],
       "Verificação elétrica": ["Inspecionar cabos, conexões e bornes elétricos.","Medir corrente elétrica e tensão do motor.","Testar funcionamento de disjuntores, relés e proteção térmica.","Verificar aterramento."],
       "Componentes mecânicos": ["Conferir alinhamento entre motor e bomba.","Verificar desgaste de rotor, eixo e acoplamentos.","Inspecionar selo mecânico e gaxetas.","Ajustar parafusos e fixações."],
       "Sistema hidráulico": ["Verificar obstruções na tubulação.","Conferir válvulas de retenção e registros.","Avaliar ocorrência de cavitação."],
@@ -570,7 +584,6 @@
       }
     }
 
-    // Atalhos semânticos para os botões do formulário
     function navegarParaDashboard() { irParaDashboard(); }
     function navegarParaFormulario() { irParaFormulario(); }
 
@@ -717,7 +730,6 @@
         return;
       }
       
-      // Injeta dados no resumo visual da tela final
       document.getElementById("resumo-data").innerText = document.getElementById("data").value;
       document.getElementById("resumo-local").innerText = document.getElementById("local").value;
       document.getElementById("resumo-equipamento").innerText = document.getElementById("equipamento").value;
@@ -811,12 +823,11 @@
       executarEnvioParaServidor(payload);
     }
 
-    function executarEnvioParaServidor(payload) {
+    function ejecutarEnvioParaServidor(payload) {
       document.getElementById("btnSalvar").innerText = "Enviando...";
       document.getElementById("btnSalvar").disabled = true;
       document.getElementById("btn-final-voltar").disabled = true;
 
-      // URL do Web App do seu Apps Script original
       const googleUrl = "https://script.google.com/macros/s/AKfycbx-M07XKMRjdaMj7O86XsDamIcRNy-8eRZie-kQjzfpNJ2G7c8B_WrJp4geB5p2mJ7f/exec";
 
       fetch(googleUrl, {
@@ -826,7 +837,6 @@
         body: JSON.stringify(payload)
       })
       .then(() => {
-        // Soma contador histórico local de sucesso
         let historicoSucesso = parseInt(localStorage.getItem("ortelan_qtd_enviadas_sucesso") || "0");
         localStorage.setItem("ortelan_qtd_enviadas_sucesso", historicoSucesso + 1);
 
@@ -884,7 +894,6 @@
         fila.shift();
         localStorage.setItem("ortelan_manutencao_offline", JSON.stringify(fila));
         
-        // Adiciona ao contador histórico de sucesso
         let historicoSucesso = parseInt(localStorage.getItem("ortelan_qtd_enviadas_sucesso") || "0");
         localStorage.setItem("ortelan_qtd_enviadas_sucesso", historicoSucesso + 1);
         
@@ -900,12 +909,10 @@
         document.getElementById("btnSalvar").disabled = false;
         document.getElementById("btn-final-voltar").disabled = false;
         
-        // Reset dos inputs
         document.getElementById("local").value = "";
         document.getElementById("textoCorretiva").value = "";
         atualizarEquipamentos();
         
-        // Retorna para tela inicial
         irParaDashboard();
       }, 2500);
     }
