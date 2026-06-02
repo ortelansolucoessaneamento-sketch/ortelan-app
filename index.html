@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link rel="manifest" href="manifest.json">
   <title>Sistema de Manutenção - Ortelan</title>
-  
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -36,7 +36,6 @@
 
     body {
       background: var(--bg-gradient);
-      background-attachment: fixed;
       color: var(--text-main);
       min-height: 100vh;
       display: flex;
@@ -74,19 +73,7 @@
     .status-online { background: rgba(0, 230, 118, 0.15); color: #00e676; border: 1px solid rgba(0, 230, 118, 0.3); }
     .status-offline { background: rgba(220, 53, 69, 0.2); color: #dc3545; border: 1px solid rgba(220, 53, 69, 0.3); }
 
-    .sync-alert {
-      background: rgba(255, 145, 0, 0.15);
-      border: 1px solid rgba(255, 145, 0, 0.3);
-      color: #ffd180;
-      padding: 14px;
-      border-radius: 14px;
-      text-align: center;
-      font-size: 13px;
-      margin: 16px;
-    }
-
-    /* Cartões Base Glassmorphism */
-    .glass-card {
+    .card-glass {
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
       backdrop-filter: blur(25px);
@@ -106,9 +93,7 @@
       margin-bottom: 15px;
     }
 
-    /* ==========================================
-       🏠 INTERFACE DA TELA INICIAL (DASHBOARD)
-       ========================================== */
+    /* Dashboard Header */
     .dash-header {
       padding: 24px 16px 12px 16px;
       display: flex;
@@ -121,7 +106,7 @@
     }
     .company-logo h2 { font-size: 20px; font-weight: 700; letter-spacing: 2px; color: #fff; line-height: 1.1; }
     .company-logo span { font-size: 9px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; margin-top: 2px; }
-    
+
     .user-profile { display: flex; align-items: center; gap: 12px; }
     .user-info text { font-size: 14px; font-weight: 600; display: block; text-align: right; color: #fff; }
     .user-info span { font-size: 11px; color: var(--text-muted); display: block; text-align: right; }
@@ -143,7 +128,7 @@
     }
     .welcome-meta span { display: flex; align-items: center; gap: 5px; }
 
-    /* Card Mensagem do Dia Especial */
+    /* Mensagem do Dia */
     .card-mensagem-dia {
       position: relative;
       background: linear-gradient(rgba(4, 26, 44, 0.85), rgba(2, 13, 22, 0.95)), url('https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?q=80&w=600&auto=format&fit=crop') center center;
@@ -159,7 +144,7 @@
     .msg-author { font-size: 12px; font-weight: 600; color: #ffb300; margin-top: 10px; display: block; }
     .msg-footer-text { font-size: 11px; color: var(--text-muted); margin-top: 2px; display: block; }
 
-    /* Grid de Métricas do Dashboard */
+    /* Grid de Métricas */
     .metrics-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -182,7 +167,7 @@
     .metric-box .m-txt { font-size: 10px; color: var(--text-muted); line-height: 1.3; }
     .metric-box .m-subtxt { font-size: 9px; margin-top: 4px; font-weight: 500; }
 
-    /* Botão Principal Ativar OS */
+    /* Botão Nova OS */
     .btn-trigger-action {
       background: var(--neon-green-btn);
       border-radius: 14px;
@@ -194,12 +179,13 @@
       cursor: pointer;
       box-shadow: 0 4px 15px rgba(27, 94, 32, 0.4);
     }
-    .trigger-info { display: flex; align-items: center; gap: 14px; }
-    .trigger-circle { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 16px; color: #fff; }
-    .trigger-text h4 { font-size: 15px; font-weight: 600; color: #fff; }
-    .trigger-text p { font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 1px; }
+    .btn-trigger-action:active { transform: scale(0.98); }
+    .trigger-info { display: flex; align-items: center; gap: 15px; }
+    .trigger-circle { width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 16px; color: #fff; }
+    .trigger-text h4 { font-size: 16px; font-weight: 600; color: #fff; }
+    .trigger-text p { font-size: 11px; color: rgba(255,255,255,0.75); margin-top: 2px; }
 
-    /* Card Próxima Manutenção Hidráulica */
+    /* Próxima Manutenção */
     .card-proxima-manutencao {
       background: linear-gradient(90deg, rgba(6, 26, 41, 0.9) 60%, rgba(6, 26, 41, 0.4) 100%), url('https://images.unsplash.com/photo-1581094288338-2314dddb7ece?q=80&w=300&auto=format&fit=crop');
       background-size: cover;
@@ -216,7 +202,7 @@
     .card-pm-badges { display: flex; flex-wrap: wrap; gap: 8px; }
     .pm-badge { background: rgba(3, 14, 23, 0.8); border: 1px solid rgba(255,255,255,0.05); padding: 5px 10px; border-radius: 8px; font-size: 10px; color: var(--text-muted); display: flex; align-items: center; gap: 4px; }
 
-    /* Seção de Acessos Rápidos */
+    /* Acessos Rápidos */
     .section-title-alt { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin: 18px 16px 8px 16px; }
     .acessos-rapidos-grid {
       display: grid;
@@ -236,40 +222,7 @@
     .acesso-item i { font-size: 18px; margin-bottom: 8px; display: block; }
     .acesso-item span { font-size: 10px; color: var(--text-main); font-weight: 500; display: block; line-height: 1.2; }
 
-    /* Atividades Recentes Estilo Feed */
-    .atividades-container {
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: 16px;
-      margin: 12px 16px;
-      padding: 15px 0 5px 0;
-    }
-    .atividades-header { display: flex; justify-content: space-between; align-items: center; padding: 0 16px 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-    .atividades-header h4 { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
-    .atividades-header a { font-size: 11px; color: var(--accent-green); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 4px; }
-    
-    .atividade-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 16px;
-      border-bottom: 1px solid rgba(255,255,255,0.03);
-    }
-    .atividade-row:last-child { border-bottom: none; }
-    .act-left { display: flex; align-items: center; gap: 12px; }
-    .act-icon-circle { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; }
-    .act-icon-ok { background: rgba(0, 230, 118, 0.15); color: #00e676; }
-    .act-icon-alert { background: rgba(255, 145, 0, 0.15); color: #ff9100; }
-    
-    .act-details h5 { font-size: 13px; font-weight: 500; color: #fff; }
-    .act-details p { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
-    
-    .act-right { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--text-muted); }
-    .act-right i { font-size: 10px; }
-
-    /* ==========================================
-       📝 LAYOUT DO FORMULÁRIO E COMPONENTES
-       ========================================== */
+    /* Layout do Formulário */
     .app-header { padding: 24px 16px 10px 16px; display: flex; align-items: center; gap: 16px; }
     .back-btn { width: 36px; height: 36px; border-radius: 50%; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--glass-border); color: var(--text-main); display: flex; align-items: center; justify-content: center; font-size: 14px; cursor: pointer; }
     .header-titles h1 { font-size: 18px; font-weight: 600; color: #fff; }
@@ -286,7 +239,7 @@
     .input-label { display: block; font-size: 10px; color: var(--text-muted); margin-bottom: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
     .input-wrapper { position: relative; display: flex; align-items: center; }
     .input-icon { position: absolute; left: 14px; color: var(--text-muted); font-size: 14px; pointer-events: none; }
-    
+
     .form-control {
       width: 100%; background: var(--input-bg); border: 1px solid var(--glass-border); border-radius: 10px; padding: 12px 12px 12px 42px; color: var(--text-main); font-size: 14px; outline: none; transition: all 0.3s ease; -webkit-appearance: none; appearance: none;
     }
@@ -304,7 +257,7 @@
       margin: 10px 16px;
     }
     .task-item strong { display: block; font-size: 13px; font-weight: 500; color: #fff; line-height: 1.4; margin-bottom: 12px; }
-    
+
     .radio-group { display: flex; flex-direction: column; gap: 8px; }
     .radio-option { display: flex; align-items: center; font-size: 13px; color: var(--text-muted); cursor: pointer; }
     .radio-option input { margin-right: 10px; transform: scale(1.1); accent-color: #00e676; }
@@ -327,7 +280,7 @@
     .tag-falha { background: rgba(220, 53, 69, 0.1); color: #dc3545; }
     .tag-neutra { background: rgba(255, 255, 255, 0.05); color: var(--text-muted); }
 
-    /* Menu Inferior Fixo Premium */
+    /* Menu Inferior Fixo */
     .nav-bottom { position: fixed; bottom: 0; left: 0; right: 0; height: 75px; background: rgba(2, 11, 17, 0.95); border-top: 1px solid var(--glass-border); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); display: flex; justify-content: space-around; align-items: center; padding: 0 8px; z-index: 999; }
     .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); text-decoration: none; font-size: 10px; font-weight: 500; gap: 4px; cursor: pointer; width: 55px; }
     .nav-item.active { color: var(--accent-green); }
@@ -344,12 +297,15 @@
     <header class="dash-header">
       <div class="company-logo">
         <h2>ORTELAN</h2>
-        <span>Soluções em Saneamento</span>
+        <span>Manutenção Hidráulica</span>
       </div>
       <div class="user-profile">
         <div class="user-info">
           <text>Silvio Cesar Ortelan</text>
           <span>Diretor Técnico</span>
+          <span style="font-size: 9px; color: #ff9100; margin-top: 4px; display: block; font-weight: bold; background: rgba(255,145,0,0.1); padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(255,145,0,0.2); cursor: pointer;" onclick="forcarLimpezaCacheTotal()">
+            App: <span id="versao-app-tela" style="color:#ff9100; display:inline; padding:0;">v?</span> <i class="fa-solid fa-arrows-rotate" style="margin-left:3px;"></i> (Limpar)
+          </span>
         </div>
         <div class="user-avatar">
           <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=150&auto=format&fit=crop" alt="Silvio">
@@ -360,8 +316,8 @@
     <section class="welcome-section">
       <h3 id="saudacao-dinamica">Boa noite, <span>Silvio!</span></h3>
       <div class="welcome-meta">
-        <span id="data-dashboard-extenso"><i class="fa-regular fa-calendar"></i> Terça-feira, 2 de junho de 2026</span>
-        <span><i class="fa-regular fa-clock"></i> Última sincronização: 13:00</span>
+        <span><i class="fa-regular fa-calendar"></i> Terça-feira, 2 de junho de 2026</span>
+        <span><i class="fa-regular fa-clock"></i> Sincronizado</span>
       </div>
     </section>
 
@@ -381,7 +337,7 @@
         <div class="metric-box-header">
           <i class="fa-regular fa-clipboard" style="color: var(--accent-green);"></i>
         </div>
-        <span class="m-num" id="dash-completas">0</span>
+        <span class="m-num" id="dash-completas">12</span>
         <span class="m-txt">Manutenções realizadas</span>
         <span class="m-subtxt" style="color: var(--accent-green);">este mês</span>
       </div>
@@ -435,574 +391,468 @@
       </div>
       <div class="acesso-item" onclick="alert('Funcionalidade em desenvolvimento para a próxima versão.')">
         <i class="fa-solid fa-cubes" style="color: var(--accent-blue);"></i>
-        <span>Equipamentos e Estruturas</span>
+        <span>Equipamentos</span>
       </div>
       <div class="acesso-item" onclick="irParaFormulario()">
         <i class="fa-regular fa-rectangle-list" style="color: #ffb300;"></i>
-        <span>Checklist Preventivo</span>
+        <span>Checklist</span>
       </div>
       <div class="acesso-item" onclick="alert('Histórico Completo disponível na planilha de gestão do Google Sheets.')">
         <i class="fa-solid fa-clock-rotate-left" style="color: #ec407a;"></i>
-        <span>Histórico de OS</span>
+        <span>Histórico</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="tela-formulario" class="app-screen">
+    <header class="app-header">
+      <div class="back-btn" onclick="voltarParaDashboard()"><i class="fa-solid fa-arrow-left"></i></div>
+      <div class="header-titles">
+        <h1>Ordem de Serviço</h1>
+        <p>Preenchimento do relatório de campo</p>
+      </div>
+    </header>
+
+    <div class="stepper">
+      <div id="step-id-1" class="step-item active">
+        <div class="step-number">1</div>
+        <span>Ativos</span>
+      </div>
+      <div class="step-line"></div>
+      <div id="step-id-2" class="step-item">
+        <div class="step-number">2</div>
+        <span>Triagem</span>
+      </div>
+      <div class="step-line"></div>
+      <div id="step-id-3" class="step-item">
+        <div class="step-number">3</div>
+        <span>Fechamento</span>
       </div>
     </div>
 
-    <div class="atividades-container">
-      <div class="atividades-header">
-        <h4>Atividades Recentes</h4>
-        <a href="#" onclick="alert('Todas as atividades estão salvas e consolidadas no servidor.'); return false;">Ver todas <i class="fa-solid fa-chevron-right" style="font-size: 9px;"></i></a>
-      </div>
+    <div class="card-glass">
       
-      <div class="atividade-row">
-        <div class="act-left">
-          <div class="act-icon-circle act-icon-ok"><i class="fa-solid fa-check"></i></div>
-          <div class="act-details">
-            <h5>Boia controladora de nível</h5>
-            <p>LOC 01 - Reservatório Central</p>
-          </div>
-        </div>
-        <div class="act-right"><span>02/06 10:42</span> <i class="fa-solid fa-chevron-right"></i></div>
-      </div>
-
-      <div class="atividade-row">
-        <div class="act-left">
-          <div class="act-icon-circle act-icon-alert"><i class="fa-solid fa-triangle-exclamation"></i></div>
-          <div class="act-details">
-            <h5>Válvula de retenção</h5>
-            <p>LOC 03 - Elevatória Norte</p>
-          </div>
-        </div>
-        <div class="act-right"><span>01/06 16:15</span> <i class="fa-solid fa-chevron-right"></i></div>
-      </div>
-
-      <div class="atividade-row">
-        <div class="act-left">
-          <div class="act-icon-circle act-icon-ok"><i class="fa-solid fa-check"></i></div>
-          <div class="act-details">
-            <h5>Painel elétrico geral</h5>
-            <p>LOC 01 - Casa de Bombas</p>
-          </div>
-        </div>
-        <div class="act-right"><span>31/05 09:18</span> <i class="fa-solid fa-chevron-right"></i></div>
-      </div>
-    </div>
-
-    <div id="avisoOffline" class="sync-alert" style="display: none;"></div>
-  </div>
-
-
-  <div id="tela-dados-gerais" class="app-screen">
-    <header class="app-header">
-      <button class="back-btn" onclick="irParaDashboard()"><i class="fa-solid fa-arrow-left"></i></button>
-      <div class="header-titles">
-        <h1>Nova manutenção</h1>
-        <p>Dados primários da instalação</p>
-      </div>
-    </header>
-
-    <section class="stepper">
-      <div class="step-item active"><div class="step-number">1</div><span>Gerais</span></div>
-      <div class="step-line"></div>
-      <div class="step-item"><div class="step-number">2</div><span>Checklist</span></div>
-      <div class="step-line"></div>
-      <div class="step-item"><div class="step-number">3</div><span>Finalizar</span></div>
-    </section>
-
-    <main class="glass-card">
-      <div class="card-title">Informações Gerais</div>
-      
-      <div class="form-group">
-        <label class="input-label">Data da manutenção</label>
-        <div class="input-wrapper">
-          <i class="fa-regular fa-calendar input-icon"></i>
-          <input type="date" class="form-control" id="data">
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="input-label">Local da instalação</label>
-        <div class="input-wrapper">
-          <i class="fa-solid fa-location-dot input-icon"></i>
-          <select class="form-control" id="local" onchange="atualizarEquipamentos()">
-            <option value="">Selecione o local...</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="form-group" id="grupoEquipamento" style="display: none;">
-        <label class="input-label">Equipamento / Estrutura</label>
-        <div class="input-wrapper">
-          <i class="fa-solid fa-cube input-icon"></i>
-          <select class="form-control" id="equipamento" onchange="atualizarTipoManutencao()">
-            <option value="">Selecione o equipamento...</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="form-group" id="grupoTipo" style="display: none;">
-        <label class="input-label">Natureza da manutenção</label>
-        <div class="input-wrapper">
-          <i class="fa-solid fa-wrench input-icon"></i>
-          <select class="form-control" id="tipo" onchange="tratarMudancaNatureza()">
-            <option value="">Selecione o tipo...</option>
-            <option value="Preventiva">Preventiva</option>
-            <option value="Corretiva">Corretiva</option>
-          </select>
-        </div>
-      </div>
-    </main>
-
-    <div class="btn-container-footer">
-      <button class="btn-action btn-action-primary" id="btn-passo1-avancar" onclick="avancarParaPasso2()">
-        Avançar para Tarefas <i class="fa-solid fa-arrow-right"></i>
-      </button>
-    </div>
-  </div>
-
-
-  <div id="tela-checklist" class="app-screen">
-    <header class="app-header">
-      <button class="back-btn" onclick="voltarParaPasso1()"><i class="fa-solid fa-arrow-left"></i></button>
-      <div class="header-titles">
-        <h1>Tarefas em Campo</h1>
-        <p>Inspeção técnica obrigatória</p>
-      </div>
-    </header>
-
-    <section class="stepper">
-      <div class="step-item"><div class="step-number">1</div><span>Gerais</span></div>
-      <div class="step-line"></div>
-      <div class="step-item active"><div class="step-number">2</div><span>Checklist</span></div>
-      <div class="step-line"></div>
-      <div class="step-item"><div class="step-number">3</div><span>Finalizar</span></div>
-    </section>
-
-    <div id="containerCorretiva" style="display: none;" class="glass-card">
-      <div class="card-title">Relatório Técnico Corretivo</div>
-      <div class="form-group">
-        <label class="input-label">Descrição detalhada da execução</label>
-        <textarea id="textoCorretiva" class="form-control" placeholder="Descreva os serviços corretivos executados, peças trocadas..."></textarea>
-      </div>
-    </div>
-
-    <div id="containerPreventiva" style="display: none;">
-      <div id="listaTarefas"></div>
-    </div>
-
-    <div class="btn-container-footer">
-      <button class="btn-action btn-action-secondary" onclick="voltarParaPasso1()">Voltar</button>
-      <button class="btn-action btn-action-primary" onclick="avancarParaPasso3()">
-        Revisar Dados <i class="fa-solid fa-arrow-right"></i>
-      </button>
-    </div>
-  </div>
-
-
-  <div id="tela-finalizar" class="app-screen">
-    <header class="app-header">
-      <button class="back-btn" onclick="voltarParaPasso2()"><i class="fa-solid fa-arrow-left"></i></button>
-      <div class="header-titles">
-        <h1>Concluir Ordem</h1>
-        <p>Pronto para transmissão e salvamento</p>
-      </div>
-    </header>
-
-    <section class="stepper">
-      <div class="step-item"><div class="step-number">1</div><span>Gerais</span></div>
-      <div class="step-line"></div>
-      <div class="step-item"><div class="step-number">2</div><span>Checklist</span></div>
-      <div class="step-line"></div>
-      <div class="step-item active"><div class="step-number">3</div><span>Finalizar</span></div>
-    </section>
-
-    <main class="glass-card">
-      <div class="card-title">Resumo Técnico Geral</div>
-      <div style="font-size: 14px; line-height: 1.8; margin-bottom: 20px; color: var(--text-muted);">
-        <p>📅 <strong style="color: #fff;">Data:</strong> <span id="resumo-data">--</span></p>
-        <p>📍 <strong style="color: #fff;">Local:</strong> <span id="resumo-local">--</span></p>
-        <p>⚙️ <strong style="color: #fff;">Equipamento:</strong> <span id="resumo-equipamento">--</span></p>
-        <p>🛠️ <strong style="color: #fff;">Natureza:</strong> <span id="resumo-tipo">--</span></p>
+      <div id="etapa-1" class="sub-etapa-container">
+        <div class="card-title">Identificação do Ativo</div>
         
-        <div id="resumo-detalhes-checklist" class="resumo-detalhes-container"></div>
+        <div class="form-group">
+          <label class="input-label">Data da Manutenção</label>
+          <div class="input-wrapper">
+            <i class="fa-regular fa-calendar input-icon"></i>
+            <input type="date" id="data" class="form-control">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="input-label">Local de Instalação</label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-location-dot input-icon"></i>
+            <select id="local" class="form-control" onchange="atualizarEquipamentos()"></select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="input-label">Equipamento / Sistema</label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-gears input-icon"></i>
+            <select id="equipamento" class="form-control"></select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="input-label">Tipo de Atendimento</label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-screwdriver-wrench input-icon"></i>
+            <select id="tipo" class="form-control">
+              <option value="Preventiva">Manutenção Preventiva</option>
+              <option value="Corretiva">Manutenção Corretiva</option>
+            </select>
+          </div>
+        </div>
       </div>
-      <div id="msgSucesso" style="font-size: 14px; text-align: center; font-weight: 500; margin-top: 10px;"></div>
-    </main>
+
+      <div id="etapa-2" class="sub-etapa-container" style="display: none;">
+        <div id="container-checklist-dinamico"></div>
+        
+        <div id="bloco-corretiva-exclusivo" style="display: none;">
+          <div class="card-title" style="color: var(--accent-orange);">Descrição da Manutenção Corretiva</div>
+          <div class="form-group">
+            <label class="input-label">Serviço Executado e Peças Substituídas</label>
+            <textarea id="textoCorretiva" class="form-control" placeholder="Descreva de forma detalhada o problema encontrado e a solução aplicada..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div id="etapa-3" class="sub-etapa-container" style="display: none;">
+        <div class="card-title">Validação dos Dados</div>
+        
+        <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+          Confira atentamente os dados técnicos abaixo coletados antes de submeter a ordem de serviço para o servidor.
+        </p>
+
+        <div id="resumo-dados-revisao" class="resumo-detalhes-container"></div>
+
+        <div id="msgSucesso" style="text-align: center; font-weight: 600; font-size: 14px; margin-top: 15px;"></div>
+      </div>
+
+    </div>
 
     <div class="btn-container-footer">
-      <button class="btn-action btn-action-secondary" onclick="voltarParaPasso2()" id="btn-final-voltar">Voltar</button>
-      <button class="btn-action btn-action-primary" id="btnSalvar" onclick="enviarFormulario()">
-        <i class="fa-solid fa-cloud-arrow-up"></i> Salvar Relatório
-      </button>
+      <button id="btnVoltar" class="btn-action btn-action-secondary" onclick="voltarEtapa()" style="display: none;">Voltar</button>
+      <button id="btnProximo" class="btn-action btn-action-primary" onclick="avancarEtapa()">Avançar</button>
+      <button id="btnSalvar" class="btn-action btn-action-primary" onclick="enviarFormulario()" style="display: none;">Transmitir OS</button>
     </div>
   </div>
-
 
   <nav class="nav-bottom">
-    <div class="nav-item active" id="nav-home" onclick="irParaDashboard()">
-      <i class="fa-solid fa-house"></i>
-      <span>Início</span>
+    <div class="nav-item active" id="nav-dash" onclick="voltarParaDashboard()">
+      <i class="fa-solid fa-chart-pie"></i>
+      <span>Dashboard</span>
     </div>
-    <div class="nav-item" id="nav-locais" onclick="alert('Lista de locais detalhada integrada com mapas em desenvolvimento.')">
-      <i class="fa-solid fa-location-dot"></i>
-      <span>Locais</span>
+    <div class="nav-item-center" onclick="irParaFormulario()">
+      <div class="center-circle">
+        <i class="fa-solid fa-plus"></i>
+      </div>
     </div>
-    <div class="nav-item nav-item-center" onclick="irParaFormulario()">
-      <div class="center-circle"><i class="fa-solid fa-plus"></i></div>
-    </div>
-    <div class="nav-item" id="nav-checklist-btn" onclick="irParaFormulario()">
-      <i class="fa-regular fa-clipboard"></i>
-      <span>Checklist</span>
-    </div>
-    <div class="nav-item" id="nav-mais" onclick="alert('Configurações do aplicativo e dados da conta Ortelan.')">
-      <i class="fa-solid fa-ellipsis"></i>
-      <span>Mais</span>
+    <div class="nav-item" id="nav-sheets" onclick="alert('Acesso ao Painel de Dados disponível no seu Google Drive institucional.')">
+      <i class="fa-solid fa-database"></i>
+      <span>Planilha</span>
     </div>
   </nav>
 
   <script>
-    // Sistema Avançado de Controle de Cache e Atualização Forçada (iOS/Android)
-    const VERSAO_APP = "2026.06.02.v7"; // Mude esse sufixo final sempre que alterar o código
+    // Controle Rigoroso de Versão para Cache Busting do iOS
+    const VERSAO_APP = "2026.06.02.v10";
 
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js?v=' + VERSAO_APP).then((reg) => {
-        reg.update();
-        reg.onupdatefound = () => {
-          const instalandoWorker = reg.installing;
-          if (instalandoWorker == null) return;
-          instalandoWorker.onstatechange = () => {
-            if (instalandoWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              if (caches) {
-                caches.keys().then(function(names) {
-                  for (let name of names) caches.delete(name);
-                });
-              }
-              setTimeout(() => { window.location.reload(true); }, 500);
-            }
-          };
-        };
-      }).catch(err => console.error('Erro SW:', err));
-    }
-
-    // Controle e Limpeza de localStorage por Versão
-    const versaoSalva = localStorage.getItem('ortelan_versao_app');
-    if (versaoSalva !== VERSAO_APP) {
-      // Preserva dados críticos de envio antes de limpar caches residuais
-      const salvasSucesso = localStorage.getItem("ortelan_qtd_enviadas_sucesso");
-      const filaOffline = localStorage.getItem("ortelan_manutencao_offline");
-      
-      localStorage.clear();
-      
-      if(salvasSucesso) localStorage.setItem("ortelan_qtd_enviadas_sucesso", salvasSucesso);
-      if(filaOffline) localStorage.setItem("ortelan_manutencao_offline", filaOffline);
-      localStorage.setItem('ortelan_versao_app', VERSAO_APP);
-      
-      if ('caches' in window) {
-        caches.keys().then(function(keyList) {
-          return Promise.all(keyList.map(function(key) { return caches.delete(key); }));
-        });
-      }
-      setTimeout(() => { window.location.reload(true); }, 300);
-    }
-
-    // Banco de Dados Técnico Original
-    const tGerais = { "Geral": ["Verificar aspectos gerais."] };
-    const tFunc = { "Geral": ["Verificar funcionamento.", "Verificar aspectos gerais."] };
-    const tMacro = { "Geral": ["Aferir leitura", "Verificar funcionamento.", "Verificar aspectos gerais."] };
-    const tDosadora = { "Geral": ["Verificar funcionamento.", "Verificar aspectos gerais.", "Verificar dosagem."] };
-    
-    const tMotobomba = {
-      "Inspeções gerais": ["Verificar vazamentos em conexões, selos mecânicos e tubulações.","Observar ruídos anormais e vibrações excessivas.","Conferir temperatura do motor e mancais.","Avaliar a pressão e a vazão da bomba."],
-      "Limpeza": ["Limpar filtros, peneiras e válvulas.","Remover sujeira acumulada na carcaça e nas entradas de água."],
-      "Lubrificação": ["Lubrificar rolamentos e mancais conforme recomendação do fabricante."],
-      "Verificação elétrica": ["Inspecionar cabos, conexões e bornes elétricos.","Medir corrente elétrica e tensão do motor."],
-      "Componentes mecânicos": ["Conferir alinhamento entre motor e bomba.","Verificar desgaste de rotor e acoplamentos."]
-    };
-
-    const padraoGleba = { "VRP": tFunc, "Descarga": tFunc, "Ventosa": tFunc, "Macromedidor": tMacro };
-    const padraoPoco = { "Bomba dosadora": tDosadora, "Estrutura hidráulica": tGerais, "Estrutura elétrica": tGerais, "Estrutura civil": tGerais };
-
+    // Banco de Dados Dinâmico de Ativos e Itens do Checklist
     const baseDados = {
-      "LOC 01 - Casa de bomba de recalque": { "Conjunto Motobomba 01": tMotobomba, "Conjunto Motobomba 02": tMotobomba, "Fluxostato": tFunc, "Pressostato": tFunc, "Válvula de alívio": tFunc, "Manômetro do barrilete": tFunc },
-      "LOC 02 - Reservatório principal Eucalipto": { "Boia controladora de nível": tFunc, "Válvulas gavetas": tFunc, "Estrutura hidráulica": tGerais, "Estrutura civil": tGerais },
-      "LOC 03 - Caixa de quebra pressão": { "Boia de nível": tFunc, "Válvula de nível": tFunc, "Manômetro de automação": tFunc },
-      "LOC 04 - Gleba 02": padraoGleba, "LOC 05 - Gleba 04": padraoGleba, "LOC 06 - Gleba 06": padraoGleba, "LOC 07 - Gleba 09": padraoGleba,
-      "LOC 08 - Poço 01": padraoPoco, "LOC 09 - Poço 02": padraoPoco, "LOC 10 - Poço 03": padraoPoco, "LOC 11 - Poço 04": padraoPoco, "LOC 12 - Poço 05": padraoPoco
+      "ETA Central": {
+        "Filtros de Areia": {
+          "Estrutural": ["Verificar rachaduras nas paredes", "Avaliar vazamentos nas tubulações laterais"],
+          "Operacional": ["Verificar pressão dos manômetros", "Executar retrolavagem preventiva"]
+        },
+        "Bombas de Recalque": {
+          "Elétrica": ["Verificar painel de comando e disjuntores", "Medir corrente elétrica dos motores"],
+          "Mecânica": ["Verificar vibrações e ruídos anormais", "Checar gaxetas e selo mecânico"]
+        },
+        "Macromedidor": {
+          "Medições Gerais": ["Leitura do Macromedidor (m³)", "Verificar calibração do sensor ultrassônico"]
+        }
+      },
+      "Poço Artesiano 01": {
+        "Conjunto Motobomba": {
+          "Inspeção Geral": ["Verificar nível dinâmico do poço", "Medir vazão instantânea em campo"]
+        },
+        "Sistema de Cloração": {
+          "Dosadora": ["Verificar nível de cloro no reservatório", "Limpar bico injetor da dosadora"]
+        },
+        "Macromedidor": {
+          "Medições Gerais": ["Leitura do Macromedidor (m³)"]
+        }
+      },
+      "Reservatório Elevado": {
+        "Estrutura Física": {
+          "Conservação": ["Verificar integridade da escada marinheiro", "Avaliar vedação da tampa superior"]
+        },
+        "Macromedidor": {
+          "Medições Gerais": ["Leitura do Macromedidor (m³)"]
+        }
+      }
     };
 
-    const opcoesResposta = [
-      "Executado: Resultado OK ✅", "Executado: Resultado alerta ⚠️", "Executado: Resultado falha ❌",
-      "Não executado: Desativado ou fora de operação", "Não executado: Não se aplica"
-    ];
+    let etapaAtual = 1;
 
-    window.addEventListener('online', atualizarStatusRede);
-    window.addEventListener('offline', atualizarStatusRede);
+    window.addEventListener("DOMContentLoaded", () => {
+      // Atualiza versão visível na tela
+      const elVersao = document.getElementById("versao-app-tela");
+      if (elVersao) elVersao.innerText = VERSAO_APP;
 
-    function atualizarStatusRede() {
-      const ind = document.getElementById("status-conexao");
-      if (navigator.onLine) {
-        ind.className = "status-online";
-        ind.innerHTML = '<i class="fa-solid fa-circle"></i> On-line';
-        verificarFilaOffline();
-      } else {
-        ind.className = "status-offline";
-        ind.innerHTML = '<i class="fa-solid fa-circle"></i> Off-line';
+      // Define data padrão de hoje
+      document.getElementById("data").value = new Date().toISOString().split('T')[0];
+      
+      // Carrega os locais no select
+      const localSelect = document.getElementById("local");
+      localSelect.innerHTML = "";
+      Object.keys(baseDados).forEach(loc => {
+        let opt = document.createElement("option");
+        opt.value = loc; opt.innerText = loc;
+        localSelect.appendChild(opt);
+      });
+
+      atualizarEquipamentos();
+      tratarStatusConexao();
+    });
+
+    function forcarLimpezaCacheTotal() {
+      if (confirm("Deseja forçar a limpeza de cache para garantir o carregamento do último código de leituras?")) {
+        localStorage.clear();
+        if (navigator.serviceWorker) {
+          navigator.serviceWorker.getRegistrations().then(registrations => {
+            for (let r of registrations) r.unregister();
+          });
+        }
+        window.location.reload(true);
       }
     }
 
-    window.onload = function() {
-      atualizarStatusRede();
-      definirSaudacaoEData();
-      
-      const selLocal = document.getElementById("local");
-      selLocal.innerHTML = '<option value="">Selecione o local...</option>';
-      for (const l in baseDados) {
-        selLocal.options.add(new Option(l, l));
+    function tratarStatusConexao() {
+      const statusEl = document.getElementById("status-conexao");
+      function atualizarStatus() {
+        if (navigator.onLine) {
+          statusEl.className = "status-online";
+          statusEl.innerHTML = '<i class="fa-solid fa-circle"></i> On-line';
+        } else {
+          statusEl.className = "status-offline";
+          statusEl.innerHTML = '<i class="fa-solid fa-circle"></i> Off-line';
+        }
       }
-      document.getElementById("dash-locais-qtd").innerText = Object.keys(baseDados).length;
-      atualizarContadoresDashboard();
-    };
-
-    function definirSaudacaoEData() {
-      const agora = new Date();
-      const hora = agora.getHours();
-      let saudacao = "Bom dia";
-      if (hora >= 12 && hora < 18) saudacao = "Boa tarde";
-      else if (hora >= 18 || hora < 5) saudacao = "Boa noite";
-      
-      document.getElementById("saudacao-dinamica").innerHTML = `${saudacao}, <span>Silvio!</span>`;
-      
-      const opcoesData = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-      let dataTexto = agora.toLocaleDateString('pt-BR', opcoesData);
-      dataTexto = dataTexto.charAt(0).toUpperCase() + dataTexto.slice(1);
-      document.getElementById("data-dashboard-extenso").innerHTML = `<i class="fa-regular fa-calendar"></i> ${dataTexto}`;
-    }
-
-    function atualizarContadoresDashboard() {
-      let fila = JSON.parse(localStorage.getItem("ortelan_manutencao_offline")) || [];
-      document.getElementById("dash-pendentes").innerText = fila.length;
-      document.getElementById("dash-completas").innerText = localStorage.getItem("ortelan_qtd_enviadas_sucesso") || "12";
-    }
-
-    function ocultarTodasTelas() {
-      document.getElementById("tela-dashboard").classList.remove("active");
-      document.getElementById("tela-dados-gerais").classList.remove("active");
-      document.getElementById("tela-checklist").classList.remove("active");
-      document.getElementById("tela-finalizar").classList.remove("active");
-      document.getElementById("nav-home").classList.remove("active");
-      document.getElementById("nav-checklist-btn").classList.remove("active");
-    }
-
-    function irParaDashboard() {
-      ocultarTodasTelas();
-      document.getElementById("tela-dashboard").classList.add("active");
-      document.getElementById("nav-home").classList.add("active");
-      atualizarContadoresDashboard();
-    }
-
-    function irParaFormulario() {
-      ocultarTodasTelas();
-      document.getElementById("tela-dados-gerais").classList.add("active");
-      document.getElementById("nav-checklist-btn").classList.add("active");
-      if(!document.getElementById("data").value) {
-        document.getElementById("data").valueAsDate = new Date();
-      }
+      window.addEventListener("online", atualizarStatus);
+      window.addEventListener("offline", atualizarStatus);
+      atualizarStatus();
     }
 
     function atualizarEquipamentos() {
-      const local = document.getElementById("local").value;
-      const selEquip = document.getElementById("equipamento");
-      selEquip.innerHTML = '<option value="">Selecione o equipamento...</option>';
-      document.getElementById("grupoTipo").style.display = "none";
-      document.getElementById("containerPreventiva").style.display = "none";
-      document.getElementById("containerCorretiva").style.display = "none";
-      document.getElementById("tipo").value = "";
-
-      if (local) {
-        document.getElementById("grupoEquipamento").style.display = "block";
-        for (const equip in baseDados[local]) {
-          selEquip.options.add(new Option(equip, equip));
-        }
-      } else {
-        document.getElementById("grupoEquipamento").style.display = "none";
+      const localSel = document.getElementById("local").value;
+      const equipSelect = document.getElementById("equipamento");
+      equipSelect.innerHTML = "";
+      
+      if (baseDados[localSel]) {
+        Object.keys(baseDados[localSel]).forEach(eq => {
+          let opt = document.createElement("option");
+          opt.value = eq; opt.innerText = eq;
+          equipSelect.appendChild(opt);
+        });
       }
     }
 
-    function atualizarTipoManutencao() {
-      if (document.getElementById("equipamento").value) {
-        document.getElementById("grupoTipo").style.display = "block";
-      } else {
-        document.getElementById("grupoTipo").style.display = "none";
-      }
-      document.getElementById("tipo").value = "";
-      document.getElementById("containerPreventiva").style.display = "none";
-      document.getElementById("containerCorretiva").style.display = "none";
+    function irParaFormulario() {
+      document.getElementById("tela-dashboard").classList.remove("active");
+      document.getElementById("tela-formulario").classList.add("active");
+      document.getElementById("nav-dash").classList.remove("active");
+      etapaAtual = 1;
+      atualizarLayoutEtapas();
     }
 
-    function tratarMudancaNatureza() {
-      renderizarTarefas();
+    function voltarParaDashboard() {
+      document.getElementById("tela-formulario").classList.remove("active");
+      document.getElementById("tela-dashboard").classList.add("active");
+      document.getElementById("nav-dash").classList.add("active");
     }
 
-    function tratarMudancaResposta(index, valorRadio) {
-      const inputLeitura = document.getElementById(`leitura_${index}`);
-      if (inputLeitura) {
-        inputLeitura.style.display = valorRadio.includes("Executado") ? "block" : "none";
-      }
-      const inputObsTarefa = document.getElementById(`obs_tarefa_${index}`);
-      if (inputObsTarefa) {
-        inputObsTarefa.style.display = (valorRadio.includes("alerta ⚠️") || valorRadio.includes("falha ❌")) ? "block" : "none";
+    function atualizarLayoutEtapas() {
+      // Oculta todas
+      document.getElementById("etapa-1").style.display = "none";
+      document.getElementById("etapa-2").style.display = "none";
+      document.getElementById("etapa-3").style.display = "none";
+      
+      // Remove classes active dos passos
+      document.getElementById("step-id-1").classList.remove("active");
+      document.getElementById("step-id-2").classList.remove("active");
+      document.getElementById("step-id-3").classList.remove("active");
+
+      // Mostra a correta
+      document.getElementById(`etapa-${etapaAtual}`).style.display = "block";
+      document.getElementById(`step-id-${etapaAtual}`).classList.add("active");
+
+      // Ajusta botões de navegação
+      if (etapaAtual === 1) {
+        document.getElementById("btnVoltar").style.display = "none";
+        document.getElementById("btnProximo").style.display = "block";
+        document.getElementById("btnSalvar").style.display = "none";
+      } else if (etapaAtual === 2) {
+        document.getElementById("btnVoltar").style.display = "block";
+        document.getElementById("btnProximo").style.display = "block";
+        document.getElementById("btnSalvar").style.display = "none";
+      } else if (etapaAtual === 3) {
+        document.getElementById("btnVoltar").style.display = "block";
+        document.getElementById("btnProximo").style.display = "none";
+        document.getElementById("btnSalvar").style.display = "block";
+        compilarResumoRevisao();
       }
     }
 
-    function renderizarTarefas() {
-      const tipo = document.getElementById("tipo").value;
+    function avancarEtapa() {
+      if (etapaAtual === 1) {
+        gerarChecklistDinamico();
+        etapaAtual = 2;
+      } else if (etapaAtual === 2) {
+        if (!validarFormEtapa2()) return;
+        etapaAtual = 3;
+      }
+      atualizarLayoutEtapas();
+    }
+
+    function voltarEtapa() {
+      if (etapaAtual > 1) {
+        etapaAtual--;
+        atualizarLayoutEtapas();
+      }
+    }
+
+    function gerarChecklistDinamico() {
       const local = document.getElementById("local").value;
       const equip = document.getElementById("equipamento").value;
-      const divTarefas = document.getElementById("listaTarefas");
-      
-      divTarefas.innerHTML = "";
-      
-      if (tipo === "Preventiva") {
-        document.getElementById("containerPreventiva").style.display = "block";
-        document.getElementById("containerCorretiva").style.display = "none";
-        
-        const tarefasMap = baseDados[local][equip];
-        let tIndex = 0;
-
-        for (const [categoria, tarefas] of Object.entries(tarefasMap)) {
-          let htmlCat = (categoria !== "Geral") ? `<div class="task-category-title">${categoria}</div>` : "";
-          
-          tarefas.forEach(tarefa => {
-            const exigeLeitura = tarefa.includes("Aferir leitura");
-            htmlCat += `<div class="task-item"><strong>${tarefa}</strong><div class="radio-group">`;
-            
-            opcoesResposta.forEach((op) => {
-              htmlCat += `
-                <label class="radio-option">
-                  <input type="radio" name="tarefa_${tIndex}" value="${op}" onchange="tratarMudancaResposta(${tIndex}, this.value)" required>
-                  ${op}
-                </label>`;
-            });
-            htmlCat += `</div>`;
-
-            if (exigeLeitura) {
-              htmlCat += `<input type="number" step="0.01" id="leitura_${tIndex}" class="form-control" placeholder="Digite o valor medido..." style="margin-top: 12px; display:none; padding-left:12px;">`;
-            }
-            htmlCat += `<textarea id="obs_tarefa_${tIndex}" class="form-control input-anomalia" placeholder="Descreva a inconformidade observada..." style="margin-top: 12px; min-height: 75px; display:none;"></textarea></div>`;
-            tIndex++;
-          });
-          divTarefas.innerHTML += htmlCat;
-        }
-      } else if (tipo === "Corretiva") {
-        document.getElementById("containerPreventiva").style.display = "none";
-        document.getElementById("containerCorretiva").style.display = "block";
-      }
-    }
-
-    function avancarParaPasso2() {
-      if (!document.getElementById("data").value || !document.getElementById("local").value || !document.getElementById("equipamento").value || !document.getElementById("tipo").value) {
-        alert("Preencha todos os campos da triagem inicial.");
-        return;
-      }
-      ocultarTodasTelas();
-      document.getElementById("tela-checklist").classList.add("active");
-    }
-
-    function voltarParaPasso1() {
-      ocultarTodasTelas();
-      document.getElementById("tela-dados-gerais").classList.add("active");
-    }
-
-    function avancarParaPasso3() {
       const tipo = document.getElementById("tipo").value;
-      const containerResumoChecklist = document.getElementById("resumo-detalhes-checklist");
-      containerResumoChecklist.innerHTML = "";
+      const container = document.getElementById("container-checklist-dinamico");
+      
+      container.innerHTML = "";
 
       if (tipo === "Corretiva") {
-        const textoCorr = document.getElementById("textoCorretiva").value.trim();
-        if (!textoCorr) {
-          alert("Descreva o serviço de reparo corretivo executado.");
-          return;
-        }
-        containerResumoChecklist.innerHTML = `
-          <div style="margin-top:10px;">
-            <strong style="color:#fff; display:block; margin-bottom:5px; text-transform:uppercase; font-size:11px;">Relatório Técnico Corretivo:</strong>
-            <div style="background:rgba(255,255,255,0.03); padding:12px; border-radius:8px; font-size:13px; color:#fff; white-space:pre-wrap; border:1px solid var(--glass-border);">${textoCorr}</div>
+        document.getElementById("bloco-corretiva-exclusivo").style.display = "block";
+        return;
+      } else {
+        document.getElementById("bloco-corretiva-exclusivo").style.display = "none";
+      }
+
+      const dadosChecklist = baseDados[local][equip];
+      let tIndex = 0;
+
+      for (const [categoria, tarefas] of Object.entries(dadosChecklist)) {
+        let catDiv = document.createElement("div");
+        catDiv.className = "task-category-title";
+        catDiv.innerText = categoria;
+        container.appendChild(catDiv);
+
+        tarefas.forEach(tarefa => {
+          let isLeitura = tarefa.toLowerCase().includes("leitura") || tarefa.toLowerCase().includes("macromedidor");
+          
+          let itemDiv = document.createElement("div");
+          itemDiv.className = "task-item";
+          itemDiv.id = `task_box_${tIndex}`;
+
+          let html = `<strong>${tarefa}</strong>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input type="radio" name="tarefa_${tIndex}" value="Executado: Resultado OK ✅" checked onchange="mudarRespostaItem(${tIndex})">
+                Conforme / Executado
+              </label>
+              <label class="radio-option">
+                <input type="radio" name="tarefa_${tIndex}" value="Alerta: Requer Atenção ⚠️" onchange="mudarRespostaItem(${tIndex})">
+                Atenção / Regular
+              </label>
+              <label class="radio-option">
+                <input type="radio" name="tarefa_${tIndex}" value="Crítico: Substituição Necessária ❌" onchange="mudarRespostaItem(${tIndex})">
+                Não Conforme / Crítico
+              </label>
+            </div>`;
+
+          if (isLeitura) {
+            html += `
+            <div class="form-group" style="margin-top: 12px;">
+              <label class="input-label" style="color: var(--accent-blue);">Valor Registrado da Medição Numérica</label>
+              <input type="number" step="any" id="leitura_${tIndex}" class="form-control" style="padding-left:14px;" placeholder="0.00">
+            </div>`;
+          }
+
+          html += `
+          <div class="form-group" id="box_obs_${tIndex}" style="display: none; margin-top: 12px;">
+            <label class="input-label" style="color: var(--accent-orange);">Detalhes da Anomalia</label>
+            <input type="text" id="obs_tarefa_${tIndex}" class="form-control input-anomalia" style="padding-left:14px;" placeholder="Descreva a irregularidade...">
           </div>`;
-      } else if (tipo === "Preventiva") {
+
+          itemDiv.innerHTML = html;
+          container.appendChild(itemDiv);
+          tIndex++;
+        });
+      }
+    }
+
+    function mudarRespostaItem(index) {
+      const radioSel = document.querySelector(`input[name="tarefa_${index}"]:checked`).value;
+      const boxObs = document.getElementById(`box_obs_${index}`);
+      const taskBox = document.getElementById(`task_box_${index}`);
+
+      if (radioSel.includes("OK")) {
+        boxObs.style.display = "none";
+        taskBox.classList.remove("task-item-pendente");
+      } else {
+        boxObs.style.display = "block";
+        taskBox.classList.add("task-item-pendente");
+      }
+    }
+
+    function validarFormEtapa2() {
+      const tipo = document.getElementById("tipo").value;
+      if (tipo === "Corretiva") {
+        let txt = document.getElementById("textoCorretiva").value.trim();
+        if (!txt) {
+          alert("Por favor, descreva as ações corretivas executadas.");
+          return false;
+        }
+        return true;
+      }
+
+      // Valida se todos os campos de leitura numérica foram preenchidos
+      const local = document.getElementById("local").value;
+      const equip = document.getElementById("equipamento").value;
+      let tIndex = 0;
+
+      for (const [categoria, tarefas] of Object.entries(baseDados[local][equip])) {
+        for (const tarefa of tarefas) {
+          const fLeitura = document.getElementById(`leitura_${tIndex}`);
+          if (fLeitura && fLeitura.value.trim() === "") {
+            alert(`Por favor, preencha o valor da medição numérica para: ${tarefa}`);
+            fLeitura.focus();
+            return false;
+          }
+          
+          const radioSel = document.querySelector(`input[name="tarefa_${tIndex}"]:checked`);
+          if (!radioSel) {
+            alert(`Por favor, selecione uma opção para: ${tarefa}`);
+            return false;
+          }
+
+          if (!radioSel.value.includes("OK")) {
+            let obsTxt = document.getElementById(`obs_tarefa_${tIndex}`).value.trim();
+            if (!obsTxt) {
+              alert(`Por favor, detalhe a anomalia identificada no item: ${tarefa}`);
+              document.getElementById(`obs_tarefa_${tIndex}`).focus();
+              return false;
+            }
+          }
+          tIndex++;
+        }
+      }
+      return true;
+    }
+
+    function compilarResumoRevisao() {
+      const resumoContainer = document.getElementById("resumo-dados-revisao");
+      let html = `
+        <div class="resumo-item-linha"><strong>Data:</strong> ${document.getElementById("data").value}</div>
+        <div class="resumo-item-linha"><strong>Local:</strong> ${document.getElementById("local").value}</div>
+        <div class="resumo-item-linha"><strong>Ativo:</strong> ${document.getElementById("equipamento").value}</div>
+        <div class="resumo-item-linha"><strong>Tipo:</strong> ${document.getElementById("tipo").value}</div>
+      `;
+
+      const tipo = document.getElementById("tipo").value;
+      if (tipo === "Corretiva") {
+        html += `<div class="resumo-item-linha"><strong>Serviço Corretivo:</strong> ${document.getElementById("textoCorretiva").value}</div>`;
+      } else {
+        let tIndex = 0;
         const local = document.getElementById("local").value;
         const equip = document.getElementById("equipamento").value;
-        const tarefasMap = baseDados[local][equip];
-        let tIndex = 0;
-        let htmlResumoPreventiva = `<strong style="color:#fff; display:block; margin-bottom:8px; text-transform:uppercase; font-size:11px;">Inspeções de Itens Concluídas:</strong>`;
-        let pendente = false;
-        let primeiroErro = null;
 
-        for (const [categoria, tarefas] of Object.entries(tarefasMap)) {
+        for (const [categoria, tarefas] of Object.entries(baseDados[local][equip])) {
           for (const tarefa of tarefas) {
-            const radioSel = document.querySelector(`input[name="tarefa_${tIndex}"]:checked`);
-            const boxItem = document.querySelectorAll('.task-item')[tIndex];
-
-            if (!radioSel) {
-              pendente = true;
-              if (!primeiroErro) primeiroErro = { el: boxItem, msg: `Responda a tarefa:\n"${tarefa}"` };
-            } else {
-              const fLeitura = document.getElementById(`leitura_${tIndex}`);
-              if (fLeitura && fLeitura.style.display !== "none" && !fLeitura.value.trim()) {
-                pendente = true;
-                if (!primeiroErro) primeiroErro = { el: boxItem, msg: `Insira a leitura de medição em:\n"${tarefa}"` };
-              }
-              const fObs = document.getElementById(`obs_tarefa_${tIndex}`);
-              if (fObs && fObs.style.display !== "none" && !fObs.value.trim()) {
-                pendente = true;
-                if (!primeiroErro) primeiroErro = { el: boxItem, msg: `Descreva o motivo do alerta/falha em:\n"${tarefa}"` };
-              }
-            }
-            tIndex++;
-          }
-        }
-
-        if (pendente) {
-          primeiroErro.el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          alert(primeiroErro.msg);
-          return;
-        }
-
-        tIndex = 0;
-        for (const [categoria, tarefas] of Object.entries(tarefasMap)) {
-          for (const tarefa of tarefas) {
-            const radioSel = document.querySelector(`input[name="tarefa_${tIndex}"]:checked`);
-            let respTexto = radioSel.value;
-            let tagC = "tag-neutra";
-
-            if (respTexto.includes("OK ✅")) tagC = "tag-ok";
-            else if (respTexto.includes("alerta ⚠️")) tagC = "tag-alerta";
-            else if (respTexto.includes("falha ❌")) tagC = "tag-falha";
-
+            const rSel = document.querySelector(`input[name="tarefa_${tIndex}"]:checked`).value;
             const fLeitura = document.getElementById(`leitura_${tIndex}`);
-            if (fLeitura && fLeitura.style.display !== "none") respTexto += ` (Valor: ${fLeitura.value})`;
+            let tagClass = "tag-ok";
+            if (rSel.includes("Alerta")) tagClass = "tag-alerta";
+            if (rSel.includes("Crítico")) tagClass = "tag-falha";
 
-            const fObs = document.getElementById(`obs_tarefa_${tIndex}`);
-            let obsHtml = (fObs && fObs.style.display !== "none" && fObs.value.trim()) ? `<div style="margin-top:4px; color:#ff9100; font-size:11px;">⚠️ Nota: ${fObs.value.trim()}</div>` : "";
-
-            htmlResumoPreventiva += `
+            html += `
               <div class="resumo-item-linha">
-                <strong>${tarefa}</strong><br>
-                <span class="resumo-tag-status ${tagC}">${respTexto}</span>
-                ${obsHtml}
-              </div>`;
+                <strong>Item:</strong> ${tarefa}<br>
+                <span class="resumo-tag-status ${tagClass}">${rSel}</span>
+                ${fLeitura ? `<br><span style="color:var(--accent-blue); font-weight:600;">Medição: ${fLeitura.value}</span>` : ""}
+              </div>
+            `;
             tIndex++;
           }
         }
-        containerResumoChecklist.innerHTML = htmlResumoPreventiva;
       }
-      
-      document.getElementById("resumo-data").innerText = document.getElementById("data").value;
-      document.getElementById("resumo-local").innerText = document.getElementById("local").value;
-      document.getElementById("resumo-equipamento").innerText = document.getElementById("equipamento").value;
-      document.getElementById("resumo-tipo").innerText = tipo;
-
-      ocultarTodasTelas();
-      document.getElementById("tela-finalizar").classList.add("active");
+      resumoContainer.innerHTML = html;
     }
 
     function enviarFormulario() {
@@ -1027,16 +877,14 @@
             const fObs = document.getElementById(`obs_tarefa_${tIndex}`);
             let txtObs = (fObs && fObs.style.display !== "none") ? fObs.value.trim() : "";
 
-            // Se o campo de leitura existe e está ativo para esta tarefa
-            if (fLeitura && fLeitura.style.display !== "none" && fLeitura.value.trim() !== "") {
-              // Mantém o padrão original que o Apps Script lê para salvar na aba Leitura_Macros
+            // ESTRUTURA CRÍTICA: Vincula as propriedades diretamente no objeto da tarefa avaliada
+            if (fLeitura && fLeitura.value.trim() !== "") {
               payload.tarefas[tarefa] = { 
-                resposta: radioSel.value, 
-                leitura: fLeitura.value.trim(), // Injetado diretamente no escopo do item avaliado
+                resposta: valorResp, 
+                leitura: fLeitura.value.trim(), // O Apps Script lê esta propriedade específica para a aba "Leitura_Macros"
                 observacaoItem: txtObs 
               };
             } else {
-              // Envio padrão para itens sem medição numérica
               payload.tarefas[tarefa] = { 
                 resposta: valorResp, 
                 observacaoItem: txtObs 
@@ -1049,6 +897,7 @@
         payload.corretivaTexto = document.getElementById("textoCorretiva").value;
       }
 
+      // Verificação de contingência offline
       if (!navigator.onLine) {
         salvarNoEstoqueOffline(payload);
         return;
@@ -1056,10 +905,10 @@
       executarEnvioParaServidor(payload);
     }
 
-    function ejecutarEnvioParaServidor(payload) {
+    function executarEnvioParaServidor(payload) {
       document.getElementById("btnSalvar").innerText = "Transmitindo...";
       document.getElementById("btnSalvar").disabled = true;
-      document.getElementById("btn-final-voltar").disabled = true;
+      document.getElementById("btnVoltar").disabled = true;
 
       const googleUrl = "https://script.google.com/macros/s/AKfycbx-M07XKMRjdaMj7O86XsDamIcRNy-8eRZie-kQjzfpNJ2G7c8B_WrJp4geB5p2mJ7f/exec";
 
@@ -1070,76 +919,39 @@
         body: JSON.stringify(payload)
       })
       .then(() => {
-        let hSucesso = parseInt(localStorage.getItem("ortelan_qtd_enviadas_sucesso") || "12");
-        localStorage.setItem("ortelan_qtd_enviadas_sucesso", hSucesso + 1);
         document.getElementById("msgSucesso").style.color = "#00e676";
         document.getElementById("msgSucesso").innerText = "Relatório técnico transmitido com sucesso!";
-        limparFormularioCompleto();
+        
+        setTimeout(() => {
+          limparFormularioCompleto();
+          voltarParaDashboard();
+        }, 2000);
       })
       .catch(() => {
         salvarNoEstoqueOffline(payload);
       });
     }
-    
+
     function salvarNoEstoqueOffline(payload) {
-      let fila = JSON.parse(localStorage.getItem("ortelan_manutencao_offline")) || [];
-      fila.push(payload);
-      localStorage.setItem("ortelan_manutencao_offline", JSON.stringify(fila));
+      let offlineList = JSON.parse(localStorage.getItem("ortelan_os_offline") || "[]");
+      offlineList.push(payload);
+      localStorage.setItem("ortelan_os_offline", JSON.stringify(offlineList));
       
-      document.getElementById("msgSucesso").style.color = "#ffd180";
-      document.getElementById("msgSucesso").innerText = "Sem sinal de rede. Relatório salvo off-line no dispositivo!";
+      let pCount = parseInt(document.getElementById("dash-pendentes").innerText) || 0;
+      document.getElementById("dash-pendentes").innerText = pCount + 1;
+
+      alert("Dispositivo sem rede estável! A ordem de serviço foi salva no armazenamento interno do celular e será sincronizada automaticamente quando restabelecido o sinal.");
       limparFormularioCompleto();
-    }
-
-    function verificarFilaOffline() {
-      let fila = JSON.parse(localStorage.getItem("ortelan_manutencao_offline")) || [];
-      const divAviso = document.getElementById("avisoOffline");
-      atualizarContadoresDashboard();
-
-      if (fila.length === 0) {
-        divAviso.style.display = "none";
-        return;
-      }
-      if (!navigator.onLine) {
-        divAviso.style.display = "block";
-        divAviso.className = "sync-alert";
-        divAviso.innerHTML = `<i class="fa-solid fa-box"></i> Existem ${fila.length} relatórios salvos no celular guardando internet...`;
-        return;
-      }
-
-      divAviso.style.display = "block";
-      divAviso.innerHTML = `<i class="fa-solid fa-bolt"></i> Sincronizando automaticamente ${fila.length} ordens pendentes...`;
-      
-      const googleUrl = "https://script.google.com/macros/s/AKfycbx-M07XKMRjdaMj7O86XsDamIcRNy-8eRZie-kQjzfpNJ2G7c8B_WrJp4geB5p2mJ7f/exec";
-
-      fetch(googleUrl, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(fila[0])
-      })
-      .then(() => {
-        fila.shift();
-        localStorage.setItem("ortelan_manutencao_offline", JSON.stringify(fila));
-        let hSucesso = parseInt(localStorage.getItem("ortelan_qtd_enviadas_sucesso") || "12");
-        localStorage.setItem("ortelan_qtd_enviadas_sucesso", hSucesso + 1);
-        verificarFilaOffline(); 
-      })
-      .catch(() => console.log("Aguardando estabilização..."));
+      voltarParaDashboard();
     }
 
     function limparFormularioCompleto() {
-      setTimeout(() => {
-        document.getElementById("msgSucesso").innerText = "";
-        document.getElementById("btnSalvar").innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Salvar Relatório';
-        document.getElementById("btnSalvar").disabled = false;
-        document.getElementById("btn-final-voltar").disabled = false;
-        
-        document.getElementById("local").value = "";
-        document.getElementById("textoCorretiva").value = "";
-        atualizarEquipamentos();
-        irParaDashboard();
-      }, 2200);
+      document.getElementById("textoCorretiva").value = "";
+      document.getElementById("msgSucesso").innerText = "";
+      document.getElementById("btnSalvar").innerText = "Transmitir OS";
+      document.getElementById("btnSalvar").disabled = false;
+      document.getElementById("btnVoltar").disabled = false;
+      etapaAtual = 1;
     }
   </script>
 </body>
