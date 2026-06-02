@@ -13,7 +13,7 @@
 
   <style>
     /* ==========================================
-       🎨 ESTILOS PREMIUM - GLASSMORPHISM
+       🎨 IDENTIDADE VISUAL PREMIUM - ORTELAN
        ========================================== */
     :root {
       --bg-gradient: linear-gradient(135deg, #06101e 0%, #021f24 50%, #040d1a 100%);
@@ -24,6 +24,8 @@
       --neon-green: linear-gradient(90deg, #5ba962 0%, #3f7d45 100%);
       --accent-blue: #00d2ff;
       --input-bg: rgba(2, 12, 22, 0.6);
+      --card-danger: rgba(220, 53, 69, 0.2);
+      --card-warning: rgba(255, 193, 7, 0.2);
     }
 
     * {
@@ -41,97 +43,39 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      padding-bottom: 90px; /* Espaço para o menu inferior */
+      padding-bottom: 90px;
     }
 
-    /* Topo do App */
-    .app-header {
-      padding: 24px 20px 10px 20px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
+    /* Utilitários de Telas */
+    .app-screen {
+      display: none;
+      animation: fadeIn 0.3s ease-in-out forwards;
+    }
+    .app-screen.active {
+      display: block;
     }
 
-    .back-btn {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--glass-border);
-      color: var(--text-main);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      cursor: pointer;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    .header-titles h1 {
-      font-size: 20px;
-      font-weight: 600;
-      letter-spacing: -0.5px;
-    }
-
-    .header-titles p {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
-    /* Barra de Progresso Passos (Stepper) */
-    .stepper {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 25px;
-      margin-bottom: 10px;
-      position: relative;
-    }
-
-    .step-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      color: var(--text-muted);
-      font-weight: 500;
-      z-index: 2;
-    }
-
-    .step-item.active {
-      color: var(--text-main);
-    }
-
-    .step-number {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    /* Status de Conexão */
+    #status-conexao {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      padding: 6px 12px;
+      border-radius: 20px;
       font-size: 11px;
       font-weight: 600;
+      z-index: 9999;
+      backdrop-filter: blur(10px);
     }
+    .status-online { background: rgba(40, 167, 69, 0.2); color: #28a745; border: 1px solid rgba(40, 167, 69, 0.4); }
+    .status-offline { background: rgba(220, 53, 69, 0.2); color: #dc3545; border: 1px solid rgba(220, 53, 69, 0.4); }
 
-    .step-item.active .step-number {
-      background: #5ba962;
-      color: white;
-      box-shadow: 0 0 10px rgba(91, 169, 98, 0.4);
-    }
-
-    .step-line {
-      flex-grow: 1;
-      height: 1px;
-      background: rgba(255, 255, 255, 0.1);
-      margin: 0 12px;
-    }
-
-    /* Container de Cartões (Formulário) */
-    .content-container {
-      padding: 0 16px;
-    }
-
+    /* Componentes Glassmorphism */
     .glass-card {
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
@@ -139,7 +83,7 @@
       -webkit-backdrop-filter: blur(20px);
       border-radius: 16px;
       padding: 20px;
-      margin-bottom: 20px;
+      margin: 16px;
       box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     }
 
@@ -152,329 +96,409 @@
       margin-bottom: 18px;
     }
 
-    /* Grupos de Inputs Estilizados */
-    .input-group {
-      margin-bottom: 20px;
-      position: relative;
-    }
-
-    .input-group:last-child {
-      margin-bottom: 0;
-    }
-
-    .input-label {
-      display: block;
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-      font-weight: 500;
-    }
-
-    .input-wrapper {
-      position: relative;
+    /* ==========================================
+       🏠 ESTILOS DA TELA INICIAL (DASHBOARD)
+       ========================================== */
+    .dash-header {
+      padding: 24px 20px;
       display: flex;
+      justify-content: space-between;
       align-items: center;
     }
+    .company-logo h2 { font-size: 22px; font-weight: 700; letter-spacing: 1px; color: var(--text-main); }
+    .company-logo span { font-size: 10px; color: var(--text-muted); display: block; text-transform: uppercase; }
+    
+    .user-profile { display: flex; align-items: center; gap: 10px; }
+    .user-info text { font-size: 14px; font-weight: 600; display: block; }
+    .user-info span { font-size: 11px; color: var(--text-muted); }
+    .user-avatar { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; border: 1px solid var(--glass-border); }
 
-    .input-icon {
-      position: absolute;
-      left: 14px;
-      color: var(--text-muted);
-      font-size: 15px;
-      pointer-events: none;
-    }
+    .welcome-section { padding: 0 20px; margin-bottom: 15px; }
+    .welcome-section h3 { font-size: 24px; font-weight: 600; }
+    .welcome-section h3 span { color: #5ba962; }
+    .welcome-section p { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
 
-    .form-control {
-      width: 100%;
-      background: var(--input-bg);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 10px;
-      padding: 14px 14px 14px 42px;
-      color: var(--text-main);
-      font-size: 15px;
-      outline: none;
-      transition: all 0.3s ease;
-      appearance: none; /* Remove seta padrão em iOS */
-      -webkit-appearance: none;
-    }
-
-    .form-control:focus {
-      border-color: rgba(0, 210, 255, 0.4);
-      background: rgba(2, 12, 22, 0.8);
-    }
-
-    /* Ajuste para ícone de seta em selects */
-    select.form-control {
-      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%237e8b9b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
-      background-repeat: no-repeat;
-      background-position: right 14px center;
-      background-size: 16px;
-    }
-
-    /* Linhas duplas de inputs (Hora de início / Término) */
-    .input-row {
-      display: flex;
-      gap: 12px;
-    }
-
-    .input-row .input-group {
-      flex: 1;
-    }
-
-    /* Textarea Customizado */
-    textarea.form-control {
-      padding: 14px;
-      resize: none;
-      height: 100px;
-    }
-
-    .char-count {
-      text-align: right;
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-top: 5px;
-    }
-
-    /* Botão Principal */
-    .btn-next {
-      width: 100%;
-      background: var(--neon-green);
-      border: none;
-      border-radius: 25px;
-      padding: 16px;
-      color: white;
-      font-size: 16px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    /* Indicadores Numéricos */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 10px;
+      padding: 0 16px;
+      margin-bottom: 15px;
+    }
+    .metric-box {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 12px;
+      text-align: left;
+    }
+    .metric-box i { font-size: 18px; margin-bottom: 8px; display: block; }
+    .metric-box .m-num { font-size: 20px; font-weight: 700; display: block; }
+    .metric-box .m-txt { font-size: 10px; color: var(--text-muted); line-height: 1.2; margin-top: 2px; }
+
+    /* Botão de Disparo Principal */
+    .btn-trigger-action {
+      background: var(--neon-green);
+      border-radius: 14px;
+      padding: 18px;
+      margin: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       cursor: pointer;
       box-shadow: 0 4px 15px rgba(91, 169, 98, 0.3);
-      transition: opacity 0.2s;
-      margin-top: 10px;
     }
+    .trigger-info { display: flex; align-items: center; gap: 15px; }
+    .trigger-circle { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+    .trigger-text h4 { font-size: 16px; font-weight: 600; }
+    .trigger-text p { font-size: 11px; color: rgba(255,255,255,0.7); }
 
-    .btn-next:active {
-      opacity: 0.8;
-    }
-
-    /* Menu de Navegação Inferior */
-    .nav-bottom {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 75px;
-      background: rgba(6, 15, 28, 0.9);
-      border-top: 1px solid var(--glass-border);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      padding: 0 10px;
-      z-index: 999;
-    }
-
-    .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 11px;
-      font-weight: 500;
-      gap: 5px;
-    }
-
-    .nav-item.active {
-      color: #5ba962;
-    }
-
-    .nav-item i {
-      font-size: 20px;
-    }
-
-    /* Botão central de bola (+) */
-    .nav-item-center {
-      position: relative;
-      top: -15px;
-    }
-
-    .center-circle {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      background: #5ba962;
+    /* Lista Sincronizados Contêiner */
+    .history-list { margin-top: 10px; }
+    .history-item {
       display: flex;
       align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 22px;
-      box-shadow: 0 4px 15px rgba(91, 169, 98, 0.4);
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
     }
+    .history-item:last-child { border-bottom: none; }
+    .hist-left { display: flex; align-items: center; gap: 12px; }
+    .hist-icon { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+    .icon-success { background: rgba(40,167,69,0.15); color: #28a745; }
+    .icon-pending { background: rgba(255,193,7,0.15); color: #ffc107; }
+    .hist-details h5 { font-size: 14px; font-weight: 500; }
+    .hist-details p { font-size: 11px; color: var(--text-muted); }
+    .hist-right { text-align: right; font-size: 11px; color: var(--text-muted); }
+
+    /* ==========================================
+       📝 ESTILOS DO FORMULÁRIO E CHECKLIST
+       ========================================== */
+    .app-header { padding: 24px 20px 10px 20px; display: flex; align-items: center; gap: 16px; }
+    .back-btn { width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border); color: var(--text-main); display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; }
+    .header-titles h1 { font-size: 20px; font-weight: 600; }
+    .header-titles p { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+    .stepper { display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; margin-bottom: 10px; }
+    .step-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-muted); font-weight: 500; }
+    .step-item.active { color: var(--text-main); }
+    .step-number { width: 24px; height: 24px; border-radius: 50%; background: rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; }
+    .step-item.active .step-number { background: #5ba962; color: white; box-shadow: 0 0 10px rgba(91, 169, 98, 0.4); }
+    .step-line { flex-grow: 1; height: 1px; background: rgba(255, 255, 255, 0.1); margin: 0 12px; }
+
+    .input-group { margin-bottom: 20px; }
+    .input-label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 8px; font-weight: 500; }
+    .input-wrapper { position: relative; display: flex; align-items: center; }
+    .input-icon { position: absolute; left: 14px; color: var(--text-muted); font-size: 15px; pointer-events: none; }
+    
+    .form-control {
+      width: 100%; background: var(--input-bg); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 14px 14px 14px 42px; color: var(--text-main); font-size: 15px; outline: none; transition: all 0.3s ease; -webkit-appearance: none; appearance: none;
+    }
+    .form-control:focus { border-color: rgba(0, 210, 255, 0.4); background: rgba(2, 12, 22, 0.8); }
+    select.form-control { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%237e8b9b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>"); background-repeat: no-repeat; background-position: right 14px center; background-size: 16px; }
+    textarea.form-control { padding: 14px; resize: none; height: 90px; }
+
+    /* Estilos do Bloco de Tarefas Dinâmicas (Checklist) */
+    .item-tarefa {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .item-tarefa h4 { font-size: 15px; font-weight: 600; margin-bottom: 12px; color: #fff; }
+    
+    /* Segmented Control Inteligente para as Respostas */
+    .grupo-botoes {
+      display: flex;
+      background: rgba(0,0,0,0.3);
+      padding: 4px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      gap: 4px;
+    }
+    .btn-opcao {
+      flex: 1; border: none; background: transparent; color: var(--text-muted); padding: 10px; font-size: 13px; font-weight: 600; border-radius: 6px; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-opcao.selected[data-valor="OK"] { background: #28a745; color: white; box-shadow: 0 2px 8px rgba(40,167,69,0.3); }
+    .btn-opcao.selected[data-valor="ALERTA"] { background: #ffc107; color: #000; box-shadow: 0 2px 8px rgba(255,193,7,0.3); }
+    .btn-opcao.selected[data-valor="FALHA"] { background: #dc3545; color: white; box-shadow: 0 2px 8px rgba(220,53,69,0.3); }
+
+    /* Botões de Ação Inferiores */
+    .btn-container-footer { padding: 0 16px 20px 16px; display: flex; gap: 12px; }
+    .btn-action { width: 100%; border: none; border-radius: 25px; padding: 16px; color: white; font-size: 16px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; transition: all 0.2s; }
+    .btn-action-primary { background: var(--neon-green); box-shadow: 0 4px 15px rgba(91, 169, 98, 0.3); }
+    .btn-action-secondary { background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: var(--text-main); }
+    .btn-action:active { opacity: 0.8; }
+
+    /* Menu de Navegação Fixo */
+    .nav-bottom { position: fixed; bottom: 0; left: 0; right: 0; height: 75px; background: rgba(6, 15, 28, 0.9); border-top: 1px solid var(--glass-border); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); display: flex; justify-content: space-around; align-items: center; padding: 0 10px; z-index: 999; }
+    .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); text-decoration: none; font-size: 11px; font-weight: 500; gap: 5px; cursor: pointer; }
+    .nav-item.active { color: #5ba962; }
+    .nav-item i { font-size: 20px; }
+    .nav-item-center { position: relative; top: -15px; }
+    .center-circle { width: 52px; height: 52px; border-radius: 50%; background: #5ba962; display: flex; align-items: center; justify-content: center; color: white; font-size: 22px; box-shadow: 0 4px 15px rgba(91, 169, 98, 0.4); }
   </style>
 </head>
 <body>
 
-  <!-- Topo com Botão Voltar -->
-  <header class="app-header">
-    <button class="back-btn"><i class="fa-solid fa-arrow-left"></i></button>
-    <div class="header-titles">
-      <h1>Nova manutenção</h1>
-      <p>Preencha os dados da manutenção</p>
-    </div>
-  </header>
+  <!-- Alerta de Conexão -->
+  <div id="status-conexao" class="status-online"><i class="fa-solid fa-circle"></i> On-line</div>
 
-  <!-- Barra de Passos -->
-  <section class="stepper">
-    <div class="step-item active">
-      <div class="step-number">1</div>
-      <span>Dados gerais</span>
-    </div>
-    <div class="step-line"></div>
-    <div class="step-item">
-      <div class="step-number">2</div>
-      <span>Checklist</span>
-    </div>
-    <div class="step-line"></div>
-    <div class="step-item">
-      <div class="step-number">3</div>
-      <span>Finalizar</span>
-    </div>
-  </section>
+  <!-- ==========================================
+       TELA 1: DASHBOARD (PRINCIPAL)
+       ========================================== -->
+  <div id="tela-dashboard" class="app-screen active">
+    <header class="dash-header">
+      <div class="company-logo">
+        <h2>ORTELAN</h2>
+        <span>Soluções em Saneamento</span>
+      </div>
+      <div class="user-profile">
+        <div class="user-info">
+          <text>João Silva</text>
+          <span>Técnico</span>
+        </div>
+        <div class="user-avatar"><i class="fa-regular fa-user"></i></div>
+      </div>
+    </header>
 
-  <!-- Container de Formulários -->
-  <main class="content-container">
-    
-    <!-- Bloco 1: Informações Gerais -->
+    <section class="welcome-section">
+      <h3 id="saudacao-dinamica">Boa tarde, <span>João!</span></h3>
+      <p id="data-atual-extenso">Segunda-feira, 1 de junho de 2026</p>
+    </section>
+
+    <!-- Indicadores Flutuantes -->
+    <div class="metrics-grid">
+      <div class="metric-box">
+        <i class="fa-regular fa-calendar-check" style="color: #28a745;"></i>
+        <span class="m-num" id="dash-qtd-feitas">0</span>
+        <span class="m-txt">Realizadas este mês</span>
+      </div>
+      <div class="metric-box">
+        <i class="fa-regular fa-clock" style="color: #ffc107;"></i>
+        <span class="m-num" id="dash-qtd-fazer">3</span>
+        <span class="m-txt">Manutenções a fazer</span>
+      </div>
+      <div class="metric-box">
+        <i class="fa-solid fa-location-dot" style="color: #00d2ff;"></i>
+        <span class="m-num">3</span>
+        <span class="m-txt">Locais de instalação</span>
+      </div>
+    </div>
+
+    <!-- Botão de Nova OS -->
+    <div class="btn-trigger-action" onclick="navegarParaFormulario()">
+      <div class="trigger-info">
+        <div class="trigger-circle"><i class="fa-solid fa-plus"></i></div>
+        <div class="trigger-text">
+          <h4>Nova manutenção</h4>
+          <p>Cadastrar uma nova ordem de serviço</p>
+        </div>
+      </div>
+      <i class="fa-solid fa-chevron-right"></i>
+    </div>
+
+    <!-- Histórico Sincronizado Interno -->
     <div class="glass-card">
+      <div class="card-title">Atividades Recentes (Sincronizadas)</div>
+      <div class="history-list" id="lista-historico-dash">
+        <!-- Injetado via Javascript -->
+        <p style="font-size: 13px; color: var(--text-muted); text-align: center; padding: 10px 0;">Nenhuma atividade recente registrada.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==========================================
+       TELA 2: FORMULÁRIO DE DADOS GERAIS
+       ========================================== -->
+  <div id="tela-dados-gerais" class="app-screen">
+    <header class="app-header">
+      <button class="back-btn" onclick="navegarParaDashboard()"><i class="fa-solid fa-arrow-left"></i></button>
+      <div class="header-titles">
+        <h1>Nova manutenção</h1>
+        <p>Preencha os dados primários</p>
+      </div>
+    </header>
+
+    <section class="stepper">
+      <div class="step-item active"><div class="step-number">1</div><span>Gerais</span></div>
+      <div class="step-line"></div>
+      <div class="step-item"><div class="step-number">2</div><span>Checklist</span></div>
+      <div class="step-line"></div>
+      <div class="step-item"><div class="step-number">3</div><span>Finalizar</span></div>
+    </section>
+
+    <main class="glass-card">
       <div class="card-title">Informações Gerais</div>
       
-      <!-- Data -->
       <div class="input-group">
         <label class="input-label">Data da manutenção</label>
         <div class="input-wrapper">
           <i class="fa-regular fa-calendar input-icon"></i>
-          <input type="date" class="form-control" id="dataManutencao" value="2026-06-01">
+          <input type="date" class="form-control" id="dataManutencao">
         </div>
       </div>
 
-      <!-- Horas em Linha Dupla -->
-      <div class="input-row">
-        <div class="input-group">
-          <label class="input-label">Hora de início</label>
-          <div class="input-wrapper">
-            <i class="fa-regular fa-clock input-icon"></i>
-            <select class="form-control" id="horaInicio">
-              <option value="08:00">08:00</option>
-              <option value="09:00">09:00</option>
-            </select>
-          </div>
-        </div>
-        <div class="input-group">
-          <label class="input-label">Hora de término (previsão)</label>
-          <div class="input-wrapper">
-            <i class="fa-regular fa-clock input-icon"></i>
-            <select class="form-control" id="horaFim">
-              <option value="10:00">10:00</option>
-              <option value="11:00">11:00</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <!-- Local da Instalação -->
       <div class="input-group">
         <label class="input-label">Local da instalação</label>
         <div class="input-wrapper">
           <i class="fa-solid fa-location-dot input-icon"></i>
           <select class="form-control" id="local">
-            <option>LOC 02 - Reservatório principal Eucalip</option>
-            <option>LOC 04 - Gleba 02</option>
-            <option>LOC 05 - Gleba 04</option>
-            <option>LOC 06 - Gleba 06</option>
+            <option value="LOC 04 - Gleba 02">LOC 04 - Gleba 02</option>
+            <option value="LOC 05 - Gleba 04">LOC 05 - Gleba 04</option>
+            <option value="LOC 06 - Gleba 06">LOC 06 - Gleba 06</option>
           </select>
         </div>
       </div>
 
-      <!-- Equipamento -->
       <div class="input-group">
         <label class="input-label">Equipamento / Estrutura</label>
         <div class="input-wrapper">
           <i class="fa-solid fa-cube input-icon"></i>
           <select class="form-control" id="equipamento">
-            <option>Boia controladora de nível</option>
-            <option>Macromedidor</option>
+            <option value="Macromedidor">Macromedidor</option>
+            <option value="Boia controladora de nível">Boia controladora de nível</option>
           </select>
         </div>
       </div>
 
-      <!-- Natureza da Manutenção -->
       <div class="input-group">
         <label class="input-label">Natureza da manutenção</label>
         <div class="input-wrapper">
           <i class="fa-solid fa-wrench input-icon"></i>
-          <select class="form-control" id="tipo">
+          <select class="form-control" id="tipo" onchange="alternarNaturezaManutencao()">
             <option value="Preventiva">Preventiva</option>
             <option value="Corretiva">Corretiva</option>
           </select>
         </div>
       </div>
+    </main>
 
-      <!-- Responsável -->
-      <div class="input-group">
-        <label class="input-label">Responsável</label>
-        <div class="input-wrapper">
-          <i class="fa-regular fa-user input-icon"></i>
-          <select class="form-control" id="responsavel">
-            <option>João da Silva</option>
-          </select>
-        </div>
-      </div>
-
+    <div class="btn-container-footer">
+      <button class="btn-action btn-action-primary" onclick="avancarParaChecklist()">
+        Avançar para Checklist <i class="fa-solid fa-arrow-right"></i>
+      </button>
     </div>
+  </div>
 
-    <!-- Bloco 2: Detalhes Adicionais -->
-    <div class="glass-card">
-      <div class="card-title">Detalhes Adicionais</div>
-      <div class="input-group">
-        <label class="input-label">Observações (opcional)</label>
-        <textarea class="form-control" placeholder="Adicione observações..." maxlength="300"></textarea>
-        <div class="char-count">0/300</div>
+
+  <!-- ==========================================
+       TELA 3: CHECKLIST DINÂMICO OU CORRETIVA
+       ========================================== -->
+  <div id="tela-checklist" class="app-screen">
+    <header class="app-header">
+      <button class="back-btn" onclick="voltarParaDadosGerais()"><i class="fa-solid fa-arrow-left"></i></button>
+      <div class="header-titles">
+        <h1>Tarefas em Campo</h1>
+        <p>Preenchimento dos itens obrigatórios</p>
       </div>
+    </header>
+
+    <section class="stepper">
+      <div class="step-item"><div class="step-number">1</div><span>Gerais</span></div>
+      <div class="step-line"></div>
+      <div class="step-item active"><div class="step-number">2</div><span>Checklist</span></div>
+      <div class="step-line"></div>
+      <div class="step-item"><div class="step-number">3</div><span>Finalizar</span></div>
+    </section>
+
+    <!-- Bloco Corretivo Oculto por padrão -->
+    <main class="glass-card" id="bloco-corretiva" style="display: none;">
+      <div class="card-title">Descreva a Manutenção Corretiva</div>
+      <div class="input-group">
+        <label class="input-label">Descrição do serviço executado</label>
+        <textarea class="form-control" id="corretivaTexto" placeholder="Relate o problema encontrado e a solução aplicada na máquina..."></textarea>
+      </div>
+    </main>
+
+    <!-- Bloco Preventivo -->
+    <main id="bloco-preventiva" class="content-container">
+      <div class="glass-card" id="container-tarefas-dinamicas">
+        <!-- Injetado dinamicamente via script conforme o equipamento selecionado -->
+      </div>
+    </main>
+
+    <div class="btn-container-footer">
+      <button class="btn-action btn-action-secondary" onclick="voltarParaDadosGerais()">Voltar</button>
+      <button class="btn-action btn-action-primary" onclick="avancarParaFinalizar()">
+        Revisar OS <i class="fa-solid fa-arrow-right"></i>
+      </button>
     </div>
+  </div>
 
-    <!-- Botão Próximo -->
-    <button class="btn-next">
-      Próximo <i class="fa-solid fa-arrow-right"></i>
-    </button>
 
-  </main>
+  <!-- ==========================================
+       TELA 4: FINALIZAR E ENVIAR
+       ========================================== -->
+  <div id="tela-finalizar" class="app-screen">
+    <header class="app-header">
+      <button class="back-btn" onclick="voltarParaChecklist()"><i class="fa-solid fa-arrow-left"></i></button>
+      <div class="header-titles">
+        <h1>Finalizar Relatório</h1>
+        <p>Revise antes de salvar ou transmitir</p>
+      </div>
+    </header>
 
-  <!-- Menu de Navegação Inferior -->
+    <section class="stepper">
+      <div class="step-item"><div class="step-number">1</div><span>Gerais</span></div>
+      <div class="step-line"></div>
+      <div class="step-item"><div class="step-number">2</div><span>Checklist</span></div>
+      <div class="step-line"></div>
+      <div class="step-item active"><div class="step-number">3</div><span>Finalizar</span></div>
+    </section>
+
+    <main class="glass-card">
+      <div class="card-title">Resumo do Envio</div>
+      <div style="font-size: 14px; line-height: 1.6; margin-bottom: 20px; color: var(--text-muted);">
+        <p>📍 <strong style="color: #fff;">Local:</strong> <span id="resumo-local">--</span></p>
+        <p>⚙️ <strong style="color: #fff;">Equipamento:</strong> <span id="resumo-equipamento">--</span></p>
+        <p>📅 <strong style="color: #fff;">Data:</strong> <span id="resumo-data">--</span></p>
+        <p>🛠️ <strong style="color: #fff;">Tipo:</strong> <span id="resumo-tipo">--</span></p>
+      </div>
+      <p style="font-size: 12px; color: #ffc107; background: rgba(255,193,7,0.1); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,193,7,0.2)">
+        <i class="fa-solid fa-circle-info"></i> Se estiver sem internet, os dados ficarão guardados no celular e serão sincronizados automaticamente assim que recuperar a conexão.
+      </p>
+    </main>
+
+    <div class="btn-container-footer">
+      <button class="btn-action btn-action-secondary" onclick="voltarParaChecklist()">Voltar</button>
+      <button class="btn-action btn-action-primary" id="btn-salvar-final" onclick="executarEnvioFinal()">
+        <i class="fa-solid fa-cloud-arrow-up"></i> Concluir e Enviar
+      </button>
+    </div>
+  </div>
+
+
+  <!-- Menu de Navegação Global Inferior -->
   <nav class="nav-bottom">
-    <a href="#" class="nav-item">
+    <div class="nav-item active" id="nav-home" onclick="navegarParaDashboard()">
       <i class="fa-solid fa-house"></i>
       <span>Início</span>
-    </a>
-    <a href="#" class="nav-item">
+    </div>
+    <div class="nav-item" id="nav-locais">
       <i class="fa-solid fa-location-dot"></i>
       <span>Locais</span>
-    </a>
-    <a href="#" class="nav-item nav-item-center">
+    </div>
+    <div class="nav-item nav-item-center" onclick="navegarParaFormulario()">
       <div class="center-circle"><i class="fa-solid fa-plus"></i></div>
-    </a>
-    <a href="#" class="nav-item active">
-      <div class="nav-icon-wrapper"><i class="fa-regular fa-clipboard"></i></div>
+    </div>
+    <div class="nav-item" id="nav-checklist" onclick="navegarParaFormulario()">
+      <i class="fa-regular fa-clipboard"></i>
       <span>Checklist</span>
-    </a>
-    <a href="#" class="nav-item">
+    </div>
+    <div class="nav-item" id="nav-mais">
       <i class="fa-solid fa-ellipsis"></i>
       <span>Mais</span>
     </a>
   </nav>
 
-</body>
-</html>
+
+  <!-- ==========================================
+       ⚙️ LOGICA COMPLETA DE FUNCIONAMENTO JAVASCRIPT
+       ========================================== -->
+  <script>
+    // URL DA SUA API GOOGLE COPIADA DO SEU CODE.GS ANTIGO
+    const URL_GOOGLE_SCRIPT = "https://script.google.com/macros/s/AKfycbzI8qD3o7gR_I6WbeFfWclM99I00p_1vBco4hU93-E7HIsb9Y0m58P7Z
