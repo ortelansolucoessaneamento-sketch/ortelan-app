@@ -7,7 +7,6 @@
   <link rel="manifest" href="manifest.json">
   <title>Sistema de Manutenção - Ortelan</title>
   
-  <!-- Fontes e Ícones Premium -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -339,12 +338,8 @@
 </head>
 <body>
 
-  <!-- Status Online -->
   <div id="status-conexao" class="status-online"><i class="fa-solid fa-circle"></i> On-line</div>
 
-  <!-- ==========================================
-       🏠 TELA 1: DASHBOARD (MODELO FIEL)
-       ========================================== -->
   <div id="tela-dashboard" class="app-screen active">
     <header class="dash-header">
       <div class="company-logo">
@@ -357,7 +352,6 @@
           <span>Diretor Técnico</span>
         </div>
         <div class="user-avatar">
-          <!-- Mock da foto do usuário técnico -->
           <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=150&auto=format&fit=crop" alt="Silvio">
         </div>
       </div>
@@ -366,12 +360,11 @@
     <section class="welcome-section">
       <h3 id="saudacao-dinamica">Boa noite, <span>Silvio!</span></h3>
       <div class="welcome-meta">
-        <span id="data-dashboard-extenso"><i class="fa-regular fa-calendar"></i> Segunda-feira, 1 de junho de 2026</span>
+        <span id="data-dashboard-extenso"><i class="fa-regular fa-calendar"></i> Terça-feira, 2 de junho de 2026</span>
         <span><i class="fa-regular fa-clock"></i> Última sincronização: 13:00</span>
       </div>
     </section>
 
-    <!-- Card Mensagem do Dia -->
     <div class="card-mensagem-dia">
       <div class="msg-header">
         <i class="fa-solid fa-book-open"></i> Mensagem do dia
@@ -383,7 +376,6 @@
       <span class="msg-footer-text">Tenha um dia abençoado!</span>
     </div>
 
-    <!-- Indicadores Alinhados ao Protótipo -->
     <div class="metrics-grid">
       <div class="metric-box" style="border-left: 2px solid var(--accent-green);">
         <div class="metric-box-header">
@@ -413,7 +405,6 @@
       </div>
     </div>
 
-    <!-- Nova Manutenção Button -->
     <div class="btn-trigger-action" onclick="irParaFormulario()">
       <div class="trigger-info">
         <div class="trigger-circle"><i class="fa-solid fa-plus"></i></div>
@@ -425,7 +416,6 @@
       <i class="fa-solid fa-chevron-right" style="color: #fff; font-size: 14px;"></i>
     </div>
 
-    <!-- Card Próxima Manutenção Hidráulica -->
     <div class="section-title-alt">Próxima Manutenção</div>
     <div class="card-proxima-manutencao">
       <div class="card-pm-title">Planejada / Preventiva</div>
@@ -437,7 +427,6 @@
       </div>
     </div>
 
-    <!-- Acessos Rápidos -->
     <div class="section-title-alt">Acessos Rápidos</div>
     <div class="acessos-rapidos-grid">
       <div class="acesso-item" onclick="alert('Funcionalidade em desenvolvimento para a próxima versão.')">
@@ -458,7 +447,6 @@
       </div>
     </div>
 
-    <!-- Atividades Recentes -->
     <div class="atividades-container">
       <div class="atividades-header">
         <h4>Atividades Recentes</h4>
@@ -503,9 +491,6 @@
   </div>
 
 
-  <!-- ==========================================
-       📝 TELA 2: DADOS GERAIS DO FORMULÁRIO
-       ========================================== -->
   <div id="tela-dados-gerais" class="app-screen">
     <header class="app-header">
       <button class="back-btn" onclick="irParaDashboard()"><i class="fa-solid fa-arrow-left"></i></button>
@@ -575,9 +560,6 @@
   </div>
 
 
-  <!-- ==========================================
-       ⚙️ TELA 3: TAREFAS / CHECKLIST DINÂMICO
-       ========================================== -->
   <div id="tela-checklist" class="app-screen">
     <header class="app-header">
       <button class="back-btn" onclick="voltarParaPasso1()"><i class="fa-solid fa-arrow-left"></i></button>
@@ -595,16 +577,14 @@
       <div class="step-item"><div class="step-number">3</div><span>Finalizar</span></div>
     </section>
 
-    <!-- Bloco Corretiva -->
     <div id="containerCorretiva" style="display: none;" class="glass-card">
       <div class="card-title">Relatório Técnico Corretivo</div>
       <div class="form-group">
         <label class="input-label">Descrição detalhada da execução</label>
-        <textarea id="textoCorretiva" class="form-control" placeholder="Descreva os serviços corretivos executados, peças trocadas, anomalias sanadas..."></textarea>
+        <textarea id="textoCorretiva" class="form-control" placeholder="Descreva os serviços corretivos executados, peças trocadas..."></textarea>
       </div>
     </div>
 
-    <!-- Bloco Preventiva -->
     <div id="containerPreventiva" style="display: none;">
       <div id="listaTarefas"></div>
     </div>
@@ -618,9 +598,6 @@
   </div>
 
 
-  <!-- ==========================================
-       🚀 TELA 4: FINALIZAR E TRANSMITIR
-       ========================================== -->
   <div id="tela-finalizar" class="app-screen">
     <header class="app-header">
       <button class="back-btn" onclick="voltarParaPasso2()"><i class="fa-solid fa-arrow-left"></i></button>
@@ -660,7 +637,6 @@
   </div>
 
 
-  <!-- Menu de Navegação Global Fixo Inferior (Idêntico ao Prototipo) -->
   <nav class="nav-bottom">
     <div class="nav-item active" id="nav-home" onclick="irParaDashboard()">
       <i class="fa-solid fa-house"></i>
@@ -683,22 +659,49 @@
     </div>
   </nav>
 
-
-  <!-- ==========================================
-       ⚙️ LOGICA DE SISTEMA INTEGRAÇÃO E UI
-       ========================================== -->
   <script>
-    // PWA Cache Updater Forçado
+    // Sistema Avançado de Controle de Cache e Atualização Forçada (iOS/Android)
+    const VERSAO_APP = "2026.06.02.v5"; // Mude esse sufixo final sempre que alterar o código
+
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js').then((reg) => {
+      navigator.serviceWorker.register('sw.js?v=' + VERSAO_APP).then((reg) => {
         reg.update();
         reg.onupdatefound = () => {
-          const w = reg.installing;
-          w.onstatechange = () => {
-            if (w.state === 'installed' && navigator.serviceWorker.controller) window.location.reload();
+          const instalandoWorker = reg.installing;
+          if (instalandoWorker == null) return;
+          instalandoWorker.onstatechange = () => {
+            if (instalandoWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              if (caches) {
+                caches.keys().then(function(names) {
+                  for (let name of names) caches.delete(name);
+                });
+              }
+              setTimeout(() => { window.location.reload(true); }, 500);
+            }
           };
         };
-      }).catch(err => console.log(err));
+      }).catch(err => console.error('Erro SW:', err));
+    }
+
+    // Controle e Limpeza de localStorage por Versão
+    const versaoSalva = localStorage.getItem('ortelan_versao_app');
+    if (versaoSalva !== VERSAO_APP) {
+      // Preserva dados críticos de envio antes de limpar caches residuais
+      const salvasSucesso = localStorage.getItem("ortelan_qtd_enviadas_sucesso");
+      const filaOffline = localStorage.getItem("ortelan_manutencao_offline");
+      
+      localStorage.clear();
+      
+      if(salvasSucesso) localStorage.setItem("ortelan_qtd_enviadas_sucesso", salvasSucesso);
+      if(filaOffline) localStorage.setItem("ortelan_manutencao_offline", filaOffline);
+      localStorage.setItem('ortelan_versao_app', VERSAO_APP);
+      
+      if ('caches' in window) {
+        caches.keys().then(function(keyList) {
+          return Promise.all(keyList.map(function(key) { return caches.delete(key); }));
+        });
+      }
+      setTimeout(() => { window.location.reload(true); }, 300);
     }
 
     // Banco de Dados Técnico Original
@@ -770,7 +773,6 @@
       
       const opcoesData = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
       let dataTexto = agora.toLocaleDateString('pt-BR', opcoesData);
-      // Capitaliza primeira letra
       dataTexto = dataTexto.charAt(0).toUpperCase() + dataTexto.slice(1);
       document.getElementById("data-dashboard-extenso").innerHTML = `<i class="fa-regular fa-calendar"></i> ${dataTexto}`;
     }
@@ -960,7 +962,6 @@
         }
 
         if (pendente) {
-          boxItem.classList.add('task-item-pendente');
           primeiroErro.el.scrollIntoView({ behavior: 'smooth', block: 'center' });
           alert(primeiroErro.msg);
           return;
@@ -1002,11 +1003,6 @@
 
       ocultarTodasTelas();
       document.getElementById("tela-finalizar").classList.add("active");
-    }
-
-    function voltarParaPasso2() {
-      ocultarTodasTelas();
-      document.getElementById("tela-checklist").classList.add("active");
     }
 
     function enviarFormulario() {
