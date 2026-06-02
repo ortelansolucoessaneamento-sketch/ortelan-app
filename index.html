@@ -661,7 +661,7 @@
 
   <script>
     // Sistema Avançado de Controle de Cache e Atualização Forçada (iOS/Android)
-    const VERSAO_APP = "2026.06.02.v6"; // Mude esse sufixo final sempre que alterar o código
+    const VERSAO_APP = "2026.06.02.v7"; // Mude esse sufixo final sempre que alterar o código
 
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js?v=' + VERSAO_APP).then((reg) => {
@@ -1013,8 +1013,7 @@
         tipo: document.getElementById("tipo").value,
         observacoes: "",
         tarefas: {},
-        corretivaTexto: "",
-        leitura: "" // Campo adicionado para o Apps Script mapear para "Leitura_Macros"
+        corretivaTexto: ""
       };
 
       if (payload.tipo === "Preventiva") {
@@ -1022,19 +1021,27 @@
         for (const [categoria, tarefas] of Object.entries(baseDados[payload.local][payload.equipamento])) {
           for (const tarefa of tarefas) {
             const radioSel = document.querySelector(`input[name="tarefa_${tIndex}"]:checked`);
-            let valorResp = radioSel.value;
+            let valorResp = radioSel ? radioSel.value : "Não Respondido";
             
             const fLeitura = document.getElementById(`leitura_${tIndex}`);
-            // Se o campo de leitura existir e estiver visível, isola o valor no payload principal
-            if (fLeitura && fLeitura.style.display !== "none" && fLeitura.value.trim() !== "") {
-              payload.leitura = fLeitura.value.trim(); 
-              valorResp += ` - Medição: ${fLeitura.value}`;
-            }
-
             const fObs = document.getElementById(`obs_tarefa_${tIndex}`);
             let txtObs = (fObs && fObs.style.display !== "none") ? fObs.value.trim() : "";
 
-            payload.tarefas[tarefa] = { resposta: valorResp, observacaoItem: txtObs };
+            // Se o campo de leitura existe e está ativo para esta tarefa
+            if (fLeitura && fLeitura.style.display !== "none" && fLeitura.value.trim() !== "") {
+              // Mantém o padrão original que o Apps Script lê para salvar na aba Leitura_Macros
+              payload.tarefas[tarefa] = { 
+                resposta: radioSel.value, 
+                leitura: fLeitura.value.trim(), // Injetado diretamente no escopo do item avaliado
+                observacaoItem: txtObs 
+              };
+            } else {
+              // Envio padrão para itens sem medição numérica
+              payload.tarefas[tarefa] = { 
+                resposta: valorResp, 
+                observacaoItem: txtObs 
+              };
+            }
             tIndex++;
           }
         }
@@ -1049,7 +1056,7 @@
       executarEnvioParaServidor(payload);
     }
 
-    function executarEnvioParaServidor(payload) {
+    function ejecutarEnvioParaServidor(payload) {
       document.getElementById("btnSalvar").innerText = "Transmitindo...";
       document.getElementById("btnSalvar").disabled = true;
       document.getElementById("btn-final-voltar").disabled = true;
@@ -1073,6 +1080,7 @@
         salvarNoEstoqueOffline(payload);
       });
     }
+    
     function salvarNoEstoqueOffline(payload) {
       let fila = JSON.parse(localStorage.getItem("ortelan_manutencao_offline")) || [];
       fila.push(payload);
