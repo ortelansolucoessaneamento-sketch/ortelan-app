@@ -927,33 +927,47 @@
       executarEnvioParaServidor(payload);
     }
 
-    function executarEnvioParaServidor(payload) {
-      document.getElementById("btnSalvar").innerText = "Enviando...";
-      document.getElementById("btnSalvar").disabled = true;
-      document.getElementById("btn-final-voltar").disabled = true;
+  function executarEnvioParaServidor(payload) {
+  // 1. TRAVA DE SEGURANÇA: Validar data antes de qualquer coisa
+  // O payload.dataManutencao é a data que vem do formulário
+  if (payload.dataManutencao) {
+    const dataSelecionada = new Date(payload.dataManutencao + 'T00:00:00');
+    const hoje = new Date();
+    hoje.setHours(0, 0, 0, 0);
 
-      const googleUrl = "https://script.google.com/macros/s/AKfycbx-M07XKMRjdaMj7O86XsDamIcRNy-8eRZie-kQjzfpNJ2G7c8B_WrJp4geB5p2mJ7f/exec";
-
-      fetch(googleUrl, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      })
-      .then(() => {
-        let historicoSucesso = parseInt(localStorage.getItem("ortelan_qtd_enviadas_sucesso") || "0");
-        localStorage.setItem("ortelan_qtd_enviadas_sucesso", historicoSucesso + 1);
-
-        document.getElementById("msgSucesso").style.color = "#aed1b7";
-        document.getElementById("msgSucesso").innerText = "Relatório enviado com sucesso!";
-        
-        limparFormularioCompleto();
-      })
-      .catch(() => {
-        alert("Instabilidade de rede. Movendo relatório para o armazenamento seguro.");
-        salvarNoEstoqueOffline(payload);
-      });
+    if (dataSelecionada > hoje) {
+      alert("Atenção: Não é permitido registrar manutenções em datas futuras.");
+      return; // Interrompe a função aqui, nada é enviado
     }
+  }
+
+  // 2. Se a data estiver ok, segue o fluxo normal
+  document.getElementById("btnSalvar").innerText = "Enviando...";
+  document.getElementById("btnSalvar").disabled = true;
+  document.getElementById("btn-final-voltar").disabled = true;
+
+  const googleUrl = "https://script.google.com/macros/s/AKfycbx-M07XKMRjdaMj7O86XsDamIcRNy-8eRZie-kQjzfpNJ2G7c8B_WrJp4geB5p2mJ7f/exec";
+
+  fetch(googleUrl, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  })
+  .then(() => {
+    let historicoSucesso = parseInt(localStorage.getItem("ortelan_qtd_enviadas_sucesso") || "0");
+    localStorage.setItem("ortelan_qtd_enviadas_sucesso", historicoSucesso + 1);
+
+    document.getElementById("msgSucesso").style.color = "#aed1b7";
+    document.getElementById("msgSucesso").innerText = "Relatório enviado com sucesso!";
+    
+    limparFormularioCompleto();
+  })
+  .catch(() => {
+    alert("Instabilidade de rede. Movendo relatório para o armazenamento seguro.");
+    salvarNoEstoqueOffline(payload);
+  });
+}
 
     function salvarNoEstoqueOffline(payload) {
       let fila = JSON.parse(localStorage.getItem("ortelan_manutencao_offline")) || [];
