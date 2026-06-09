@@ -15,26 +15,22 @@
 
  <style>
   :root {
-    --bg-gradient: linear-gradient(135deg, #040d08 0%, #081c12 50%, #030805 100%);
-    --glass-bg: rgba(12, 34, 22, 0.45); /* Mais transparente para dar profundidade */
-    --glass-border: rgba(255, 255, 255, 0.08); /* Borda de reflexo sutil */
-    --accent-green: #00ff87; /* Verde neon premium */
-    --accent-cyan: #60efff; /* Ciano para dar o tom tecnológico */
+    --bg-gradient: linear-gradient(135deg, #030d08 0%, #071f13 50%, #020a05 100%);
+    --glass-bg: rgba(10, 28, 19, 0.45); /* Vidro translúcido premium */
+    --glass-border: rgba(255, 255, 255, 0.08); /* Borda fina de reflexo */
+    --accent-green: #00ff87;
     --text-main: #f3f4f6;
     --text-muted: #9ca3af;
     --danger-red: #ff4b4b;
     --warning-yellow: #ffb800;
-    --radius: 16px;
-    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   }
 
-  /* Reset Dinâmico */
+  /* Reset */
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Inter', sans-serif;
-    -webkit-font-smoothing: antialiased;
   }
 
   body {
@@ -48,7 +44,7 @@
     overflow-x: hidden;
   }
 
-  /* Container Central Master */
+  /* Container Principal */
   .app-container {
     width: 100%;
     max-width: 480px;
@@ -56,105 +52,131 @@
     position: relative;
   }
 
-  /* EFEITO ULTRA GLASSMORPHISM (Telas e Cartões) */
-  .app-screen, .card-glass {
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px) saturate(160%);
-    -webkit-backdrop-filter: blur(20px) saturate(160%);
-    border: 1px solid var(--glass-border);
-    border-radius: var(--radius);
+  /* TELAS DO APP (Efeito Glassmorphism Aplicado) */
+  .app-screen {
+    display: none;
+    background: var(--glass-bg) !important;
+    backdrop-filter: blur(20px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 16px;
     padding: 24px;
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     margin-bottom: 20px;
-    transition: var(--transition);
   }
 
-  /* Controle de Telas SPA */
-  .app-screen {
-    display: none;
-  }
   .app-screen.active {
     display: block;
-    animation: fadeInGlass 0.4s ease-out-towards;
+    animation: fadeIn 0.3s ease-out;
   }
 
-  /* Animação suave estilo iOS */
-  @keyframes fadeInGlass {
-    from { opacity: 0; transform: translateY(10px) scale(0.98); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
-  /* Cabeçalhos Modernos */
+  /* Cabeçalho */
   .app-header {
     text-align: center;
-    margin-bottom: 28px;
+    margin-bottom: 24px;
   }
 
   .app-header img {
-    max-height: 50px;
-    margin-bottom: 10px;
-    filter: drop-shadow(0 0 8px rgba(0, 255, 135, 0.3));
+    max-height: 45px;
+    margin-bottom: 8px;
+    filter: drop-shadow(0 0 8px rgba(0,255,135,0.3));
   }
 
   .app-header h1 {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     font-weight: 700;
-    letter-spacing: -0.5px;
-    background: linear-gradient(120deg, #ffffff, var(--accent-green));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .app-header p {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    margin-top: 4px;
-  }
-
-  /* Tipografia de Seções */
-  h2 {
-    font-size: 1.1rem;
-    font-weight: 600;
     color: #ffffff;
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
   }
-  h2 i { color: var(--accent-green); }
 
-  /* Elementos de Formulário Premium (Inputs, Selects) */
-  .form-group {
+  /* Grid do Dashboard (Restauração dos cards originais) */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
     margin-bottom: 20px;
   }
 
-  .form-group label {
-    display: block;
-    font-size: 0.85rem;
-    font-weight: 500;
+  .metric-card {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .metric-card.full-width {
+    grid-column: span 2;
+  }
+
+  .metric-value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--accent-green);
+    margin-top: 4px;
+  }
+
+  .metric-label {
+    font-size: 0.75rem;
     color: var(--text-muted);
-    margin-bottom: 8px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
 
-  /* Efeito de vidro ativo nos campos de digitação */
+  /* Itens do Histórico */
+  .history-list {
+    margin-top: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .history-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* Formulários */
+  .form-group {
+    margin-bottom: 18px;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
   .input-control {
     width: 100%;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 14px 16px;
+    border-radius: 10px;
+    padding: 12px;
     color: #ffffff;
-    font-size: 1rem;
+    font-size: 0.95rem;
     outline: none;
-    transition: var(--transition);
+    transition: all 0.2s ease;
   }
 
   .input-control:focus {
-    background: rgba(255, 255, 255, 0.08);
     border-color: var(--accent-green);
-    box-shadow: 0 0 15px rgba(0, 255, 135, 0.2);
+    background: rgba(255, 255, 255, 0.08);
   }
 
   select.input-control option {
@@ -162,152 +184,132 @@
     color: #ffffff;
   }
 
-  /* Botões Estilo iOS Gradiente Gglass */
-  .btn-primary {
+  /* Área dos Botões de Navegação Inferiores (Avançar / Voltar) */
+  .nav-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .nav-buttons.single-button {
+    grid-template-columns: 1fr;
+  }
+
+  /* Estilização Geral de Botões */
+  .btn-nav {
     width: 100%;
-    background: linear-gradient(90deg, #00b054 0%, #00ff87 100%);
-    border: none;
-    border-radius: 12px;
-    padding: 16px;
-    color: #020a05;
-    font-size: 1rem;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
-    box-shadow: 0 4px 20px rgba(0, 255, 135, 0.3);
-    transition: var(--transition);
+    gap: 8px;
+    transition: all 0.2s ease;
   }
 
-  .btn-primary:opacity-hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(0, 255, 135, 0.45);
+  .btn-nav.btn-primary {
+    background: linear-gradient(90deg, #00b054 0%, #00ff87 100%);
+    border: none;
+    color: #020a05;
+    box-shadow: 0 4px 15px rgba(0, 255, 135, 0.25);
   }
 
-  .btn-primary:active {
-    transform: translateY(1px);
-  }
-
-  .btn-secondary {
-    width: 100%;
+  .btn-nav.btn-secondary {
     background: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 14px;
     color: #ffffff;
-    font-size: 0.95rem;
-    font-weight: 500;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: var(--transition);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
   }
 
-  .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.2);
-  }
-
-  /* Itens do Checklist Dinâmico */
+  /* Checklist Dinâmico */
   .task-item {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 14px;
-    transition: var(--transition);
-  }
-
-  .task-item:hover {
-    border-color: rgba(0, 255, 135, 0.15);
-    background: rgba(255, 255, 255, 0.05);
+    padding: 14px;
+    margin-bottom: 12px;
   }
 
   .task-title {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 500;
-    margin-bottom: 12px;
-    color: #ffffff;
+    margin-bottom: 10px;
     line-height: 1.4;
   }
 
-  /* Rádios de Opção Customizados em Botões Compactos (P/A/F) */
+  /* Grupo de botões P / A / F */
   .radio-group {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-  }
-
-  .radio-label {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 8px;
-    padding: 10px;
-    text-align: center;
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--transition);
-    color: var(--text-muted);
-  }
-
-  /* Estado Selecionado com Glow dos Rádios */
-  .radio-input:checked + .radio-label.ok {
-    background: rgba(0, 255, 135, 0.15);
-    border-color: var(--accent-green);
-    color: var(--accent-green);
-    box-shadow: 0 0 10px rgba(0, 255, 135, 0.1);
-  }
-
-  .radio-input:checked + .radio-label.alerta {
-    background: rgba(255, 184, 0, 0.15);
-    border-color: var(--warning-yellow);
-    color: var(--warning-yellow);
-    box-shadow: 0 0 10px rgba(255, 184, 0, 0.1);
-  }
-
-  .radio-input:checked + .radio-label.falha {
-    background: rgba(255, 75, 75, 0.15);
-    border-color: var(--danger-red);
-    color: var(--danger-red);
-    box-shadow: 0 0 10px rgba(255, 75, 75, 0.1);
+    gap: 6px;
   }
 
   .radio-input {
     display: none;
   }
 
-  /* Badges de Conexão Offline/Online */
+  .radio-label {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    padding: 8px;
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: all 0.2s ease;
+  }
+
+  /* Ativação das cores nos botões de checklist */
+  .radio-input:checked + .radio-label.ok {
+    background: rgba(0, 255, 135, 0.15);
+    border-color: var(--accent-green);
+    color: var(--accent-green);
+  }
+
+  .radio-input:checked + .radio-label.alerta {
+    background: rgba(255, 184, 0, 0.15);
+    border-color: var(--warning-yellow);
+    color: var(--warning-yellow);
+  }
+
+  .radio-input:checked + .radio-label.falha {
+    background: rgba(255, 75, 75, 0.15);
+    border-color: var(--danger-red);
+    color: var(--danger-red);
+  }
+
+  /* Badge de Sinal de Conexão */
   .status-badge {
     position: absolute;
     top: -10px;
     right: 10px;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 600;
-    padding: 4px 10px;
-    border-radius: 20px;
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255,255,255,0.1);
-  }
-  
-  .status-badge.online {
-    background: rgba(0, 255, 135, 0.2);
-    color: var(--accent-green);
-  }
-  
-  .status-badge.offline {
-    background: rgba(255, 75, 75, 0.2);
-    color: var(--danger-red);
+    padding: 3px 8px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.08);
   }
 
-  /* Utilitários */
-  .mt-20 { margin-top: 20px; }
-  .text-center { text-align: center; }
+  .status-badge.online { background: rgba(0, 255, 135, 0.15); color: var(--accent-green); }
+  .status-badge.offline { background: rgba(255, 75, 75, 0.15); color: var(--danger-red); }
+
+  /* Lista de Resumo da última tela */
+  .summary-list {
+    margin-top: 10px;
+  }
+  
+  .summary-item {
+    font-size: 0.85rem;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    justify-content: space-between;
+  }
 </style>
 </head>
 <body>
