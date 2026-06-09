@@ -517,17 +517,21 @@
        ========================================== -->
   <script>
     // SISTEMA INTELIGENTE DE FORÇAR ATUALIZAÇÃO RECORRENTE (PWA BYPASS)
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js')
+   if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }) // Impede o Safari de cachear o script de controle
         .then((reg) => {
           console.log("Service Worker ativo!");
+          
+          // Força a checagem no servidor imediatamente ao abrir o app
           reg.update();
           
           reg.onupdatefound = () => {
             const instalandoWorker = reg.installing;
             instalandoWorker.onstatechange = () => {
               if (instalandoWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                window.location.reload();
+                // Notifica e reinicia para aplicar a versão nova instantaneamente
+                console.log("Nova versão encontrada! Atualizando...");
+                window.location.reload(true);
               }
             };
           };
