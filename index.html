@@ -13,12 +13,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <style>
+<style>
   :root {
     --bg-gradient: linear-gradient(135deg, #030d08 0%, #071f13 50%, #020a05 100%);
-    /* Ajustado para efeito de vidro translúcido sem alterar a estrutura */
-    --glass-bg: rgba(10, 28, 19, 0.55); 
-    --glass-border: rgba(255, 255, 255, 0.08);
+    /* Mantido o padrão original, apenas com transparência calibrada para o efeito vidro */
+    --glass-bg: rgba(10, 28, 19, 0.65);
+    --glass-border: rgba(143, 177, 152, 0.15);
     --accent-green: #00ff87;
     --text-main: #f3f4f6;
     --text-muted: #9ca3af;
@@ -50,26 +50,26 @@
     position: relative;
   }
 
-  /* Aplicação do Glassmorphism Real e Suave nas telas */
+  /* Adicionado estritamente o efeito de desfoque backdrop-filter sem alterar as dimensões */
   .app-screen {
     display: none;
     background: var(--glass-bg);
-    backdrop-filter: blur(16px) saturate(140%);
-    -webkit-backdrop-filter: blur(16px) saturate(140%);
     border: 1px solid var(--glass-border);
     border-radius: 16px;
     padding: 20px;
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
     margin-bottom: 20px;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
   }
 
   .app-screen.active {
     display: block;
-    animation: fadeIn 0.25s ease-out;
+    animation: fadeIn 0.3s ease-out;
   }
 
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(6px); }
+    from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
@@ -81,46 +81,41 @@
   .app-header img {
     max-height: 40px;
     margin-bottom: 8px;
-    filter: drop-shadow(0 0 6px rgba(0, 255, 135, 0.2));
   }
 
   .app-header h1 {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: #ffffff;
-    letter-spacing: -0.3px;
   }
 
-  /* Grid do Dashboard Mantido Idêntico */
+  /* FORMATAÇÃO ORIGINAL PRESERVADA (Evita o bug de esticar os cards) */
   .metrics-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    flex-direction: column;
     gap: 10px;
     margin-bottom: 15px;
   }
 
-  /* Efeito de Vidro Interno nos Cards do Dashboard */
+  .metrics-row {
+    display: flex;
+    gap: 10px;
+  }
+
   .metric-card {
+    flex: 1;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 12px;
-    padding: 14px;
+    padding: 12px;
     text-align: center;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    box-shadow: inset 0 1px 1px rgba(255,255,255,0.05);
-  }
-
-  .metric-card.full-width {
-    grid-column: span 2;
   }
 
   .metric-value {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: 700;
     color: var(--accent-green);
     margin-top: 2px;
-    text-shadow: 0 0 10px rgba(0, 255, 137, 0.2);
   }
 
   .metric-label {
@@ -132,75 +127,66 @@
 
   .history-list {
     margin-top: 8px;
-    max-height: 160px;
+    max-height: 150px;
     overflow-y: auto;
   }
 
   .history-item {
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.04);
-    padding: 10px;
-    border-radius: 8px;
-    margin-bottom: 6px;
-    font-size: 0.8rem;
+    padding: 8px 10px;
+    border-radius: 6px;
+    margin-bottom: 5px;
+    font-size: 0.75rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
   .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 12px;
   }
 
   .form-group label {
     display: block;
     font-size: 0.75rem;
     color: var(--text-muted);
-    margin-bottom: 5px;
+    margin-bottom: 4px;
     text-transform: uppercase;
     font-weight: 600;
-    letter-spacing: 0.3px;
   }
 
   .input-control {
     width: 100%;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 10px;
-    padding: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 10px;
     color: #ffffff;
     font-size: 0.9rem;
     outline: none;
-    transition: all 0.2s ease;
   }
 
   .input-control:focus {
     border-color: var(--accent-green);
-    background: rgba(255, 255, 255, 0.07);
-    box-shadow: 0 0 12px rgba(0, 255, 135, 0.15);
   }
 
   select.input-control option {
-    background: #06140c;
+    background: #030d08;
     color: #ffffff;
   }
 
-  /* Botões de Navegação com Alinhamento 100% Fiel */
+  /* BOTÕES ORIGINAIS PRESERVADOS (Lado a lado sem quebras) */
   .nav-buttons {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
     gap: 10px;
-    margin-top: 20px;
-  }
-
-  .nav-buttons.single-button {
-    grid-template-columns: 1fr;
+    margin-top: 15px;
   }
 
   .btn-nav {
-    width: 100%;
+    flex: 1;
     padding: 12px;
-    border-radius: 10px;
+    border-radius: 8px;
     font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
@@ -208,50 +194,37 @@
     justify-content: center;
     align-items: center;
     gap: 6px;
-    transition: all 0.2s ease;
+    border: none;
   }
 
   .btn-nav.btn-primary {
     background: linear-gradient(90deg, #00b054 0%, #00ff87 100%);
-    border: none;
     color: #020a05;
-    box-shadow: 0 4px 12px rgba(0, 255, 135, 0.2);
-  }
-
-  .btn-nav.btn-primary:active {
-    transform: scale(0.98);
   }
 
   .btn-nav.btn-secondary {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     color: #ffffff;
   }
 
-  .btn-nav.btn-secondary:active {
-    background: rgba(255, 255, 255, 0.1);
-  }
-
-  /* Itens do Checklist Mantidos Intactos */
   .task-item {
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.04);
-    border-radius: 10px;
-    padding: 12px;
-    margin-bottom: 10px;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 8px;
   }
 
   .task-title {
     font-size: 0.85rem;
     font-weight: 500;
-    margin-bottom: 8px;
-    line-height: 1.35;
+    margin-bottom: 6px;
   }
 
   .radio-group {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
+    display: flex;
+    gap: 5px;
   }
 
   .radio-input {
@@ -259,32 +232,32 @@
   }
 
   .radio-label {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 6px;
-    padding: 7px;
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    padding: 6px;
     text-align: center;
     font-size: 0.75rem;
     font-weight: 600;
     cursor: pointer;
     color: var(--text-muted);
-    transition: all 0.15s ease;
   }
 
   .radio-input:checked + .radio-label.ok {
-    background: rgba(0, 255, 135, 0.12);
+    background: rgba(0, 255, 135, 0.2);
     border-color: var(--accent-green);
     color: var(--accent-green);
   }
 
   .radio-input:checked + .radio-label.alerta {
-    background: rgba(255, 184, 0, 0.12);
+    background: rgba(255, 184, 0, 0.2);
     border-color: var(--warning-yellow);
     color: var(--warning-yellow);
   }
 
   .radio-input:checked + .radio-label.falha {
-    background: rgba(255, 75, 75, 0.12);
+    background: rgba(255, 75, 75, 0.2);
     border-color: var(--danger-red);
     color: var(--danger-red);
   }
@@ -295,26 +268,25 @@
     right: 8px;
     font-size: 0.65rem;
     font-weight: 600;
-    padding: 3px 8px;
-    border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.06);
+    padding: 2px 6px;
+    border-radius: 8px;
   }
 
-  .status-badge.online { background: rgba(0, 255, 135, 0.12); color: var(--accent-green); }
-  .status-badge.offline { background: rgba(255, 75, 75, 0.12); color: var(--danger-red); }
+  .status-badge.online { background: rgba(0, 255, 135, 0.2); color: var(--accent-green); }
+  .status-badge.offline { background: rgba(255, 75, 75, 0.2); color: var(--danger-red); }
 
   .summary-list {
-    margin-top: 8px;
+    margin-top: 5px;
   }
   
   .summary-item {
     font-size: 0.8rem;
-    padding: 5px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
     display: flex;
     justify-content: space-between;
   }
-</style>
+</style> 
 </head>
 <body>
 
