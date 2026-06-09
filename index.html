@@ -13,252 +13,302 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <style>
-    :root {
-      --bg-gradient: linear-gradient(135deg, #030d08 0%, #071f13 50%, #020a05 100%);
-      --glass-bg: rgba(10, 28, 19, 0.75);
-      --glass-border: rgba(143, 177, 152, 0.15);
-      --text-main: #e2e8e4;
-      --text-muted: #9caf9f;
-      --neon-green: linear-gradient(90deg, #5ba962 0%, #3f7d45 100%);
-      --accent-blue: #00d2ff;
-      --input-bg: rgba(7, 19, 13, 0.7);
-    }
+ <style>
+  :root {
+    --bg-gradient: linear-gradient(135deg, #040d08 0%, #081c12 50%, #030805 100%);
+    --glass-bg: rgba(12, 34, 22, 0.45); /* Mais transparente para dar profundidade */
+    --glass-border: rgba(255, 255, 255, 0.08); /* Borda de reflexo sutil */
+    --accent-green: #00ff87; /* Verde neon premium */
+    --accent-cyan: #60efff; /* Ciano para dar o tom tecnológico */
+    --text-main: #f3f4f6;
+    --text-muted: #9ca3af;
+    --danger-red: #ff4b4b;
+    --warning-yellow: #ffb800;
+    --radius: 16px;
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Inter', sans-serif;
-      -webkit-tap-highlight-color: transparent;
-    }
+  /* Reset Dinâmico */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
 
-    body {
-      background: var(--bg-gradient);
-      background-attachment: fixed;
-      color: var(--text-main);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      padding-bottom: 90px;
-    }
+  body {
+    background: var(--bg-gradient);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 15px;
+    overflow-x: hidden;
+  }
 
-    /* Gerenciamento Adaptável de Telas */
-    .app-screen {
-      display: none;
-      animation: fadeIn 0.3s ease-in-out forwards;
-    }
-    .app-screen.active {
-      display: block;
-    }
+  /* Container Central Master */
+  .app-container {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    position: relative;
+  }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+  /* EFEITO ULTRA GLASSMORPHISM (Telas e Cartões) */
+  .app-screen, .card-glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    margin-bottom: 20px;
+    transition: var(--transition);
+  }
 
-    /* Alerta de Conexão Superior */
-    #status-conexao {
-      position: fixed;
-      top: 12px;
-      right: 12px;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 600;
-      z-index: 9999;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-    }
-    .status-online { background: rgba(40, 167, 69, 0.2); color: #5ba962; border: 1px solid rgba(40, 167, 69, 0.3); }
-    .status-offline { background: rgba(220, 53, 69, 0.2); color: #dc3545; border: 1px solid rgba(220, 53, 69, 0.3); }
+  /* Controle de Telas SPA */
+  .app-screen {
+    display: none;
+  }
+  .app-screen.active {
+    display: block;
+    animation: fadeInGlass 0.4s ease-out-towards;
+  }
 
-    .sync-alert {
-      background: rgba(218, 165, 32, 0.15);
-      border: 1px solid rgba(218, 165, 32, 0.3);
-      color: #ffe082;
-      padding: 14px;
-      border-radius: 14px;
-      text-align: center;
-      font-size: 13px;
-      margin: 16px;
-    }
+  /* Animação suave estilo iOS */
+  @keyframes fadeInGlass {
+    from { opacity: 0; transform: translateY(10px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
 
-    /* Cartões Base Glassmorphism */
-    .glass-card {
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);
-      border-radius: 20px;
-      padding: 22px;
-      margin: 16px;
-      box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.6);
-    }
+  /* Cabeçalhos Modernos */
+  .app-header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
 
-    .card-title {
-      font-size: 12px;
-      font-weight: 700;
-      color: #ffffff;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 20px;
-      border-left: 3px solid #5ba962;
-      padding-left: 8px;
-    }
+  .app-header img {
+    max-height: 50px;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 0 8px rgba(0, 255, 135, 0.3));
+  }
 
-    /* ==========================================
-       🏠 INTERFACE DA TELA INICIAL (DASHBOARD)
-       ========================================== */
-    .dash-header {
-      padding: 24px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .company-logo h2 { font-size: 22px; font-weight: 700; letter-spacing: 1.5px; color: #fff; }
-    .company-logo span { font-size: 10px; color: var(--text-muted); display: block; text-transform: uppercase; letter-spacing: 1px; }
-    
-    .user-profile { display: flex; align-items: center; gap: 10px; }
-    .user-info text { font-size: 14px; font-weight: 600; display: block; text-align: right; }
-    .user-info span { font-size: 11px; color: var(--text-muted); display: block; text-align: right; }
-    .user-avatar { width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; border: 1px solid var(--glass-border); font-size: 16px; }
+  .app-header h1 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    background: linear-gradient(120deg, #ffffff, var(--accent-green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 
-    .welcome-section { padding: 0 20px; margin-bottom: 15px; }
-    .welcome-section h3 { font-size: 24px; font-weight: 600; border: none; padding-left: 0; margin-top: 0; }
-    .welcome-section h3 span { color: #5ba962; }
-    .welcome-section p { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+  .app-header p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
 
-    .metrics-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      padding: 0 16px;
-      margin-bottom: 15px;
-    }
-    .metric-box {
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: 14px;
-      padding: 14px 12px;
-    }
-    .metric-box i { font-size: 18px; margin-bottom: 8px; display: block; }
-    .metric-box .m-num { font-size: 22px; font-weight: 700; display: block; color: #fff; }
-    .metric-box .m-txt { font-size: 10px; color: var(--text-muted); line-height: 1.3; margin-top: 2px; }
+  /* Tipografia de Seções */
+  h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  h2 i { color: var(--accent-green); }
 
-    .btn-trigger-action {
-      background: var(--neon-green);
-      border-radius: 16px;
-      padding: 20px;
-      margin: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      cursor: pointer;
-      box-shadow: 0 6px 20px rgba(91, 169, 98, 0.25);
-      transition: transform 0.2s;
-    }
-    .btn-trigger-action:active { transform: scale(0.98); }
-    .trigger-info { display: flex; align-items: center; gap: 15px; }
-    .trigger-circle { width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 16px; color: #fff; }
-    .trigger-text h4 { font-size: 16px; font-weight: 600; color: #fff; }
-    .trigger-text p { font-size: 11px; color: rgba(255,255,255,0.75); margin-top: 2px; }
+  /* Elementos de Formulário Premium (Inputs, Selects) */
+  .form-group {
+    margin-bottom: 20px;
+  }
 
-    /* ==========================================
-       📝 LAYOUT DO FORMULÁRIO E COMPONENTES
-       ========================================== */
-    .app-header { padding: 24px 20px 10px 20px; display: flex; align-items: center; gap: 16px; }
-    .back-btn { width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--glass-border); color: var(--text-main); display: flex; align-items: center; justify-content: center; font-size: 15px; cursor: pointer; }
-    .header-titles h1 { font-size: 20px; font-weight: 600; color: #fff; }
-    .header-titles p { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .form-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
 
-    .stepper { display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; margin-bottom: 5px; }
-    .step-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-muted); font-weight: 500; }
-    .step-item.active { color: #fff; }
-    .step-number { width: 24px; height: 24px; border-radius: 50%; background: rgba(255, 255, 255, 0.08); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; }
-    .step-item.active .step-number { background: #5ba962; color: white; box-shadow: 0 0 12px rgba(91, 169, 98, 0.4); }
-    .step-line { flex-grow: 1; height: 1px; background: rgba(255, 255, 255, 0.1); margin: 0 12px; }
+  /* Efeito de vidro ativo nos campos de digitação */
+  .input-control {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 14px 16px;
+    color: #ffffff;
+    font-size: 1rem;
+    outline: none;
+    transition: var(--transition);
+  }
 
-    .form-group { margin-bottom: 22px; }
-    .input-label { display: block; font-size: 11px; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
-    .input-wrapper { position: relative; display: flex; align-items: center; }
-    .input-icon { position: absolute; left: 14px; color: var(--text-muted); font-size: 15px; pointer-events: none; }
-    
-    .form-control {
-      width: 100%; background: var(--input-bg); border: 1px solid var(--glass-border); border-radius: 12px; padding: 14px 14px 14px 44px; color: var(--text-main); font-size: 15px; outline: none; transition: all 0.3s ease; -webkit-appearance: none; appearance: none;
-    }
-    .form-control:focus { border-color: rgba(143, 177, 152, 0.6); background: rgba(7, 19, 13, 0.9); box-shadow: 0 0 0 4px rgba(143, 177, 152, 0.1); }
-    select.form-control { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%239caf9f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>"); background-repeat: no-repeat; background-position: right 14px center; background-size: 16px; }
-    textarea.form-control { padding: 14px; resize: vertical; min-height: 100px; }
+  .input-control:focus {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--accent-green);
+    box-shadow: 0 0 15px rgba(0, 255, 135, 0.2);
+  }
 
-    /* Elementos Estilizados do Checklist */
-    .task-category-title { font-size: 14px; color: #fff; font-weight: 600; margin: 15px 16px 5px 16px; letter-spacing: 0.5px; }
-    .task-item {
-      background: rgba(7, 19, 13, 0.4);
-      border: 1px solid var(--glass-border);
-      border-radius: 14px;
-      padding: 18px;
-      margin: 12px 16px;
-    }
-    .task-item strong { display: block; font-size: 14px; font-weight: 500; color: #fff; line-height: 1.4; margin-bottom: 14px; }
-    
-    .radio-group { display: flex; flex-direction: column; gap: 10px; }
-    .radio-option { display: flex; align-items: center; font-size: 14px; color: var(--text-muted); cursor: pointer; transition: color 0.2s; }
-    .radio-option:hover { color: #fff; }
-    .radio-option input { margin-right: 12px; transform: scale(1.2); accent-color: #5ba962; cursor: pointer; }
+  select.input-control option {
+    background: #091911;
+    color: #ffffff;
+  }
 
-    .input-anomalia { border-color: rgba(218, 165, 32, 0.4) !important; background-color: rgba(218, 165, 32, 0.03) !important; }
-    .input-anomalia:focus { border-color: rgba(218, 165, 32, 0.7) !important; }
+  /* Botões Estilo iOS Gradiente Gglass */
+  .btn-primary {
+    width: 100%;
+    background: linear-gradient(90deg, #00b054 0%, #00ff87 100%);
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    color: #020a05;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 20px rgba(0, 255, 135, 0.3);
+    transition: var(--transition);
+  }
 
-    /* Rodapé de Navegação e Ação */
-    .btn-container-footer { padding: 0 16px 20px 16px; display: flex; gap: 12px; }
-    .btn-action { width: 100%; border: none; border-radius: 25px; padding: 16px; color: #030a06; font-size: 15px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; transition: all 0.2s; text-transform: uppercase; letter-spacing: 1px; }
-    .btn-action-primary { background: #8fb198; box-shadow: 0 4px 15px rgba(143, 177, 152, 0.25); color: #030a06; }
-    .btn-action-primary:hover { background: #aed1b7; }
-    .btn-action-secondary { background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border); color: var(--text-main); }
-    .btn-action:disabled { background: rgba(143, 177, 152, 0.15) !important; color: var(--text-muted) !important; cursor: not-allowed; box-shadow: none; }
+  .btn-primary:opacity-hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(0, 255, 135, 0.45);
+  }
 
-    .task-item-pendente {
-      border: 1px solid rgba(255, 77, 77, 0.5) !important;
-      background-color: rgba(255, 77, 77, 0.04) !important;
-      box-shadow: 0 0 15px rgba(255, 77, 77, 0.15);
-    }
+  .btn-primary:active {
+    transform: translateY(1px);
+  }
 
-    /* Estilos do Bloco de Resumo Dinâmico */
-    .resumo-detalhes-container {
-      margin-top: 20px;
-      padding-top: 15px;
-      border-top: 1px dashed rgba(143, 177, 152, 0.3);
-    }
-    .resumo-item-linha {
-      background: rgba(255, 255, 255, 0.02);
-      border-radius: 8px;
-      padding: 10px 12px;
-      margin-bottom: 8px;
-      font-size: 13px;
-    }
-    .resumo-item-linha strong { color: #fff; font-weight: 500; }
-    .resumo-tag-status {
-      display: inline-block;
-      padding: 2px 8px;
-      border-radius: 12px;
-      font-size: 11px;
-      font-weight: 600;
-      margin-top: 4px;
-    }
-    .tag-ok { background: rgba(40, 167, 69, 0.15); color: #5ba962; }
-    .tag-alerta { background: rgba(255, 193, 7, 0.15); color: #ffc107; }
-    .tag-falha { background: rgba(220, 53, 69, 0.15); color: #dc3545; }
-    .tag-neutra { background: rgba(255, 255, 255, 0.08); color: var(--text-muted); }
+  .btn-secondary {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 14px;
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: var(--transition);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+  }
 
-    /* Menu Inferior Fixo */
-    .nav-bottom { position: fixed; bottom: 0; left: 0; right: 0; height: 75px; background: rgba(3, 10, 6, 0.92); border-top: 1px solid var(--glass-border); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); display: flex; justify-content: space-around; align-items: center; padding: 0 10px; z-index: 999; }
-    .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); text-decoration: none; font-size: 11px; font-weight: 500; gap: 5px; cursor: pointer; width: 60px; }
-    .nav-item.active { color: #8fb198; }
-    .nav-item i { font-size: 19px; }
-    .nav-item-center { position: relative; top: -14px; }
-    .center-circle { width: 52px; height: 52px; border-radius: 50%; background: #5ba962; display: flex; align-items: center; justify-content: center; color: white; font-size: 22px; box-shadow: 0 4px 15px rgba(91, 169, 98, 0.4); }
-  </style>
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  /* Itens do Checklist Dinâmico */
+  .task-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 14px;
+    transition: var(--transition);
+  }
+
+  .task-item:hover {
+    border-color: rgba(0, 255, 135, 0.15);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .task-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 12px;
+    color: #ffffff;
+    line-height: 1.4;
+  }
+
+  /* Rádios de Opção Customizados em Botões Compactos (P/A/F) */
+  .radio-group {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .radio-label {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--text-muted);
+  }
+
+  /* Estado Selecionado com Glow dos Rádios */
+  .radio-input:checked + .radio-label.ok {
+    background: rgba(0, 255, 135, 0.15);
+    border-color: var(--accent-green);
+    color: var(--accent-green);
+    box-shadow: 0 0 10px rgba(0, 255, 135, 0.1);
+  }
+
+  .radio-input:checked + .radio-label.alerta {
+    background: rgba(255, 184, 0, 0.15);
+    border-color: var(--warning-yellow);
+    color: var(--warning-yellow);
+    box-shadow: 0 0 10px rgba(255, 184, 0, 0.1);
+  }
+
+  .radio-input:checked + .radio-label.falha {
+    background: rgba(255, 75, 75, 0.15);
+    border-color: var(--danger-red);
+    color: var(--danger-red);
+    box-shadow: 0 0 10px rgba(255, 75, 75, 0.1);
+  }
+
+  .radio-input {
+    display: none;
+  }
+
+  /* Badges de Conexão Offline/Online */
+  .status-badge {
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  
+  .status-badge.online {
+    background: rgba(0, 255, 135, 0.2);
+    color: var(--accent-green);
+  }
+  
+  .status-badge.offline {
+    background: rgba(255, 75, 75, 0.2);
+    color: var(--danger-red);
+  }
+
+  /* Utilitários */
+  .mt-20 { margin-top: 20px; }
+  .text-center { text-align: center; }
+</style>
 </head>
 <body>
 
