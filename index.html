@@ -283,21 +283,19 @@
     .nav-item i { font-size: 19px; }
     .nav-item-center { position: relative; top: -14px; }
     .center-circle { width: 52px; height: 52px; border-radius: 50%; background: #5ba962; display: flex; align-items: center; justify-content: center; color: white; font-size: 22px; box-shadow: 0 4px 15px rgba(91, 169, 98, 0.4); }
+     .card-item {
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+          transition: all 0.3s ease;
+      }
+      
+        .card-item:hover {
+          background: rgba(255, 255, 255, 0.06);
+          border-color: rgba(52, 211, 153, 0.3);
+      }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  /* Efeito de vidro mais nítido e borda brilhante */
-    .card-item {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        transition: all 0.3s ease;
-    }
-    
-    /* Quando o mouse passa por cima ou o dedo toca */
-    .card-item:hover {
-        background: rgba(255, 255, 255, 0.06);
-        border-color: rgba(52, 211, 153, 0.3);
-    }
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>    
 </head>
 <body>
 
