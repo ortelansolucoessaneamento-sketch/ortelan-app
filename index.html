@@ -14,6 +14,25 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
+    /* Melhoria visual nos cards de tarefas */
+.card-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 12px;
+    transition: transform 0.2s;
+}
+
+.card-item:active {
+    transform: scale(0.98); /* Efeito de clique */
+}
+
+/* Estilo para os mini cards de estatística no Dashboard */
+.stat-mini {
+    background: linear-gradient(135deg, rgba(52, 211, 153, 0.1), rgba(255, 255, 255, 0.05));
+    border-left: 4px solid #34d399;
+}
     :root {
       --bg-gradient: linear-gradient(135deg, #030d08 0%, #071f13 50%, #020a05 100%);
       /* Transparência refinada para o efeito de vidro do iOS transparecer o fundo */
@@ -265,6 +284,20 @@
     .nav-item-center { position: relative; top: -14px; }
     .center-circle { width: 52px; height: 52px; border-radius: 50%; background: #5ba962; display: flex; align-items: center; justify-content: center; color: white; font-size: 22px; box-shadow: 0 4px 15px rgba(91, 169, 98, 0.4); }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  /* Efeito de vidro mais nítido e borda brilhante */
+    .card-item {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+    }
+    
+    /* Quando o mouse passa por cima ou o dedo toca */
+    .card-item:hover {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(52, 211, 153, 0.3);
+    }
 </head>
 <body>
 
@@ -328,6 +361,9 @@
     <!-- Alerta Interno Interativo de Fila -->
     <div id="avisoOffline" class="sync-alert" style="display: none;"></div>
   </div>
+  <div class="card-menu" onclick="abrirDashboard()">
+    <span>📈 Ver Consumo</span>
+</div>
 
 
   <!-- ==========================================
@@ -511,11 +547,107 @@
     </div>
   </nav>
 
+<!-- Nova Tela de Dashboard de Consumo -->
+<div id="tela-leituras" class="tela">
+    <div class="card-item">
+        <h2 style="color: #34d399; margin-bottom: 15px;">📊 Consumo de Água</h2>
+        <canvas id="graficoConsumo" style="width: 100%; height: 250px;"></canvas>
+    </div>
 
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px;">
+        <div class="card-item" style="text-align: center; padding: 15px;">
+            <small style="color: #94a3b8;">Média Mensal</small>
+            <div id="dash-media" style="font-size: 1.2rem; font-weight: bold; color: #fff;">0 m³</div>
+        </div>
+        <div class="card-item" style="text-align: center; padding: 15px;">
+            <small style="color: #94a3b8;">Último Volume</small>
+            <div id="dash-ultimo" style="font-size: 1.2rem; font-weight: bold; color: #fff;">0 m³</div>
+        </div>
+    </div>
+    
+    <button class="btn-proximo" onclick="voltarParaHome()" style="margin-top: 20px; background: rgba(255,255,255,0.1);">
+        Voltar
+    </button>
+</div>
+  
   <!-- ==========================================
        ⚙️ SCRIPT E LÓGICA DE NEGÓCIO CORRIGIDA E INTEGRADA
        ========================================== -->
   <script>
+    function abrirDashboard() { document.querySelectorAll('.tela').forEach(t => t.classList.remove('active')); document.getElementById('tela-leituras').classList.add('active'); buscarDadosLeituras(); } function voltarParaHome() { document.querySelectorAll('.tela').forEach(t => t.classList.remove('active')); document.getElementById('tela-dashboard').classList.add('active'); } async function buscarDadosLeituras() { const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbx-M07XKMRjdaMj7O86XsDamIcRNy-8eRZie-kQjzfpNJ2G7c8B_WrJp4geB5p2mJ7f/exec"; try { const response = await fetch(URL_SCRIPT + "?action=getLeituras"); const dados = await response.json(); if (dados && dados.length > 0) { desenharGrafico(dados); const ultimoRegistro = dados[dados.length - 1]; document.getElementById('dash-media').innerText = Number(ultimoRegistro.media).toFixed(2) + " m³"; document.getElementById('dash-ultimo').innerText = Number(ultimoRegistro.volume).toFixed(2) + " m³"; } } catch (erro) { console.error("Erro ao carregar dashboard:", erro); } } let chartInstance = null; function desenharGrafico(dados) { const ctx = document.getElementById('graficoConsumo').getContext('2d'); if (chartInstance) { chartInstance.destroy(); } chartInstance = new Chart(ctx, { type: 'line', data: { labels: dados.map(d => new Date(d.data).toLocaleDateString('pt-BR', {day:'2-digit', month:'2-digit'})), datasets: [{ label: 'Consumo (m³)', data: dados.map(d => d.volume), borderColor: '#34d399', backgroundColor: 'rgba(52, 211, 153, 0.1)', borderWidth: 3, tension: 0.4, fill: true }] }, options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } }, x: { grid: { display: false } } } } }); }
+// Função para abrir a tela do Dashboard e carregar os dados
+function abrirDashboard() {
+    // 1. Esconde todas as telas e mostra a do Dashboard
+    document.querySelectorAll('.tela').forEach(t => t.classList.remove('active'));
+    document.getElementById('tela-leituras').classList.add('active');
+
+    // 2. Busca os dados da planilha
+    buscarDadosLeituras();
+}
+
+// Função para voltar para a tela inicial
+function voltarParaHome() {
+    document.querySelectorAll('.tela').forEach(t => t.classList.remove('active'));
+    document.getElementById('tela-dashboard').classList.add('active'); // Ajuste para o ID da sua home
+}
+
+// Função que busca os dados no Google Sheets
+async function buscarDadosLeituras() {
+    const URL_SCRIPT = https:"//script.google.com/macros/s/AKfycbx-M07XKMRjdaMj7O86XsDamIcRNy-8eRZie-kQjzfpNJ2G7c8B_WrJp4geB5p2mJ7f/exec"; 
+    
+    try {
+        const response = await fetch(URL_SCRIPT + "?action=getLeituras");
+        const dados = await response.json();
+        
+        if (dados && dados.length > 0) {
+            renderizarGrafico(dados);
+            
+            // Atualiza os números nos cards pequenos
+            const ultima = dados[dados.length - 1];
+            document.getElementById('dash-media').innerText = ultima.media.toFixed(2) + " m³";
+            document.getElementById('dash-ultimo').innerText = ultima.volume.toFixed(2) + " m³";
+        }
+    } catch (erro) {
+        console.error("Erro ao buscar leituras:", erro);
+        alert("Não foi possível carregar os dados de consumo.");
+    }
+}
+
+// Função que desenha o gráfico usando a biblioteca Chart.js
+let meuGrafico = null; // Variável para não duplicar o gráfico
+function renderizarGrafico(dados) {
+    const ctx = document.getElementById('graficoConsumo').getContext('2d');
+    
+    // Se já existir um gráfico, apaga para criar um novo
+    if (meuGrafico) meuGrafico.destroy();
+
+    meuGrafico = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: dados.map(d => new Date(d.data).toLocaleDateString('pt-BR', {day:'2-digit', month:'2-digit'})),
+            datasets: [{
+                label: 'Volume Consumido (m³)',
+                data: dados.map(d => d.volume),
+                borderColor: '#34d399',
+                backgroundColor: 'rgba(52, 211, 153, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4 // Deixa a linha curva e elegante
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { grid: { display: false } }
+            },
+            plugins: {
+                legend: { display: false } // Esconde a legenda para ficar mais limpo
+            }
+        }
+    });
+}
+    
     // SISTEMA INTELIGENTE DE FORÇAR ATUALIZAÇÃO RECORRENTE (PWA BYPASS)
    if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }) // Impede o Safari de cachear o script de controle
@@ -1044,6 +1176,82 @@
         irParaDashboard();
       }, 2500);
     }
+
+    // 1. URL da sua Planilha (Já configurada!)
+const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbx-M07XKMRjdaMj7O86XsDamIcRNy-8eRZie-kQjzfpNJ2G7c8B_WrJp4geB5p2mJ7f/exec";
+
+// 2. Função para abrir a tela de Consumo
+function abrirDashboard() {
+    // Esconde a tela principal e mostra a de leituras
+    document.querySelectorAll('.tela').forEach(t => t.classList.remove('active'));
+    document.getElementById('tela-leituras').classList.add('active');
+    
+    // Chama a função que busca os dados
+    buscarDadosLeituras();
+}
+
+// 3. Função para voltar
+function voltarParaHome() {
+    document.querySelectorAll('.tela').forEach(t => t.classList.remove('active'));
+    // Aqui, verifique se o ID da sua tela inicial é 'tela-dashboard' ou 'home'
+    document.getElementById('tela-dashboard').classList.add('active'); 
+}
+
+// 4. Função que busca os dados reais na Planilha
+async function buscarDadosLeituras() {
+    try {
+        // Faz o pedido para o Google Sheets
+        const response = await fetch(URL_SCRIPT + "?action=getLeituras");
+        const dados = await response.json();
+        
+        if (dados && dados.length > 0) {
+            renderizarGrafico(dados);
+            
+            // Pega o último registro para mostrar nos cards pequenos
+            const ultimo = dados[dados.length - 1];
+            document.getElementById('dash-media').innerText = Number(ultimo.media).toFixed(2) + " m³";
+            document.getElementById('dash-ultimo').innerText = Number(ultimo.volume).toFixed(2) + " m³";
+        }
+    } catch (erro) {
+        console.error("Erro ao carregar dados:", erro);
+        alert("Erro ao carregar dados. Verifique sua conexão.");
+    }
+}
+
+// 5. Função que desenha o gráfico na tela
+let meuGrafico = null;
+function renderizarGrafico(dados) {
+    const ctx = document.getElementById('graficoConsumo').getContext('2d');
+    
+    if (meuGrafico) {
+        meuGrafico.destroy(); // Limpa o gráfico antigo para não sobrepor
+    }
+
+    meuGrafico = new Chart(ctx, {
+        type: 'line',
+        data: {
+            // Formata a data para o padrão brasileiro (dia/mês)
+            labels: dados.map(d => new Date(d.data).toLocaleDateString('pt-BR', {day:'2-digit', month:'2-digit'})),
+            datasets: [{
+                label: 'Consumo (m³)',
+                data: dados.map(d => d.volume),
+                borderColor: '#34d399', // Verde Ortelan
+                backgroundColor: 'rgba(52, 211, 153, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+}
   </script>
 </body>
 </html>
