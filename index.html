@@ -7,6 +7,7 @@
   <link rel="manifest" href="manifest.json">
   <title>Sistema de Manutenção - Ortelan</title>
   
+  <!-- Fontes e Ícones Premium -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -86,7 +87,7 @@
       -webkit-backdrop-filter: blur(10px);
     }
 
-    /* Cartões Base Glassmorphism */
+    /* Cartões Base Glassmorphism - Filtros Apple Calibrados */
     .glass-card {
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
@@ -109,10 +110,18 @@
       padding-left: 8px;
     }
 
-    /* Dashboard */
-    .dash-header { padding: 24px 20px; display: flex; justify-content: space-between; align-items: center; }
+    /* ==========================================
+        🏠 INTERFACE DA TELA INICIAL (DASHBOARD)
+       ========================================== */
+    .dash-header {
+      padding: 24px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
     .company-logo h2 { font-size: 22px; font-weight: 700; letter-spacing: 1.5px; color: #fff; }
     .company-logo span { font-size: 10px; color: var(--text-muted); display: block; text-transform: uppercase; letter-spacing: 1px; }
+    
     .user-profile { display: flex; align-items: center; gap: 10px; }
     .user-info text { font-size: 14px; font-weight: 600; display: block; text-align: right; }
     .user-info span { font-size: 11px; color: var(--text-muted); display: block; text-align: right; }
@@ -123,20 +132,47 @@
     .welcome-section h3 span { color: #5ba962; }
     .welcome-section p { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
 
-    .metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 0 16px; margin-bottom: 15px; }
-    .metric-box { background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-radius: 14px; padding: 14px 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      padding: 0 16px;
+      margin-bottom: 15px;
+    }
+    .metric-box {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border-radius: 14px;
+      padding: 14px 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
     .metric-box i { font-size: 18px; margin-bottom: 8px; display: block; }
     .metric-box .m-num { font-size: 22px; font-weight: 700; display: block; color: #fff; }
     .metric-box .m-txt { font-size: 10px; color: var(--text-muted); line-height: 1.3; margin-top: 2px; }
 
-    .btn-trigger-action { background: var(--neon-green); border-radius: 16px; padding: 20px; margin: 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; box-shadow: 0 6px 20px rgba(91, 169, 98, 0.25); transition: transform 0.2s; }
+    .btn-trigger-action {
+      background: var(--neon-green);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(91, 169, 98, 0.25);
+      transition: transform 0.2s;
+    }
     .btn-trigger-action:active { transform: scale(0.98); }
     .trigger-info { display: flex; align-items: center; gap: 15px; }
     .trigger-circle { width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 16px; color: #fff; }
     .trigger-text h4 { font-size: 16px; font-weight: 600; color: #fff; }
     .trigger-text p { font-size: 11px; color: rgba(255,255,255,0.75); margin-top: 2px; }
 
-    /* Componentes Formulários */
+    /* ==========================================
+        📝 LAYOUT DO FORMULÁRIO E COMPONENTES
+       ========================================== */
     .app-header { padding: 24px 20px 10px 20px; display: flex; align-items: center; gap: 16px; }
     .back-btn { width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--glass-border); color: var(--text-main); display: flex; align-items: center; justify-content: center; font-size: 15px; cursor: pointer; }
     .header-titles h1 { font-size: 20px; font-weight: 600; color: #fff; }
@@ -153,15 +189,25 @@
     .input-label { display: block; font-size: 11px; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
     .input-wrapper { position: relative; display: flex; align-items: center; }
     .input-icon { position: absolute; left: 14px; color: var(--text-muted); font-size: 15px; pointer-events: none; }
-    .form-control { width: 100%; background: var(--input-bg); border: 1px solid var(--glass-border); border-radius: 12px; padding: 14px 14px 14px 44px; color: var(--text-main); font-size: 15px; outline: none; transition: all 0.3s ease; -webkit-appearance: none; appearance: none; }
+    
+    .form-control {
+      width: 100%; background: var(--input-bg); border: 1px solid var(--glass-border); border-radius: 12px; padding: 14px 14px 14px 44px; color: var(--text-main); font-size: 15px; outline: none; transition: all 0.3s ease; -webkit-appearance: none; appearance: none;
+    }
     .form-control:focus { border-color: rgba(143, 177, 152, 0.6); background: rgba(7, 19, 13, 0.9); box-shadow: 0 0 0 4px rgba(143, 177, 152, 0.1); }
     select.form-control { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%239caf9f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>"); background-repeat: no-repeat; background-position: right 14px center; background-size: 16px; }
     textarea.form-control { padding: 14px; resize: vertical; min-height: 100px; }
 
-    /* Checklist */
+    /* Elementos Estilizados do Checklist */
     .task-category-title { font-size: 14px; color: #fff; font-weight: 600; margin: 15px 16px 5px 16px; letter-spacing: 0.5px; }
-    .task-item { background: rgba(7, 19, 13, 0.4); border: 1px solid var(--glass-border); border-radius: 14px; padding: 18px; margin: 12px 16px; }
+    .task-item {
+      background: rgba(7, 19, 13, 0.4);
+      border: 1px solid var(--glass-border);
+      border-radius: 14px;
+      padding: 18px;
+      margin: 12px 16px;
+    }
     .task-item strong { display: block; font-size: 14px; font-weight: 500; color: #fff; line-height: 1.4; margin-bottom: 14px; }
+    
     .radio-group { display: flex; flex-direction: column; gap: 10px; }
     .radio-option { display: flex; align-items: center; font-size: 14px; color: var(--text-muted); cursor: pointer; transition: color 0.2s; }
     .radio-option:hover { color: #fff; }
@@ -170,20 +216,42 @@
     .input-anomalia { border-color: rgba(218, 165, 32, 0.4) !important; background-color: rgba(218, 165, 32, 0.03) !important; }
     .input-anomalia:focus { border-color: rgba(218, 165, 32, 0.7) !important; }
 
-    /* Rodapé e Botões */
+    /* Rodapé de Navegação e Ação */
     .btn-container-footer { padding: 0 16px 20px 16px; display: flex; gap: 12px; }
     .btn-action { width: 100%; border: none; border-radius: 25px; padding: 16px; color: #030a06; font-size: 15px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; transition: all 0.2s; text-transform: uppercase; letter-spacing: 1px; }
     .btn-action-primary { background: #8fb198; box-shadow: 0 4px 15px rgba(143, 177, 152, 0.25); color: #030a06; }
     .btn-action-primary:hover { background: #aed1b7; }
     .btn-action-secondary { background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border); color: var(--text-main); }
     .btn-action:disabled { background: rgba(143, 177, 152, 0.15) !important; color: var(--text-muted) !important; cursor: not-allowed; box-shadow: none; }
-    .task-item-pendente { border: 1px solid rgba(255, 77, 77, 0.5) !important; background-color: rgba(255, 77, 77, 0.04) !important; box-shadow: 0 0 15px rgba(255, 77, 77, 0.15); }
 
-    /* Resumo Técnico */
-    .resumo-detalhes-container { margin-top: 20px; padding-top: 15px; border-top: 1px dashed rgba(143, 177, 152, 0.3); }
-    .resumo-item-linha { background: rgba(255, 255, 255, 0.02); border-radius: 8px; padding: 10px 12px; margin-bottom: 8px; font-size: 13px; }
+    .task-item-pendente {
+      border: 1px solid rgba(255, 77, 77, 0.5) !important;
+      background-color: rgba(255, 77, 77, 0.04) !important;
+      box-shadow: 0 0 15px rgba(255, 77, 77, 0.15);
+    }
+
+    /* Estilos do Bloco de Resumo Dinâmico */
+    .resumo-detalhes-container {
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px dashed rgba(143, 177, 152, 0.3);
+    }
+    .resumo-item-linha {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
     .resumo-item-linha strong { color: #fff; font-weight: 500; }
-    .resumo-tag-status { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-top: 4px; }
+    .resumo-tag-status {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-top: 4px;
+    }
     .tag-ok { background: rgba(40, 167, 69, 0.15); color: #5ba962; }
     .tag-alerta { background: rgba(255, 193, 7, 0.15); color: #ffc107; }
     .tag-falha { background: rgba(220, 53, 69, 0.15); color: #dc3545; }
@@ -200,8 +268,12 @@
 </head>
 <body>
 
+  <!-- Status Online Inteligente -->
   <div id="status-conexao" class="status-online"><i class="fa-solid fa-circle"></i> On-line</div>
 
+  <!-- ==========================================
+       🏠 TELA 1: DASHBOARD
+       ========================================== -->
   <div id="tela-dashboard" class="app-screen active">
     <header class="dash-header">
       <div class="company-logo">
@@ -222,6 +294,7 @@
       <p id="data-dashboard-extenso">Carregando informações...</p>
     </section>
 
+    <!-- Indicadores -->
     <div class="metrics-grid">
       <div class="metric-box">
         <i class="fa-regular fa-calendar-check" style="color: #5ba962;"></i>
@@ -240,6 +313,7 @@
       </div>
     </div>
 
+    <!-- Gatilho para Nova OS -->
     <div class="btn-trigger-action" onclick="irParaFormulario()">
       <div class="trigger-info">
         <div class="trigger-circle"><i class="fa-solid fa-plus"></i></div>
@@ -251,10 +325,14 @@
       <i class="fa-solid fa-chevron-right" style="color: #fff;"></i>
     </div>
 
+    <!-- Alerta Interno Interativo de Fila -->
     <div id="avisoOffline" class="sync-alert" style="display: none;"></div>
   </div>
 
 
+  <!-- ==========================================
+       📝 TELA 2: DADOS GERAIS DO FORMULÁRIO
+       ========================================== -->
   <div id="tela-dados-gerais" class="app-screen">
     <header class="app-header">
       <button class="back-btn" onclick="irParaDashboard()"><i class="fa-solid fa-arrow-left"></i></button>
@@ -293,7 +371,7 @@
         </div>
       </div>
 
-      <div class="form-group" id="grupoEquipamento" style="display: none;">
+      <div class="form-group hidden" id="grupoEquipamento" style="display: none;">
         <label class="input-label">Equipamento / Estrutura</label>
         <div class="input-wrapper">
           <i class="fa-solid fa-cube input-icon"></i>
@@ -303,7 +381,7 @@
         </div>
       </div>
 
-      <div class="form-group" id="grupoTipo" style="display: none;">
+      <div class="form-group hidden" id="grupoTipo" style="display: none;">
         <label class="input-label">Natureza da manutenção</label>
         <div class="input-wrapper">
           <i class="fa-solid fa-wrench input-icon"></i>
@@ -324,6 +402,9 @@
   </div>
 
 
+  <!-- ==========================================
+       ⚙️ TELA 3: TAREFAS / CHECKLIST DINÂMICO
+       ========================================== -->
   <div id="tela-checklist" class="app-screen">
     <header class="app-header">
       <button class="back-btn" onclick="voltarParaPasso1()"><i class="fa-solid fa-arrow-left"></i></button>
@@ -341,6 +422,7 @@
       <div class="step-item"><div class="step-number">3</div><span>Finalizar</span></div>
     </section>
 
+    <!-- Bloco Corretiva Oculto -->
     <div id="containerCorretiva" style="display: none;" class="glass-card">
       <div class="card-title">Relatório Técnico Corretivo</div>
       <div class="form-group">
@@ -349,6 +431,7 @@
       </div>
     </div>
 
+    <!-- Bloco Preventiva Dinâmica -->
     <div id="containerPreventiva" style="display: none;">
       <div id="listaTarefas"></div>
     </div>
@@ -362,6 +445,9 @@
   </div>
 
 
+  <!-- ==========================================
+       🚀 TELA 4: FINALIZAR E SALVAR
+       ========================================== -->
   <div id="tela-finalizar" class="app-screen">
     <header class="app-header">
       <button class="back-btn" onclick="voltarParaPasso2()"><i class="fa-solid fa-arrow-left"></i></button>
@@ -387,6 +473,7 @@
         <p>⚙️ <strong style="color: #fff;">Equipamento:</strong> <span id="resumo-equipamento">--</span></p>
         <p>🛠️ <strong style="color: #fff;">Natureza:</strong> <span id="resumo-tipo">--</span></p>
         
+        <!-- Bloco Dinâmico Injetado com o Resumo Técnico das Respostas -->
         <div id="resumo-detalhes-checklist" class="resumo-detalhes-container"></div>
       </div>
       <div id="msgSucesso" style="font-size: 14px; text-align: center; font-weight: 500; margin-top: 10px;"></div>
@@ -401,6 +488,7 @@
   </div>
 
 
+  <!-- Menu de Navegação Global Inferior -->
   <nav class="nav-bottom">
     <div class="nav-item active" id="nav-home" onclick="irParaDashboard()">
       <i class="fa-solid fa-house"></i>
@@ -424,16 +512,24 @@
   </nav>
 
 
+  <!-- ==========================================
+       ⚙️ SCRIPT E LÓGICA DE NEGÓCIO CORRIGIDA E INTEGRADA
+       ========================================== -->
   <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' })
+    // SISTEMA INTELIGENTE DE FORÇAR ATUALIZAÇÃO RECORRENTE (PWA BYPASS)
+   if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }) // Impede o Safari de cachear o script de controle
         .then((reg) => {
           console.log("Service Worker ativo!");
+          
+          // Força a checagem no servidor imediatamente ao abrir o app
           reg.update();
+          
           reg.onupdatefound = () => {
             const instalandoWorker = reg.installing;
             instalandoWorker.onstatechange = () => {
               if (instalandoWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                // Notifica e reinicia para aplicar a versão nova instantaneamente
                 console.log("Nova versão encontrada! Atualizando...");
                 window.location.reload(true);
               }
@@ -443,11 +539,12 @@
         .catch((err) => console.log("Falha no SW: ", err));
     }
 
-    // Banco de Dados Técnico Original
+    // Banco de Dados Técnico Original Intacto
     const tGerais = { "Geral": ["Verificar aspectos gerais."] };
     const tFunc = { "Geral": ["Verificar funcionamento.", "Verificar aspectos gerais."] };
     const tMacro = { "Geral": ["Aferir leitura", "Verificar funcionamento.", "Verificar aspectos gerais."] };
     const tDosadora = { "Geral": ["Verificar funcionamento.", "Verificar aspectos gerais.", "Verificar dosagem."] };
+    
     const tMotobomba = {
       "Inspeções gerais": ["Verificar vazamentos em conexões, selos mecânicos e tubulações.","Observar ruídos anormais e vibrações excessivas.","Conferir temperatura do motor e mancais.","Avaliar a pressão e a vazão da bomba."],
       "Limpeza": ["Limpar filtros, peneiras e válvulas.","Remover sujeira acumulada na carcaça e nas entradas de água.","Em bombas submersas, verificar incrustações e resíduos."],
@@ -458,20 +555,24 @@
       "Testes operacionais": ["Realizar partidas periódicas em bombas reserva.","Monitorar tempo de acionamento e ciclos de operação.","Registrar dados de desempenho para comparação histórica."],
       "Manutenção periódica programada": ["Troca de rolamentos conforme vida útil.","Substituição de selos mecânicos desgastados.","Revisão completa do motor elétrico.","Reaperto estrutural e calibração de instrumentos."]
     };
-    
+
     const padraoGleba = { "VRP": tFunc, "Descarga": tFunc, "Ventosa": tFunc, "Macromedidor": tMacro };
     const padraoPoco = { "Bomba dosadora": tDosadora, "Estrutura hidráulica": tGerais, "Estrutura elétrica": tGerais, "Estrutura civil": tGerais };
-    
-    const baseDados = { 
-      "LOC 01 - Casa de bomba de recalque": { "Conjunto Motobomba 01": tMotobomba, "Conjunto Motobomba 02": tMotobomba, "Fluxostato": tFunc, "Pressostato": tFunc, "Válvula de alívio": tFunc, "Manômetro do barrilete": tFunc, "Estrutura hidráulica": tGerais, "Estrutura civil": tGerais, "Estrutura elétrica": tGerais }, 
-      "LOC 02 - Reservatório principal Eucalipto": { "Boia controladora de nível": tFunc, "Válvulas gavetas": tFunc, "Estrutura hidráulica": tGerais, "Estrutura civil": tGerais, "Estrutura elétrica": tGerais }, 
-      "LOC 03 - Caixa de quebra pressão": { "Boia de nível": tFunc, "Válvula de nível": tFunc, "Dispositivo volumétrico": tFunc, "Manômetro de automação": tFunc, "Estrutura hidráulica": tGerais, "Estrutura civil": tGerais, "Estrutura elétrica": tGerais }, 
-      "LOC 04 - Gleba 02": padraoGleba, "LOC 05 - Gleba 04": padraoGleba, "LOC 06 - Gleba 06": padraoGleba, "LOC 07 - Gleba 09": padraoGleba, 
-      "LOC 08 - Poço 01": padraoPoco, "LOC 09 - Poço 02": padraoPoco, "LOC 10 - Poço 03": padraoPoco, "LOC 11 - Poço 04": padraoPoco, "LOC 12 - Poço 05": padraoPoco 
+
+    const baseDados = {
+      "LOC 01 - Casa de bomba de recalque": { "Conjunto Motobomba 01": tMotobomba, "Conjunto Motobomba 02": tMotobomba, "Fluxostato": tFunc, "Pressostato": tFunc, "Válvula de alívio": tFunc, "Manômetro do barrilete": tFunc, "Estrutura hidráulica": tGerais, "Estrutura civil": tGerais, "Estrutura elétrica": tGerais },
+      "LOC 02 - Reservatório principal Eucalipto": { "Boia controladora de nível": tFunc, "Válvulas gavetas": tFunc, "Estrutura hidráulica": tGerais, "Estrutura civil": tGerais, "Estrutura elétrica": tGerais },
+      "LOC 03 - Caixa de quebra pressão": { "Boia de nível": tFunc, "Válvula de nível": tFunc, "Dispositivo volumétrico": tFunc, "Manômetro de automação": tFunc, "Estrutura hidráulica": tGerais, "Estrutura civil": tGerais, "Estrutura elétrica": tGerais },
+      "LOC 04 - Gleba 02": padraoGleba, "LOC 05 - Gleba 04": padraoGleba, "LOC 06 - Gleba 06": padraoGleba, "LOC 07 - Gleba 09": padraoGleba,
+      "LOC 08 - Poço 01": padraoPoco, "LOC 09 - Poço 02": padraoPoco, "LOC 10 - Poço 03": padraoPoco, "LOC 11 - Poço 04": padraoPoco, "LOC 12 - Poço 05": padraoPoco
     };
 
-    const opcoesResposta = [ "Executado: Resultado OK ✅", "Executado: Resultado alerta ⚠️", "Executado: Resultado falha ❌", "Não executado: Desativado ou fora de operação", "Não executado: Não se aplica" ];
+    const opcoesResposta = [
+      "Executado: Resultado OK ✅", "Executado: Resultado alerta ⚠️", "Executado: Resultado falha ❌",
+      "Não executado: Desativado ou fora de operação", "Não executado: Não se aplica"
+    ];
 
+    // Monitoramento de Conexão Física real
     window.addEventListener('online', atualizarStatusRede);
     window.addEventListener('offline', atualizarStatusRede);
 
@@ -489,6 +590,7 @@
 
     window.onload = function() {
       atualizarStatusRede();
+      
       const opcoesData = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
       document.getElementById("data-dashboard-extenso").innerText = new Date().toLocaleDateString('pt-BR', opcoesData);
       
@@ -497,7 +599,9 @@
       for (const local in baseDados) {
         selLocal.options.add(new Option(local, local));
       }
+
       document.getElementById("dash-locais-qtd").innerText = Object.keys(baseDados).length;
+      
       atualizarContadoresDashboard();
       verificarFilaOffline();
     };
@@ -505,6 +609,7 @@
     function atualizarContadoresDashboard() {
       let fila = JSON.parse(localStorage.getItem("ortelan_manutencao_offline")) || [];
       document.getElementById("dash-pendentes").innerText = fila.length;
+      
       let enviadas = localStorage.getItem("ortelan_qtd_enviadas_sucesso") || "0";
       document.getElementById("dash-completas").innerText = enviadas;
     }
@@ -514,6 +619,7 @@
       document.getElementById("tela-dados-gerais").classList.remove("active");
       document.getElementById("tela-checklist").classList.remove("active");
       document.getElementById("tela-finalizar").classList.remove("active");
+      
       document.getElementById("nav-home").classList.remove("active");
       document.getElementById("nav-checklist-btn").classList.remove("active");
     }
@@ -538,11 +644,12 @@
       const local = document.getElementById("local").value;
       const selEquip = document.getElementById("equipamento");
       selEquip.innerHTML = '<option value="">Selecione o equipamento...</option>';
+      
       document.getElementById("grupoTipo").style.display = "none";
       document.getElementById("containerPreventiva").style.display = "none";
       document.getElementById("containerCorretiva").style.display = "none";
       document.getElementById("tipo").value = "";
-      
+
       if (local) {
         document.getElementById("grupoEquipamento").style.display = "block";
         for (const equip in baseDados[local]) {
@@ -569,68 +676,93 @@
       renderizarTarefas();
     }
 
-    function renderizarTarefas() {
-      const local = document.getElementById("local").value;
-      const equip = document.getElementById("equipamento").value;
-      const tipo = document.getElementById("tipo").value;
-      
-      const cPreventiva = document.getElementById("containerPreventiva");
-      const cCorretiva = document.getElementById("containerCorretiva");
-      const divLista = document.getElementById("listaTarefas");
-      
-      divLista.innerHTML = "";
-      cPreventiva.style.display = "none";
-      cCorretiva.style.display = "none";
-      
-      if (!local || !equip || !tipo) return;
-      
-      if (tipo === "Corretiva") {
-        cCorretiva.style.display = "block";
-      } else if (tipo === "Preventiva") {
-        cPreventiva.style.display = "block";
-        const categorias = baseDados[local][equip];
-        let indexGlobal = 0;
-        
-        for (const cat in categorias) {
-          const divCat = document.createElement("div");
-          divCat.className = "task-category-title";
-          divCat.innerText = cat;
-          divLista.appendChild(divCat);
-          
-          categorias[cat].forEach((tarefa) => {
-            const divTask = document.createElement("div");
-            divTask.className = "task-item";
-            divTask.id = `card_tarefa_${indexGlobal}`;
-            
-            let htmlOptions = "";
-            opcoesResposta.forEach((opt, idx) => {
-              htmlOptions += `
-                <label class="radio-option">
-                  <input type="radio" name="resposta_${indexGlobal}" value="${opt}" onchange="removerAlertaFaltaPreenchimento(${indexGlobal})">
-                  ${opt}
-                </label>
-              `;
-            });
-            
-            divTask.innerHTML = `
-              <strong>${tarefa}</strong>
-              <div class="radio-group">${htmlOptions}</div>
-              <textarea id="obs_tarefa_${indexGlobal}" class="form-control" style="margin-top:12px; padding:10px; min-height:60px;" placeholder="Observações específicas para esta tarefa (opcional)..."></textarea>
-            `;
-            divLista.appendChild(divTask);
-            indexGlobal++;
-          });
+    function tratarMudancaResposta(index, valorRadio) {
+      const inputLeitura = document.getElementById(`leitura_${index}`);
+      if (inputLeitura) {
+        if (valorRadio.includes("Executado")) {
+          inputLeitura.style.display = "block";
+          inputLeitura.required = true;
+        } else {
+          inputLeitura.style.display = "none";
+          inputLeitura.required = false;
+          inputLeitura.value = ""; 
+        }
+      }
+
+      const inputObsTarefa = document.getElementById(`obs_tarefa_${index}`);
+      if (inputObsTarefa) {
+        if (valorRadio.includes("alerta ⚠️") || valorRadio.includes("falha ❌")) {
+          inputObsTarefa.style.display = "block";
+          inputObsTarefa.required = true;
+        } else {
+          inputObsTarefa.style.display = "none";
+          inputObsTarefa.required = false;
+          inputObsTarefa.value = "";
         }
       }
     }
 
-    function removerAlertaFaltaPreenchimento(index) {
-      document.getElementById(`card_tarefa_${index}`).classList.remove("task-item-pendente");
+    function renderizarTarefas() {
+      const tipo = document.getElementById("tipo").value;
+      const local = document.getElementById("local").value;
+      const equip = document.getElementById("equipamento").value;
+      const divTarefas = document.getElementById("listaTarefas");
+      
+      divTarefas.innerHTML = "";
+      
+      if (tipo === "Preventiva") {
+        document.getElementById("containerPreventiva").style.display = "block";
+        document.getElementById("containerCorretiva").style.display = "none";
+        
+        const tarefasMap = baseDados[local][equip];
+        let tIndex = 0;
+
+        for (const [categoria, tarefas] of Object.entries(tarefasMap)) {
+          let htmlCat = "";
+          if (categoria !== "Geral") {
+            htmlCat += `<div class="task-category-title">${categoria}</div>`;
+          }
+          
+          tarefas.forEach(tarefa => {
+            const exigeLeitura = tarefa.includes("Aferir leitura");
+            htmlCat += `<div class="task-item"><strong>${tarefa}</strong><div class="radio-group">`;
+            
+            opcoesResposta.forEach((op) => {
+              htmlCat += `
+                <label class="radio-option">
+                  <input type="radio" name="tarefa_${tIndex}" value="${op}" onchange="tratarMudancaResposta(${tIndex}, this.value)" required>
+                  ${op}
+                </label>`;
+            });
+            
+            htmlCat += `</div>`;
+
+            if (exigeLeitura) {
+              htmlCat += `<input type="number" step="0.01" id="leitura_${tIndex}" class="form-control" placeholder="Digite a leitura verificada (ex: 1250.50)" style="margin-top: 15px; display:none; padding-left:14px;">`;
+            }
+
+            htmlCat += `<textarea id="obs_tarefa_${tIndex}" class="form-control input-anomalia" placeholder="Descreva detalhadamente a anomalia observada..." style="margin-top: 15px; min-height: 80px; display:none;"></textarea></div>`;
+            tIndex++;
+          });
+          divTarefas.innerHTML += htmlCat;
+        }
+      } else if (tipo === "Corretiva") {
+        document.getElementById("containerPreventiva").style.display = "none";
+        document.getElementById("containerCorretiva").style.display = "block";
+      } else {
+        document.getElementById("containerPreventiva").style.display = "none";
+        document.getElementById("containerCorretiva").style.display = "none";
+      }
     }
 
     function avancarParaPasso2() {
-      if(!document.getElementById("data").value || !document.getElementById("local").value || !document.getElementById("equipamento").value || !document.getElementById("tipo").value) {
-        alert("Por favor, preencha todos os campos obrigatórios antes de avançar!");
+      const data = document.getElementById("data").value;
+      const local = document.getElementById("local").value;
+      const equip = document.getElementById("equipamento").value;
+      const tipo = document.getElementById("tipo").value;
+      
+      if (!data || !local || !equip || !tipo) {
+        alert("Por favor, selecione todos os campos antes de avançar.");
         return;
       }
       ocultarTodasTelas();
@@ -642,77 +774,117 @@
       document.getElementById("tela-dados-gerais").classList.add("active");
     }
 
+    // NOVA LÓGICA: CRIA O RESUMO COMPLETO DO CHECKLIST ANTES DE EXIBIR A TELA FINAL
     function avancarParaPasso3() {
       const tipo = document.getElementById("tipo").value;
-      if (tipo === "Preventiva") {
-        const radios = document.querySelectorAll('#listaTarefas input[type="radio"]');
-        const totalGrupos = radios.length / opcoesResposta.length;
-        let todasRespondidas = true;
-        
-        for (let i = 0; i < totalGrupos; i++) {
-          const checado = document.querySelector(`input[name="resposta_${i}"]:checked`);
-          if (!checado) {
-            todasRespondidas = false;
-            document.getElementById(`card_tarefa_${i}`).classList.add("task-item-pendente");
+      const containerResumoChecklist = document.getElementById("resumo-detalhes-checklist");
+      containerResumoChecklist.innerHTML = ""; // Limpa revisões passadas
+
+      if (tipo === "Corretiva") {
+        const textoCorr = document.getElementById("textoCorretiva").value.trim();
+        if (!textoCorr) {
+          alert("Por favor, preencha a descrição da manutenção corretiva.");
+          return;
+        }
+        containerResumoChecklist.innerHTML = `
+          <div style="margin-top:10px;">
+            <strong style="color:#fff; display:block; margin-bottom:5px; text-transform:uppercase; font-size:11px; letter-spacing:0.5px;">Serviço Executado:</strong>
+            <div style="background:rgba(255,255,255,0.04); padding:12px; border-radius:10px; font-size:13px; color:#fff; white-space:pre-wrap; border:1px solid var(--glass-border);">${textoCorr}</div>
+          </div>`;
+      } else if (tipo === "Preventiva") {
+        const local = document.getElementById("local").value;
+        const equip = document.getElementById("equipamento").value;
+        const tarefasMap = baseDados[local][equip];
+        let tIndex = 0;
+        let htmlResumoPreventiva = `<strong style="color:#fff; display:block; margin-bottom:10px; text-transform:uppercase; font-size:11px; letter-spacing:0.5px;">Status das Tarefas do Checklist:</strong>`;
+        let algumaPendente = false;
+        let primeiraTarefaPendente = null;
+        let mensagemErroCustomizada = "";
+
+        // Primeiro valida em lote se tudo foi respondido em conformidade antes de mudar de tela
+        for (const [categoria, tarefas] of Object.entries(tarefasMap)) {
+          for (const tarefa of tarefas) {
+            const selecionado = document.querySelector(`input[name="tarefa_${tIndex}"]:checked`);
+            const elementoTaskItem = document.querySelectorAll('.task-item')[tIndex];
+
+            if (!selecionado) {
+              algumaPendente = true;
+              if (!primeiraTarefaPendente) {
+                primeiraTarefaPendente = elementoTaskItem;
+                mensagemErroCustomizada = `Falta responder a tarefa:\n\n"${tarefa}"`;
+              }
+            } else {
+              let valorRadio = selecionado.value;
+              const campoLeitura = document.getElementById(`leitura_${tIndex}`);
+              if (campoLeitura && campoLeitura.style.display !== "none" && !campoLeitura.value.trim()) {
+                algumaPendente = true;
+                if (!primeiraTarefaPendente) {
+                  primeiraTarefaPendente = elementoTaskItem;
+                  mensagemErroCustomizada = `Por favor, preencha o valor da leitura para a tarefa:\n\n"${tarefa}"`;
+                }
+              }
+              const campoObsTarefa = document.getElementById(`obs_tarefa_${tIndex}`);
+              if (campoObsTarefa && campoObsTarefa.style.display !== "none" && !campoObsTarefa.value.trim()) {
+                algumaPendente = true;
+                if (!primeiraTarefaPendente) {
+                  primeiraTarefaPendente = elementoTaskItem;
+                  mensagemErroCustomizada = `Como este item foi marcado como Alerta ou Falha, descreva o problema na tarefa:\n\n"${tarefa}"`;
+                }
+              }
+            }
+            tIndex++;
           }
         }
-        
-        if (!todasRespondidas) {
-          alert("Existem tarefas obrigatórias sem resposta no checklist. Verifique os cards destacados em vermelho!");
+
+        if (algumaPendente) {
+          setTimeout(() => {
+            primeiraTarefaPendente.classList.add('task-item-pendente');
+            primeiraTarefaPendente.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            alert(mensagemErroCustomizada);
+          }, 50);
           return;
         }
-      } else if (tipo === "Corretiva") {
-        if (!document.getElementById("textoCorretiva").value.trim()) {
-          alert("Por favor, preencha a descrição detalhada da manutenção corretiva.");
-          return;
+
+        // Se estiver tudo 100% preenchido, renderiza o resumo visual delas
+        tIndex = 0;
+        for (const [categoria, tarefas] of Object.entries(tarefasMap)) {
+          for (const tarefa of tarefas) {
+            const selecionado = document.querySelector(`input[name="tarefa_${tIndex}"]:checked`);
+            let respostaTexto = selecionado.value;
+            let tagClasse = "tag-neutra";
+
+            if (respostaTexto.includes("OK ✅")) tagClasse = "tag-ok";
+            else if (respostaTexto.includes("alerta ⚠️")) tagClasse = "tag-alerta";
+            else if (respostaTexto.includes("falha ❌")) tagClasse = "tag-falha";
+
+            const campoLeitura = document.getElementById(`leitura_${tIndex}`);
+            if (campoLeitura && campoLeitura.style.display !== "none") {
+              respostaTexto += ` (Leitura: ${campoLeitura.value})`;
+            }
+
+            const campoObsTarefa = document.getElementById(`obs_tarefa_${tIndex}`);
+            let blocoObsHtml = "";
+            if (campoObsTarefa && campoObsTarefa.style.display !== "none" && campoObsTarefa.value.trim()) {
+              blocoObsHtml = `<div style="margin-top:5px; color:#ffcc00; font-size:12px; padding-left:10px; border-left:2px solid #ffc107;">Obs: ${campoObsTarefa.value.trim()}</div>`;
+            }
+
+            htmlResumoPreventiva += `
+              <div class="resumo-item-linha">
+                <strong>${tarefa}</strong><br>
+                <span class="resumo-tag-status ${tagClasse}">${respostaTexto}</span>
+                ${blocoObsHtml}
+              </div>`;
+            tIndex++;
+          }
         }
+        containerResumoChecklist.innerHTML = htmlResumoPreventiva;
       }
       
-      document.getElementById("resumo-data").innerText = document.getElementById("data").value.split("-").reverse().join("/");
+      document.getElementById("resumo-data").innerText = document.getElementById("data").value;
       document.getElementById("resumo-local").innerText = document.getElementById("local").value;
       document.getElementById("resumo-equipamento").innerText = document.getElementById("equipamento").value;
       document.getElementById("resumo-tipo").innerText = tipo;
-      
-      const containerResumo = document.getElementById("resumo-detalhes-checklist");
-      containerResumo.innerHTML = "";
-      
-      if (tipo === "Preventiva") {
-        const local = document.getElementById("local").value;
-        const equip = document.getElementById("equipamento").value;
-        const categorias = baseDados[local][equip];
-        let indexGlobal = 0;
-        
-        for (const cat in categorias) {
-          categorias[cat].forEach((tarefa) => {
-            const resp = document.querySelector(`input[name="resposta_${indexGlobal}"]:checked`).value;
-            const obs = document.getElementById(`obs_tarefa_${indexGlobal}`).value.trim();
-            
-            let classeTag = "tag-neutra";
-            if(resp.includes("OK ✅")) classeTag = "tag-ok";
-            else if(resp.includes("alerta ⚠️")) classeTag = "tag-alerta";
-            else if(resp.includes("falha ❌")) classeTag = "tag-falha";
-            
-            const itemLinha = document.createElement("div");
-            itemLinha.className = "resumo-item-linha";
-            itemLinha.innerHTML = `
-              <strong>${tarefa}</strong><br>
-              <span class="resumo-tag-status ${classeTag}">${resp}</span>
-              ${obs ? `<br><span style="font-size:12px; color:#ffffe0; font-style:italic;">💬 Obs: ${obs}</span>` : ""}
-            `;
-            containerResumo.appendChild(itemLinha);
-            indexGlobal++;
-          });
-        }
-      } else {
-        const itemLinha = document.createElement("div");
-        itemLinha.className = "resumo-item-linha";
-        itemLinha.innerHTML = `
-          <strong>Histórico da Intervenção Corretiva:</strong>
-          <p style="white-space: pre-wrap; margin-top:6px; font-style:italic; color:var(--text-muted);">${document.getElementById("textoCorretiva").value}</p>
-        `;
-        containerResumo.appendChild(itemLinha);
-      }
-      
+
       ocultarTodasTelas();
       document.getElementById("tela-finalizar").classList.add("active");
     }
@@ -723,78 +895,119 @@
     }
 
     function enviarFormulario() {
-      document.getElementById("btnSalvar").disabled = true;
-      document.getElementById("btnSalvar").innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processando...';
-      document.getElementById("btn-final-voltar").style.display = "none";
-      
+      const data = document.getElementById("data").value;
       const local = document.getElementById("local").value;
       const equip = document.getElementById("equipamento").value;
       const tipo = document.getElementById("tipo").value;
-      
-      const pacoteDados = {
-        data: document.getElementById("data").value,
-        local: local,
-        equipamento: equip,
-        tipo: tipo,
-        tecnico: "Silvio Cesar Ortelan",
-        checklist: []
-      };
-      
+
+      const payload = { dataManutencao: data, local: local, equipamento: equip, tipo: tipo, observacoes: "", tarefas: {}, corretivaTexto: "" };
+
       if (tipo === "Preventiva") {
-        const categorias = baseDados[local][equip];
-        let indexGlobal = 0;
-        for (const cat in categorias) {
-          categorias[cat].forEach((tarefa) => {
-            pacoteDados.checklist.push({
-              tarefa: tarefa,
-              categoria: cat,
-              status: document.querySelector(`input[name="resposta_${indexGlobal}"]:checked`).value,
-              observacao: document.getElementById(`obs_tarefa_${indexGlobal}`).value
-            });
-            indexGlobal++;
-          });
+        const tarefasMap = baseDados[local][equip];
+        let tIndex = 0;
+
+        for (const [categoria, tarefas] of Object.entries(tarefasMap)) {
+          for (const tarefa of tarefas) {
+            const selecionado = document.querySelector(`input[name="tarefa_${tIndex}"]:checked`);
+            let valorResposta = selecionado.value;
+            
+            const campoLeitura = document.getElementById(`leitura_${tIndex}`);
+            if (campoLeitura && campoLeitura.style.display !== "none") {
+              valorResposta += ` - Leitura: ${campoLeitura.value}`;
+            }
+
+            const campoObsTarefa = document.getElementById(`obs_tarefa_${tIndex}`);
+            let textoObs = "";
+            if (campoObsTarefa && campoObsTarefa.style.display !== "none") {
+              textoObs = campoObsTarefa.value.trim();
+            }
+
+            payload.tarefas[tarefa] = { resposta: valorResposta, observacaoItem: textoObs };
+            tIndex++;
+          }
         }
       } else {
-        pacoteDados.checklist.push({
-          tarefa: "Relatório Corretivo",
-          categoria: "Execução",
-          status: "Corretiva Finalizada",
-          observacao: document.getElementById("textoCorretiva").value
-        });
+        payload.corretivaTexto = document.getElementById("textoCorretiva").value;
       }
-      
-      let filaOffline = JSON.parse(localStorage.getItem("ortelan_manutencao_offline")) || [];
-      filaOffline.push(pacoteDados);
-      localStorage.setItem("ortelan_manutencao_offline", JSON.stringify(filaOffline));
-      
-      if (navigator.onLine) {
-        document.getElementById("msgSucesso").style.color = "#5ba962";
-        document.getElementById("msgSucesso").innerText = "Sincronizando em tempo real com a nuvem...";
-        verificarFilaOffline();
-      } else {
-        document.getElementById("msgSucesso").style.color = "#ffc107";
-        document.getElementById("msgSucesso").innerHTML = '<i class="fa-solid fa-cloud-moon"></i> Salvo off-line com sucesso no dispositivo!';
-        limparFormularioCompleto();
+
+      if (!navigator.onLine) {
+        salvarNoEstoqueOffline(payload);
+        return;
       }
+      executarEnvioParaServidor(payload);
+    }
+
+  function executarEnvioParaServidor(payload) {
+  // 1. TRAVA DE SEGURANÇA: Validar data antes de qualquer coisa
+  // O payload.dataManutencao é a data que vem do formulário
+  if (payload.dataManutencao) {
+    const dataSelecionada = new Date(payload.dataManutencao + 'T00:00:00');
+    const hoje = new Date();
+    hoje.setHours(0, 0, 0, 0);
+
+    if (dataSelecionada > hoje) {
+      alert("Atenção: Não é permitido registrar manutenções em datas futuras.");
+      return; // Interrompe a função aqui, nada é enviado
+    }
+  }
+
+  // 2. Se a data estiver ok, segue o fluxo normal
+  document.getElementById("btnSalvar").innerText = "Enviando...";
+  document.getElementById("btnSalvar").disabled = true;
+  document.getElementById("btn-final-voltar").disabled = true;
+
+  const googleUrl = "https://script.google.com/macros/s/AKfycbx-M07XKMRjdaMj7O86XsDamIcRNy-8eRZie-kQjzfpNJ2G7c8B_WrJp4geB5p2mJ7f/exec";
+
+  fetch(googleUrl, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  })
+  .then(() => {
+    let historicoSucesso = parseInt(localStorage.getItem("ortelan_qtd_enviadas_sucesso") || "0");
+    localStorage.setItem("ortelan_qtd_enviadas_sucesso", historicoSucesso + 1);
+
+    document.getElementById("msgSucesso").style.color = "#aed1b7";
+    document.getElementById("msgSucesso").innerText = "Relatório enviado com sucesso!";
+    
+    limparFormularioCompleto();
+  })
+  .catch(() => {
+    alert("Instabilidade de rede. Movendo relatório para o armazenamento seguro.");
+    salvarNoEstoqueOffline(payload);
+  });
+}
+
+    function salvarNoEstoqueOffline(payload) {
+      let fila = JSON.parse(localStorage.getItem("ortelan_manutencao_offline")) || [];
+      fila.push(payload);
+      localStorage.setItem("ortelan_manutencao_offline", JSON.stringify(fila));
+      
+      document.getElementById("msgSucesso").style.color = "#ffe082";
+      document.getElementById("msgSucesso").innerText = "Guardado off-line! Será enviado automaticamente com sinal.";
+      
+      limparFormularioCompleto();
     }
 
     function verificarFilaOffline() {
-      if (!navigator.onLine) {
-        atualizarContadoresDashboard();
-        return;
-      }
-      
       let fila = JSON.parse(localStorage.getItem("ortelan_manutencao_offline")) || [];
-      const aviso = document.getElementById("avisoOffline");
+      const divAviso = document.getElementById("avisoOffline");
       
+      atualizarContadoresDashboard();
+
       if (fila.length === 0) {
-        aviso.style.display = "none";
-        atualizarContadoresDashboard();
+        divAviso.style.display = "none";
         return;
       }
-      
-      aviso.style.display = "block";
-      aviso.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Sincronizando ${fila.length} relatório(s) pendente(s) com o servidor...`;
+      if (!navigator.onLine) {
+        divAviso.style.display = "block";
+        divAviso.innerHTML = `<i class="fa-solid fa-box"></i> Existem ${fila.length} relatórios aguardando internet...`;
+        return;
+      }
+
+      divAviso.style.display = "block";
+      divAviso.innerHTML = `<i class="fa-solid fa-bolt"></i> Sincronizando ${fila.length} relatórios com o servidor...`;
       
       const proximoItem = fila[0];
       const googleUrl = "https://script.google.com/macros/s/AKfycbyMuAEf5VTIXz-7mIAVrqTQoo_Gj_oN8v1KnoMG_jElh6OWJw7ui8abO5lusZrkXWYv/exec";
@@ -822,11 +1035,12 @@
         document.getElementById("msgSucesso").innerText = "";
         document.getElementById("btnSalvar").innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Salvar Relatório';
         document.getElementById("btnSalvar").disabled = false;
-        document.getElementById("btn-final-voltar").style.display = "block";
+        document.getElementById("btn-final-voltar").disabled = false;
         
         document.getElementById("local").value = "";
         document.getElementById("textoCorretiva").value = "";
         atualizarEquipamentos();
+        
         irParaDashboard();
       }, 2500);
     }
