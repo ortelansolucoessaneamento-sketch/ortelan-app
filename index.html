@@ -7,6 +7,7 @@
   <link rel="manifest" href="manifest.json">
   <title>Sistema de Manutenção - Ortelan</title>
   
+  <!-- Fontes e Ícones Premium -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -14,23 +15,14 @@
 
   <style>
     :root {
-      /* PALETA INTERMEDIÁRIA - Visual Técnico, Limpo e Moderno */
-      /* Fundo acetinado cinza-claro com um toque sutil de verde esmeralda ao fundo */
+      /* PALETA INTERMEDIÁRIA */
       --bg-gradient: linear-gradient(135deg, #f3f7f4 0%, #eaf2ed 50%, #dfeae3 100%);
-      
-      /* Vidro claro e purificado (Efeito Frost/iOS Light) */
       --glass-bg: rgba(255, 255, 255, 0.75);
       --glass-border: rgba(255, 255, 255, 0.6);
-      
-      /* Alto contraste de leitura: Texto escuro/grafite fosco */
       --text-main: #1a2e22;
       --text-muted: #5a7062;
-      
-      /* Cores de Destaque Corporativo */
       --neon-green: linear-gradient(90deg, #27ae60 0%, #1e8449 100%);
-      --accent-blue: #007aff; /* Azul clássico iOS para elementos técnicos */
-      
-      /* Inputs com excelente contraste para leitura sob o sol */
+      --accent-blue: #007aff;
       --input-bg: #ffffff;
       --input-border: #cbdcd0;
     }
@@ -53,7 +45,6 @@
       padding-bottom: 95px;
     }
 
-    /* Gerenciamento de Telas */
     .app-screen {
       display: none;
       animation: fadeIn 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
@@ -67,7 +58,6 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Alerta de Conexão Superior Adaptado */
     #status-conexao {
       position: fixed;
       top: 14px;
@@ -98,7 +88,6 @@
       -webkit-backdrop-filter: blur(10px);
     }
 
-    /* Cartões Base Estilo Light Glassmorphism Refinados */
     .glass-card {
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
@@ -121,7 +110,6 @@
       padding-left: 10px;
     }
 
-    /* Dashboard Estilo Clean */
     .dash-header {
       padding: 28px 20px 20px 20px;
       display: flex;
@@ -141,7 +129,57 @@
     .welcome-section h3 span { color: #27ae60; }
     .welcome-section p { font-size: 13px; color: var(--text-muted); margin-top: 6px; font-weight: 500; }
 
-    /* Caixas de Métrica Destacadas e Claras */
+    /* Estilização Customizada para o Bloco Devocional da Palavra do Dia */
+    .word-day-card {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(238, 247, 241, 0.85) 100%);
+      border: 1px solid rgba(39, 174, 96, 0.2);
+      border-radius: 22px;
+      padding: 20px;
+      margin: 0 18px 20px 18px;
+      box-shadow: 0 8px 24px rgba(160, 185, 170, 0.25);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease;
+    }
+    .word-day-card:active { transform: scale(0.98); }
+    .word-day-tag { font-size: 11px; font-weight: 700; color: #1e8449; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }
+    .word-day-text { font-size: 16px; font-weight: 600; color: var(--text-main); line-height: 1.5; font-style: italic; margin-bottom: 6px; }
+    .word-day-ref { font-size: 12px; font-weight: 700; color: #27ae60; }
+    .word-day-hint { font-size: 11px; color: var(--text-muted); position: absolute; bottom: 12px; right: 16px; font-weight: 500; display: flex; align-items: center; gap: 4px; }
+
+    /* Modais do Sistema (Janelas Suspensas Fluidas) */
+    .app-modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(26, 46, 34, 0.4);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .app-modal.modal-active { opacity: 1; pointer-events: auto; }
+    .modal-content {
+      background: #ffffff;
+      border-radius: 24px;
+      width: 100%;
+      max-width: 450px;
+      padding: 26px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+      transform: scale(0.9);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .app-modal.modal-active .modal-content { transform: scale(1); }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .modal-header h4 { font-size: 16px; font-weight: 700; color: #1e8449; display: flex; align-items: center; gap: 8px; }
+    .modal-close { background: none; border: none; font-size: 20px; color: var(--text-muted); cursor: pointer; }
+    .modal-body-text { font-size: 15px; line-height: 1.6; color: var(--text-main); white-space: pre-wrap; font-weight: 500; }
+
     .metrics-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -161,7 +199,6 @@
     .metric-box .m-num { font-size: 26px; font-weight: 800; display: block; color: var(--text-main); margin-bottom: 2px; }
     .metric-box .m-txt { font-size: 11px; color: var(--text-muted); line-height: 1.4; font-weight: 600; }
 
-    /* Botão de Ação Principal - Alta Visibilidade corporativa */
     .btn-trigger-action {
       background: var(--neon-green);
       border-radius: 18px;
@@ -181,13 +218,11 @@
     .trigger-text p { font-size: 12px; color: rgba(255,255,255,0.85); margin-top: 2px; font-weight: 500; }
     .btn-trigger-action > i { font-size: 18px; color: #fff; }
 
-    /* Layout do Formulário */
     .app-header { padding: 26px 20px 14px 20px; display: flex; align-items: center; gap: 18px; }
     .back-btn { width: 42px; height: 42px; border-radius: 50%; background: #ffffff; border: 1px solid var(--input-border); color: var(--text-main); display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.04); }
     .header-titles h1 { font-size: 22px; font-weight: 700; color: var(--text-main); }
     .header-titles p { font-size: 13px; color: var(--text-muted); margin-top: 2px; font-weight: 500; }
 
-    /* Stepper visível */
     .stepper { display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; margin-bottom: 8px; }
     .step-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-muted); font-weight: 600; }
     .step-item.active { color: var(--text-main); }
@@ -195,7 +230,6 @@
     .step-item.active .step-number { background: #27ae60; color: white; box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3); }
     .step-line { flex-grow: 1; height: 2px; background: rgba(0, 0, 0, 0.08); margin: 0 12px; }
 
-    /* Formulários e Inputs de alto contraste para campo */
     .form-group { margin-bottom: 24px; }
     .input-label { display: block; font-size: 12px; color: var(--text-main); margin-bottom: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; }
     .input-wrapper { position: relative; display: flex; align-items: center; }
@@ -222,7 +256,6 @@
       box-shadow: 0 0 0 4px rgba(39, 174, 96, 0.15); 
     }
     
-    /* Customização do Select */
     select.form-control { 
       background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>"); 
       background-repeat: no-repeat; 
@@ -231,7 +264,6 @@
     }
     textarea.form-control { padding: 16px; resize: vertical; min-height: 110px; }
 
-    /* Elementos do Checklist */
     .task-category-title { font-size: 15px; color: var(--text-main); font-weight: 700; margin: 20px 18px 8px 18px; letter-spacing: 0.8px; text-transform: uppercase; border-bottom: 1px solid var(--input-border); padding-bottom: 4px;}
     .task-item {
       background: #ffffff;
@@ -250,7 +282,6 @@
     .input-anomalia { border-color: rgba(230, 126, 34, 0.5) !important; background-color: rgba(230, 126, 34, 0.03) !important; }
     .input-anomalia:focus { border-color: #e67e22 !important; }
 
-    /* Rodapé de Ações */
     .btn-container-footer { padding: 0 18px 24px 18px; display: flex; gap: 14px; }
     .btn-action { width: 100%; border: none; border-radius: 28px; padding: 18px; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 12px; cursor: pointer; transition: all 0.2s; text-transform: uppercase; letter-spacing: 1.2px; }
     .btn-action-primary { background: #27ae60; color: #fff; box-shadow: 0 6px 20px rgba(39, 174, 96, 0.25); }
@@ -264,7 +295,6 @@
       box-shadow: 0 0 18px rgba(231, 76, 60, 0.15);
     }
 
-    /* Resumo Técnico Final */
     .resumo-detalhes-container {
       margin-top: 22px;
       padding-top: 18px;
@@ -292,7 +322,6 @@
     .tag-falha { background: rgba(231, 76, 60, 0.12); color: #c0392b; border: 1px solid rgba(231, 76, 60, 0.2); }
     .tag-neutra { background: #f0f4f1; color: var(--text-main); border: 1px solid var(--input-border); }
 
-    /* Menu de Navegação Global Inferior - Visual Limpo OLED Moderno */
     .nav-bottom { position: fixed; bottom: 0; left: 0; right: 0; height: 80px; background: #ffffff; border-top: 1px solid var(--input-border); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); display: flex; justify-content: space-around; align-items: center; padding: 0 12px; z-index: 999; box-shadow: 0 -4px 20px rgba(160, 185, 170, 0.15); }
     .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); text-decoration: none; font-size: 12px; font-weight: 600; gap: 6px; cursor: pointer; width: 65px; transition: color 0.2s; }
     .nav-item.active { color: #27ae60; }
@@ -304,8 +333,12 @@
 </head>
 <body>
 
+  <!-- Status Online Inteligente -->
   <div id="status-conexao" class="status-online"><i class="fa-solid fa-circle"></i> On-line</div>
 
+  <!-- ==========================================
+       🏠 TELA 1: DASHBOARD
+       ========================================== -->
   <div id="tela-dashboard" class="app-screen active">
     <header class="dash-header">
       <div class="company-logo">
@@ -326,6 +359,19 @@
       <p id="data-dashboard-extenso">Carregando informações...</p>
     </section>
 
+    <!-- NOVO: Card Dinâmico da Palavra do Dia -->
+    <div class="word-day-card" onclick="abrirReflexaoDia()">
+      <div class="word-day-tag">
+        <i class="fa-solid fa-book-open"></i> Palavra do Dia
+      </div>
+      <div class="word-day-text" id="bloco-versiculo">"Carregando palavra de sabedoria..."</div>
+      <div class="word-day-ref" id="bloco-referencia">--</div>
+      <div class="word-day-hint">
+        <i class="fa-solid fa-seedling"></i> Tocar para refletir
+      </div>
+    </div>
+
+    <!-- Indicadores -->
     <div class="metrics-grid">
       <div class="metric-box">
         <i class="fa-regular fa-calendar-check" style="color: #27ae60;"></i>
@@ -344,6 +390,7 @@
       </div>
     </div>
 
+    <!-- Gatilho para Nova OS -->
     <div class="btn-trigger-action" onclick="irParaFormulario()">
       <div class="trigger-info">
         <div class="trigger-circle"><i class="fa-solid fa-plus"></i></div>
@@ -355,10 +402,14 @@
       <i class="fa-solid fa-chevron-right"></i>
     </div>
 
+    <!-- Alerta Interno Interativo de Fila -->
     <div id="avisoOffline" class="sync-alert" style="display: none;"></div>
   </div>
 
 
+  <!-- ==========================================
+       📝 TELA 2: DADOS GERAIS DO FORMULÁRIO
+       ========================================== -->
   <div id="tela-dados-gerais" class="app-screen">
     <header class="app-header">
       <button class="back-btn" onclick="irParaDashboard()"><i class="fa-solid fa-arrow-left"></i></button>
@@ -428,6 +479,9 @@
   </div>
 
 
+  <!-- ==========================================
+       ⚙️ TELA 3: TAREFAS / CHECKLIST DINÂMICO
+       ========================================== -->
   <div id="tela-checklist" class="app-screen">
     <header class="app-header">
       <button class="back-btn" onclick="voltarParaPasso1()"><i class="fa-solid fa-arrow-left"></i></button>
@@ -445,6 +499,7 @@
       <div class="step-item"><div class="step-number">3</div><span>Finalizar</span></div>
     </section>
 
+    <!-- Bloco Corretiva Oculto -->
     <div id="containerCorretiva" style="display: none;" class="glass-card">
       <div class="card-title">Relatório Técnico Corretivo</div>
       <div class="form-group">
@@ -453,6 +508,7 @@
       </div>
     </div>
 
+    <!-- Bloco Preventiva Dinâmica -->
     <div id="containerPreventiva" style="display: none;">
       <div id="listaTarefas"></div>
     </div>
@@ -466,6 +522,9 @@
   </div>
 
 
+  <!-- ==========================================
+       🚀 TELA 4: FINALIZAR E SALVAR
+       ========================================== -->
   <div id="tela-finalizar" class="app-screen">
     <header class="app-header">
       <button class="back-btn" onclick="voltarParaPasso2()"><i class="fa-solid fa-arrow-left"></i></button>
@@ -491,6 +550,7 @@
         <p>⚙️ <strong>Equipamento:</strong> <span id="resumo-equipamento" style="color: var(--text-main); font-weight: 600;">--</span></p>
         <p>🛠️ <strong>Natureza:</strong> <span id="resumo-tipo" style="color: var(--text-main); font-weight: 600;">--</span></p>
         
+        <!-- Bloco Dinâmico Injetado com o Resumo Técnico das Respostas -->
         <div id="resumo-detalhes-checklist" class="resumo-detalhes-container"></div>
       </div>
       <div id="msgSucesso" style="font-size: 15px; text-align: center; font-weight: 600; margin-top: 12px;"></div>
@@ -505,6 +565,21 @@
   </div>
 
 
+  <!-- NOVO: JANELA SUSPENSA (MODAL) DO DEVOCIONAL -->
+  <div id="modal-devocional" class="app-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="modal-devocional-titulo"><i class="fa-solid fa-feather-pointed"></i> Reflexão para o Trabalho</h4>
+        <button class="modal-close" onclick="fecharReflexaoDia()">&times;</button>
+      </div>
+      <div class="modal-body-text" id="modal-devocional-texto">
+        Carregando...
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Menu de Navegação Global Inferior -->
   <nav class="nav-bottom">
     <div class="nav-item active" id="nav-home" onclick="irParaDashboard()">
       <i class="fa-solid fa-house"></i>
@@ -528,25 +603,47 @@
   </nav>
 
 
+  <!-- ==========================================
+       ⚙️ SCRIPT E LÓGICA DE NEGÓCIO
+       ========================================== -->
   <script>
-    // SISTEMA INTELIGENTE DE FORÇAR ATUALIZAÇÃO RECORRENTE (PWA BYPASS)
-   if ('serviceWorker' in navigator) {
+    if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' })
         .then((reg) => {
           console.log("Service Worker ativo!");
           reg.update();
-          reg.onupdatefound = () => {
-            const instalandoWorker = reg.installing;
-            instalandoWorker.onstatechange = () => {
-              if (instalandoWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                console.log("Nova versão encontrada! Atualizando...");
-                window.location.reload(true);
-              }
-            };
-          };
         })
         .catch((err) => console.log("Falha no SW: ", err));
     }
+
+    // NOVO: Banco de Versículos Locais Inteligentes Pré-Explicados
+    const bancoVersiculos = [
+      {
+        v: "Tudo o que fizerem, façam de todo o coração, como para o Senhor, e não para os homens.",
+        r: "Colossenses 3:23",
+        e: "Reflexão da IA:\n\nNo saneamento e no cuidado com a infraestrutura de água, o seu trabalho acontece longe dos olhos da maioria das pessoas, mas ele preserva vidas. Fazer 'de todo o coração' significa realizar cada aperto de parafuso, cada leitura de macromedidor e cada checagem elétrica com o máximo de capricho e integridade. Quando você trabalha com excelência nos bastidores, você honra a Deus e abençoa a comunidade."
+      },
+      {
+        v: "Você viu um homem habilidoso em seu trabalho? Ele servirá diante de reis; não servirá diante de homens obscuros.",
+        r: "Provérbios 22:29",
+        e: "Reflexão da IA:\n\nA habilidade técnica e a perícia mecânica são dons valiosos. Quando você se dedica a entender o comportamento de uma motobomba ou a vazão exata de um sistema hidráulico, você se torna um profissional diferenciado. A competência honesta abre portas altas e traz respeito natural no mercado."
+      },
+      {
+        v: "O Senhor Deus colocou o homem no jardim do Éden para cuidar dele e cultivá-lo.",
+        r: "Gênesis 2:15",
+        e: "Reflexão da IA:\n\nDesde o princípio, a primeira missão dada ao ser humano foi a gestão ambiental e o cuidado com os recursos naturais. Trabalhar com saneamento e fornecimento de água potável é, na sua essência pura, cumprir esse mandamento original: cuidar e cultivar a criação com inteligência técnica."
+      },
+      {
+        v: "Quem é fiel no pouco também é fiel no muito; e quem é injusto no pouco também é injusto no muito.",
+        r: "Lucas 16:10",
+        e: "Reflexão da IA:\n\nAnotar uma leitura com precisão absoluta, apontar um pequeno vazamento em um selo mecânico que ninguém mais viu e preencher o checklist de forma honesta são os 'poucos' que definem o caráter do técnico. A confiabilidade do sistema inteiro depende da integridade de cada pequena anotação."
+      },
+      {
+        v: "Os planos bem elaborados levam à fartura, mas o apressado sempre acaba na miséria.",
+        r: "Provérbios 21:5",
+        e: "Reflexão da IA:\n\nA manutenção preventiva é a personificação deste versículo. Planejar as vistorias, seguir o roteiro técnico e não queimar etapas evita falhas catastróficas nas bombas e paradas no abastecimento. A paciência metódica gera eficiência duradoura."
+      }
+    ];
 
     // Banco de Dados Técnico Original Intacto
     const tGerais = { "Geral": ["Verificar aspectos gerais."] };
@@ -581,6 +678,8 @@
       "Não executado: Desativado ou fora de operação", "Não executado: Não se aplica"
     ];
 
+    let versiculoSelecionadoDoDia = null;
+
     window.addEventListener('online', atualizarStatusRede);
     window.addEventListener('offline', atualizarStatusRede);
 
@@ -602,6 +701,9 @@
       const opcoesData = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
       document.getElementById("data-dashboard-extenso").innerText = new Date().toLocaleDateString('pt-BR', opcoesData);
       
+      // NOVO: Inicializa o Versículo com base no dia do mês atual
+      configurarVersiculoDoDia();
+
       const selLocal = document.getElementById("local");
       selLocal.innerHTML = '<option value="">Selecione o local...</option>';
       for (const local in baseDados) {
@@ -613,6 +715,28 @@
       atualizarContadoresDashboard();
       verificarFilaOffline();
     };
+
+    // NOVO: Funções de Controle da Palavra do Dia e Janela Modal
+    function configurarVersiculoDoDia() {
+      const diaDoMes = new Date().getDate();
+      const indice = diaDoMes % bancoVersiculos.length;
+      versiculoSelecionadoDoDia = bancoVersiculos[indice];
+
+      document.getElementById("bloco-versiculo").innerText = `"${versiculoSelecionadoDoDia.v}"`;
+      document.getElementById("bloco-referencia").innerText = versiculoSelecionadoDoDia.r;
+    }
+
+    function abrirReflexaoDia() {
+      if (versiculoSelecionadoDoDia) {
+        document.getElementById("modal-devocional-titulo").innerHTML = `<i class="fa-solid fa-feather-pointed"></i> Reflexão - ${versiculoSelecionadoDoDia.r}`;
+        document.getElementById("modal-devocional-texto").innerText = versiculoSelecionadoDoDia.e;
+        document.getElementById("modal-devocional").classList.add("modal-active");
+      }
+    }
+
+    function fecharReflexaoDia() {
+      document.getElementById("modal-devocional").classList.remove("modal-active");
+    }
 
     function atualizarContadoresDashboard() {
       let fila = JSON.parse(localStorage.getItem("ortelan_manutencao_offline")) || [];
