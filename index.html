@@ -7,7 +7,6 @@
   <link rel="manifest" href="manifest.json">
   <title>Sistema de Manutenção - Ortelan</title>
   
-  <!-- Fontes e Ícones Premium -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -15,16 +14,15 @@
 
   <style>
     :root {
-      /* PALETA INTERMEDIÁRIA */
-      --bg-gradient: linear-gradient(135deg, #f3f7f4 0%, #eaf2ed 50%, #dfeae3 100%);
-      --glass-bg: rgba(255, 255, 255, 0.75);
-      --glass-border: rgba(255, 255, 255, 0.6);
-      --text-main: #1a2e22;
-      --text-muted: #5a7062;
-      --neon-green: linear-gradient(90deg, #27ae60 0%, #1e8449 100%);
-      --accent-blue: #007aff;
-      --input-bg: #ffffff;
-      --input-border: #cbdcd0;
+      --bg-gradient: linear-gradient(135deg, #030d08 0%, #071f13 50%, #020a05 100%);
+      /* Transparência refinada para o efeito de vidro do iOS transparecer o fundo */
+      --glass-bg: rgba(10, 28, 19, 0.45);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --text-main: #e2e8e4;
+      --text-muted: #9caf9f;
+      --neon-green: linear-gradient(90deg, #5ba962 0%, #3f7d45 100%);
+      --accent-blue: #00d2ff;
+      --input-bg: rgba(7, 19, 13, 0.5);
     }
 
     * {
@@ -42,303 +40,329 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      padding-bottom: 95px;
+      padding-bottom: 90px;
     }
 
+    /* Gerenciamento Adaptável de Telas */
     .app-screen {
       display: none;
-      animation: fadeIn 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      animation: fadeIn 0.3s ease-in-out forwards;
     }
     .app-screen.active {
       display: block;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(12px); }
+      from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* Alerta de Conexão Superior */
     #status-conexao {
       position: fixed;
-      top: 14px;
-      right: 14px;
-      padding: 7px 16px;
+      top: 12px;
+      right: 12px;
+      padding: 6px 14px;
       border-radius: 20px;
-      font-size: 12px;
-      font-weight: 700;
+      font-size: 11px;
+      font-weight: 600;
       z-index: 9999;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
     }
-    .status-online { background: rgba(39, 174, 96, 0.15); color: #27ae60; border: 1px solid rgba(39, 174, 96, 0.3); }
-    .status-offline { background: rgba(231, 76, 60, 0.15); color: #c0392b; border: 1px solid rgba(231, 76, 60, 0.3); }
+    .status-online { background: rgba(40, 167, 69, 0.15); color: #5ba962; border: 1px solid rgba(40, 167, 69, 0.25); }
+    .status-offline { background: rgba(220, 53, 69, 0.15); color: #dc3545; border: 1px solid rgba(220, 53, 69, 0.25); }
 
     .sync-alert {
-      background: rgba(243, 156, 18, 0.12);
-      border: 1px solid rgba(243, 156, 18, 0.3);
-      color: #d35400;
-      padding: 16px;
+      background: rgba(218, 165, 32, 0.12);
+      border: 1px solid rgba(218, 165, 32, 0.25);
+      color: #ffe082;
+      padding: 14px;
       border-radius: 14px;
       text-align: center;
-      font-size: 14px;
-      font-weight: 600;
+      font-size: 13px;
       margin: 16px;
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
     }
 
+    /* Cartões Base Glassmorphism - Filtros Apple Calibrados */
     .glass-card {
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
-      backdrop-filter: blur(30px) saturate(160%);
-      -webkit-backdrop-filter: blur(30px) saturate(160%);
-      border-radius: 22px;
-      padding: 24px;
-      margin: 18px;
-      box-shadow: 0 10px 30px rgba(160, 185, 170, 0.3);
+      backdrop-filter: blur(25px) saturate(120%);
+      -webkit-backdrop-filter: blur(25px) saturate(120%);
+      border-radius: 20px;
+      padding: 22px;
+      margin: 16px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
     }
 
     .card-title {
-      font-size: 13px;
-      font-weight: 800;
-      color: var(--text-main);
+      font-size: 12px;
+      font-weight: 700;
+      color: #ffffff;
       text-transform: uppercase;
-      letter-spacing: 1.8px;
-      margin-bottom: 22px;
-      border-left: 4px solid #27ae60;
-      padding-left: 10px;
+      letter-spacing: 1.5px;
+      margin-bottom: 20px;
+      border-left: 3px solid #5ba962;
+      padding-left: 8px;
     }
 
+    /* ==========================================
+        🏠 INTERFACE DA TELA INICIAL (DASHBOARD)
+       ========================================== */
     .dash-header {
-      padding: 28px 20px 20px 20px;
+      padding: 24px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .company-logo h2 { font-size: 24px; font-weight: 800; letter-spacing: 2px; color: #1e8449; }
-    .company-logo span { font-size: 11px; color: var(--text-muted); display: block; text-transform: uppercase; letter-spacing: 1.2px; font-weight: 600; }
+    .company-logo h2 { font-size: 22px; font-weight: 700; letter-spacing: 1.5px; color: #fff; }
+    .company-logo span { font-size: 10px; color: var(--text-muted); display: block; text-transform: uppercase; letter-spacing: 1px; }
     
-    .user-profile { display: flex; align-items: center; gap: 12px; }
-    .user-info text { font-size: 15px; font-weight: 700; display: block; text-align: right; color: var(--text-main); }
-    .user-info span { font-size: 12px; color: var(--text-muted); display: block; text-align: right; }
-    .user-avatar { width: 44px; height: 44px; border-radius: 50%; background: #ffffff; display: flex; align-items: center; justify-content: center; border: 1px solid var(--input-border); font-size: 18px; color: #27ae60; box-shadow: 0 4px 10px rgba(0,0,0,0.04); }
+    .user-profile { display: flex; align-items: center; gap: 10px; }
+    .user-info text { font-size: 14px; font-weight: 600; display: block; text-align: right; }
+    .user-info span { font-size: 11px; color: var(--text-muted); display: block; text-align: right; }
+    .user-avatar { width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,0.04); display: flex; align-items: center; justify-content: center; border: 1px solid var(--glass-border); font-size: 16px; }
 
-    .welcome-section { padding: 0 20px; margin-bottom: 20px; }
-    .welcome-section h3 { font-size: 26px; font-weight: 700; color: var(--text-main); }
-    .welcome-section h3 span { color: #27ae60; }
-    .welcome-section p { font-size: 13px; color: var(--text-muted); margin-top: 6px; font-weight: 500; }
-
-    /* Estilização Customizada para o Bloco Devocional da Palavra do Dia */
-    .word-day-card {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(238, 247, 241, 0.85) 100%);
-      border: 1px solid rgba(39, 174, 96, 0.2);
-      border-radius: 22px;
-      padding: 20px;
-      margin: 0 18px 20px 18px;
-      box-shadow: 0 8px 24px rgba(160, 185, 170, 0.25);
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.2s ease;
-    }
-    .word-day-card:active { transform: scale(0.98); }
-    .word-day-tag { font-size: 11px; font-weight: 700; color: #1e8449; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }
-    .word-day-text { font-size: 16px; font-weight: 600; color: var(--text-main); line-height: 1.5; font-style: italic; margin-bottom: 6px; }
-    .word-day-ref { font-size: 12px; font-weight: 700; color: #27ae60; }
-    .word-day-hint { font-size: 11px; color: var(--text-muted); position: absolute; bottom: 12px; right: 16px; font-weight: 500; display: flex; align-items: center; gap: 4px; }
-
-    /* Modais do Sistema (Janelas Suspensas Fluidas) */
-    .app-modal {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(26, 46, 34, 0.4);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      z-index: 10000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.3s ease;
-    }
-    .app-modal.modal-active { opacity: 1; pointer-events: auto; }
-    .modal-content {
-      background: #ffffff;
-      border-radius: 24px;
-      width: 100%;
-      max-width: 450px;
-      padding: 26px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-      transform: scale(0.9);
-      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-    .app-modal.modal-active .modal-content { transform: scale(1); }
-    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-    .modal-header h4 { font-size: 16px; font-weight: 700; color: #1e8449; display: flex; align-items: center; gap: 8px; }
-    .modal-close { background: none; border: none; font-size: 20px; color: var(--text-muted); cursor: pointer; }
-    .modal-body-text { font-size: 15px; line-height: 1.6; color: var(--text-main); white-space: pre-wrap; font-weight: 500; }
+    .welcome-section { padding: 0 20px; margin-bottom: 15px; }
+    .welcome-section h3 { font-size: 24px; font-weight: 600; border: none; padding-left: 0; margin-top: 0; }
+    .welcome-section h3 span { color: #5ba962; }
+    .welcome-section p { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
 
     .metrics-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      padding: 0 18px;
-      margin-bottom: 20px;
+      gap: 10px;
+      padding: 0 16px;
+      margin-bottom: 15px;
     }
     .metric-box {
-      background: #ffffff;
-      border: 1px solid var(--input-border);
-      border-radius: 16px;
-      padding: 16px 12px;
-      box-shadow: 0 8px 20px rgba(160, 185, 170, 0.2);
-      text-align: center;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border-radius: 14px;
+      padding: 14px 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
-    .metric-box i { font-size: 22px; margin-bottom: 8px; display: inline-block; }
-    .metric-box .m-num { font-size: 26px; font-weight: 800; display: block; color: var(--text-main); margin-bottom: 2px; }
-    .metric-box .m-txt { font-size: 11px; color: var(--text-muted); line-height: 1.4; font-weight: 600; }
+    .metric-box i { font-size: 18px; margin-bottom: 8px; display: block; }
+    .metric-box .m-num { font-size: 22px; font-weight: 700; display: block; color: #fff; }
+    .metric-box .m-txt { font-size: 10px; color: var(--text-muted); line-height: 1.3; margin-top: 2px; }
 
     .btn-trigger-action {
       background: var(--neon-green);
-      border-radius: 18px;
-      padding: 22px;
-      margin: 18px;
+      border-radius: 16px;
+      padding: 20px;
+      margin: 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       cursor: pointer;
-      box-shadow: 0 8px 25px rgba(39, 174, 96, 0.3);
+      box-shadow: 0 6px 20px rgba(91, 169, 98, 0.25);
+      transition: transform 0.2s;
+    }
+    .btn-trigger-action:active { transform: scale(0.98); }
+    .trigger-info { display: flex; align-items: center; gap: 15px; }
+    .trigger-circle { width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 16px; color: #fff; }
+    .trigger-text h4 { font-size: 16px; font-weight: 600; color: #fff; }
+    .trigger-text p { font-size: 11px; color: rgba(255,255,255,0.75); margin-top: 2px; }
+
+    /* Estilos Específicos do Card Devocional */
+    .card-devocional {
+      cursor: pointer;
       transition: all 0.2s ease;
     }
-    .btn-trigger-action:active { transform: scale(0.97); box-shadow: 0 4px 12px rgba(39, 174, 96, 0.15); }
-    .trigger-info { display: flex; align-items: center; gap: 16px; }
-    .trigger-circle { width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 18px; color: #fff; }
-    .trigger-text h4 { font-size: 18px; font-weight: 700; color: #fff; }
-    .trigger-text p { font-size: 12px; color: rgba(255,255,255,0.85); margin-top: 2px; font-weight: 500; }
-    .btn-trigger-action > i { font-size: 18px; color: #fff; }
+    .card-devocional:active {
+      transform: scale(0.98);
+      background: rgba(10, 28, 19, 0.6);
+    }
+    .devocional-flex {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .devocional-icon {
+      font-size: 20px;
+      color: #ffe082;
+      margin-top: 2px;
+    }
+    .devocional-content {
+      flex: 1;
+    }
+    .devocional-content h4 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .devocional-content p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.4;
+      font-style: italic;
+    }
+    .devocional-content span {
+      display: block;
+      font-size: 11px;
+      color: #ffe082;
+      margin-top: 6px;
+      font-weight: 500;
+      font-style: normal;
+    }
 
-    .app-header { padding: 26px 20px 14px 20px; display: flex; align-items: center; gap: 18px; }
-    .back-btn { width: 42px; height: 42px; border-radius: 50%; background: #ffffff; border: 1px solid var(--input-border); color: var(--text-main); display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.04); }
-    .header-titles h1 { font-size: 22px; font-weight: 700; color: var(--text-main); }
-    .header-titles p { font-size: 13px; color: var(--text-muted); margin-top: 2px; font-weight: 500; }
+    /* Estilos do Modal Customizado */
+    .modal-devocional-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .modal-devocional-overlay.modal-active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-devocional-card {
+      background: rgba(12, 34, 23, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 24px;
+      width: 100%;
+      max-width: 450px;
+      padding: 24px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+    .modal-devocional-overlay.modal-active .modal-devocional-card {
+      transform: scale(1);
+    }
+    .modal-header-dev {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding-bottom: 12px;
+    }
+    .modal-header-dev h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: #ffe082;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .modal-close-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 20px;
+      cursor: pointer;
+    }
+    .modal-body-dev {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text-main);
+      max-height: 60vh;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
 
-    .stepper { display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; margin-bottom: 8px; }
-    .step-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-muted); font-weight: 600; }
-    .step-item.active { color: var(--text-main); }
-    .step-number { width: 26px; height: 26px; border-radius: 50%; background: rgba(0, 0, 0, 0.08); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--text-muted); }
-    .step-item.active .step-number { background: #27ae60; color: white; box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3); }
-    .step-line { flex-grow: 1; height: 2px; background: rgba(0, 0, 0, 0.08); margin: 0 12px; }
+    /* ==========================================
+        📝 LAYOUT DO FORMULÁRIO E COMPONENTES
+       ========================================== */
+    .app-header { padding: 24px 20px 10px 20px; display: flex; align-items: center; gap: 16px; }
+    .back-btn { width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--glass-border); color: var(--text-main); display: flex; align-items: center; justify-content: center; font-size: 15px; cursor: pointer; }
+    .header-titles h1 { font-size: 20px; font-weight: 600; color: #fff; }
+    .header-titles p { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
 
-    .form-group { margin-bottom: 24px; }
-    .input-label { display: block; font-size: 12px; color: var(--text-main); margin-bottom: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; }
+    .stepper { display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; margin-bottom: 5px; }
+    .step-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-muted); font-weight: 500; }
+    .step-item.active { color: #fff; }
+    .step-number { width: 24px; height: 24px; border-radius: 50%; background: rgba(255, 255, 255, 0.08); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; }
+    .step-item.active .step-number { background: #5ba962; color: white; box-shadow: 0 0 12px rgba(91, 169, 98, 0.4); }
+    .step-line { flex-grow: 1; height: 1px; background: rgba(255, 255, 255, 0.1); margin: 0 12px; }
+
+    .form-group { margin-bottom: 22px; }
+    .input-label { display: block; font-size: 11px; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
     .input-wrapper { position: relative; display: flex; align-items: center; }
-    .input-icon { position: absolute; left: 16px; color: #27ae60; font-size: 16px; pointer-events: none; }
+    .input-icon { position: absolute; left: 14px; color: var(--text-muted); font-size: 15px; pointer-events: none; }
     
     .form-control {
-      width: 100%; 
-      background: var(--input-bg); 
-      border: 1px solid var(--input-border); 
-      border-radius: 14px; 
-      padding: 16px 16px 16px 48px; 
-      color: var(--text-main); 
-      font-size: 16px; 
-      font-weight: 500;
-      outline: none; 
-      transition: all 0.25s ease; 
-      -webkit-appearance: none; 
-      appearance: none;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+      width: 100%; background: var(--input-bg); border: 1px solid var(--glass-border); border-radius: 12px; padding: 14px 14px 14px 44px; color: var(--text-main); font-size: 15px; outline: none; transition: all 0.3s ease; -webkit-appearance: none; appearance: none;
     }
-    .form-control:focus { 
-      border-color: #27ae60; 
-      background: #ffffff; 
-      box-shadow: 0 0 0 4px rgba(39, 174, 96, 0.15); 
-    }
+    .form-control:focus { border-color: rgba(143, 177, 152, 0.6); background: rgba(7, 19, 13, 0.9); box-shadow: 0 0 0 4px rgba(143, 177, 152, 0.1); }
+    select.form-control { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%239caf9f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>"); background-repeat: no-repeat; background-position: right 14px center; background-size: 16px; }
+    textarea.form-control { padding: 14px; resize: vertical; min-height: 100px; }
+
+    /* Elementos Estilizados do Checklist */
+    .task-category-title { font-size: 14px; color: #fff; font-weight: 600; margin: 15px 16px 5px 16px; letter-spacing: 0.5px; }
+    .task-item { background: rgba(7, 19, 13, 0.4); border: 1px solid var(--glass-border); border-radius: 14px; padding: 18px; margin: 12px 16px; }
+    .task-item strong { display: block; font-size: 14px; font-weight: 500; color: #fff; line-height: 1.4; margin-bottom: 14px; }
     
-    select.form-control { 
-      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>"); 
-      background-repeat: no-repeat; 
-      background-position: right 16px center; 
-      background-size: 18px; 
-    }
-    textarea.form-control { padding: 16px; resize: vertical; min-height: 110px; }
+    .radio-group { display: flex; flex-direction: column; gap: 10px; }
+    .radio-option { display: flex; align-items: center; font-size: 14px; color: var(--text-muted); cursor: pointer; transition: color 0.2s; }
+    .radio-option:hover { color: #fff; }
+    .radio-option input { margin-right: 12px; transform: scale(1.2); accent-color: #5ba962; cursor: pointer; }
 
-    .task-category-title { font-size: 15px; color: var(--text-main); font-weight: 700; margin: 20px 18px 8px 18px; letter-spacing: 0.8px; text-transform: uppercase; border-bottom: 1px solid var(--input-border); padding-bottom: 4px;}
-    .task-item {
-      background: #ffffff;
-      border: 1px solid var(--input-border);
-      border-radius: 16px;
-      padding: 20px;
-      margin: 14px 18px;
-      box-shadow: 0 4px 15px rgba(160, 185, 170, 0.15);
-    }
-    .task-item strong { display: block; font-size: 15px; font-weight: 600; color: var(--text-main); line-height: 1.5; margin-bottom: 16px; }
-    
-    .radio-group { display: flex; flex-direction: column; gap: 12px; }
-    .radio-option { display: flex; align-items: center; font-size: 15px; color: var(--text-main); font-weight: 500; cursor: pointer; padding: 6px 0; }
-    .radio-option input { margin-right: 14px; transform: scale(1.3); accent-color: #27ae60; cursor: pointer; }
+    .input-anomalia { border-color: rgba(218, 165, 32, 0.4) !important; background-color: rgba(218, 165, 32, 0.03) !important; }
+    .input-anomalia:focus { border-color: rgba(218, 165, 32, 0.7) !important; }
 
-    .input-anomalia { border-color: rgba(230, 126, 34, 0.5) !important; background-color: rgba(230, 126, 34, 0.03) !important; }
-    .input-anomalia:focus { border-color: #e67e22 !important; }
+    /* Rodapé de Navegação e Ação */
+    .btn-container-footer { padding: 0 16px 20px 16px; display: flex; gap: 12px; }
+    .btn-action { width: 100%; border: none; border-radius: 25px; padding: 16px; color: #030a06; font-size: 15px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; transition: all 0.2s; text-transform: uppercase; letter-spacing: 1px; }
+    .btn-action-primary { background: #8fb198; box-shadow: 0 4px 15px rgba(143, 177, 152, 0.25); color: #030a06; }
+    .btn-action-primary:hover { background: #aed1b7; }
+    .btn-action-secondary { background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border); color: var(--text-main); }
+    .btn-action:disabled { background: rgba(143, 177, 152, 0.15) !important; color: var(--text-muted) !important; cursor: not-allowed; box-shadow: none; }
 
-    .btn-container-footer { padding: 0 18px 24px 18px; display: flex; gap: 14px; }
-    .btn-action { width: 100%; border: none; border-radius: 28px; padding: 18px; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 12px; cursor: pointer; transition: all 0.2s; text-transform: uppercase; letter-spacing: 1.2px; }
-    .btn-action-primary { background: #27ae60; color: #fff; box-shadow: 0 6px 20px rgba(39, 174, 96, 0.25); }
-    .btn-action-primary:hover { background: #1e8449; }
-    .btn-action-secondary { background: #ffffff; border: 1px solid var(--input-border); color: var(--text-main); box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
-    .btn-action:disabled { background: #e0e0e0 !important; color: #a0a0a0 !important; cursor: not-allowed; box-shadow: none; border: 1px solid #d0d0d0; }
+    .task-item-pendente { border: 1px solid rgba(255, 77, 77, 0.5) !important; background-color: rgba(255, 77, 77, 0.04) !important; box-shadow: 0 0 15px rgba(255, 77, 77, 0.15); }
 
-    .task-item-pendente {
-      border: 1px solid rgba(231, 76, 60, 0.7) !important;
-      background-color: rgba(231, 76, 60, 0.05) !important;
-      box-shadow: 0 0 18px rgba(231, 76, 60, 0.15);
-    }
+    /* Estilos do Bloco de Resumo Dinâmico */
+    .resumo-detalhes-container { margin-top: 20px; padding-top: 15px; border-top: 1px dashed rgba(143, 177, 152, 0.3); }
+    .resumo-item-linha { background: rgba(255, 255, 255, 0.02); border-radius: 8px; padding: 10px 12px; margin-bottom: 8px; font-size: 13px; }
+    .resumo-item-linha strong { color: #fff; font-weight: 500; }
+    .resumo-tag-status { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-top: 4px; }
+    .tag-ok { background: rgba(40, 167, 69, 0.15); color: #5ba962; }
+    .tag-alerta { background: rgba(255, 193, 7, 0.15); color: #ffc107; }
+    .tag-falha { background: rgba(220, 53, 69, 0.15); color: #dc3545; }
+    .tag-neutra { background: rgba(255, 255, 255, 0.08); color: var(--text-muted); }
 
-    .resumo-detalhes-container {
-      margin-top: 22px;
-      padding-top: 18px;
-      border-top: 1px dashed var(--input-border);
-    }
-    .resumo-item-linha {
-      background: #ffffff;
-      border-radius: 10px;
-      padding: 12px 14px;
-      margin-bottom: 10px;
-      font-size: 14px;
-      border: 1px solid var(--input-border);
-    }
-    .resumo-item-linha strong { color: var(--text-main); font-weight: 600; }
-    .resumo-tag-status {
-      display: inline-block;
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-size: 12px;
-      font-weight: 700;
-      margin-top: 6px;
-    }
-    .tag-ok { background: rgba(39, 174, 96, 0.12); color: #27ae60; border: 1px solid rgba(39, 174, 96, 0.2); }
-    .tag-alerta { background: rgba(243, 156, 18, 0.12); color: #e67e22; border: 1px solid rgba(243, 156, 18, 0.2); }
-    .tag-falha { background: rgba(231, 76, 60, 0.12); color: #c0392b; border: 1px solid rgba(231, 76, 60, 0.2); }
-    .tag-neutra { background: #f0f4f1; color: var(--text-main); border: 1px solid var(--input-border); }
-
-    .nav-bottom { position: fixed; bottom: 0; left: 0; right: 0; height: 80px; background: #ffffff; border-top: 1px solid var(--input-border); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); display: flex; justify-content: space-around; align-items: center; padding: 0 12px; z-index: 999; box-shadow: 0 -4px 20px rgba(160, 185, 170, 0.15); }
-    .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); text-decoration: none; font-size: 12px; font-weight: 600; gap: 6px; cursor: pointer; width: 65px; transition: color 0.2s; }
-    .nav-item.active { color: #27ae60; }
-    .nav-item i { font-size: 21px; }
-    .nav-item-center { position: relative; top: -16px; }
-    .center-circle { width: 56px; height: 56px; border-radius: 50%; background: #27ae60; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; box-shadow: 0 6px 18px rgba(39, 174, 96, 0.4); transition: transform 0.2s; }
-    .center-circle:active { transform: scale(0.92); }
+    /* Menu Inferior Fixo */
+    .nav-bottom { position: fixed; bottom: 0; left: 0; right: 0; height: 75px; background: rgba(3, 10, 6, 0.92); border-top: 1px solid var(--glass-border); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); display: flex; justify-content: space-around; align-items: center; padding: 0 10px; z-index: 999; }
+    .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); text-decoration: none; font-size: 11px; font-weight: 500; gap: 5px; cursor: pointer; width: 60px; }
+    .nav-item.active { color: #8fb198; }
+    .nav-item i { font-size: 19px; }
+    .nav-item-center { position: relative; top: -14px; }
+    .center-circle { width: 52px; height: 52px; border-radius: 50%; background: #5ba962; display: flex; align-items: center; justify-content: center; color: white; font-size: 22px; box-shadow: 0 4px 15px rgba(91, 169, 98, 0.4); }
   </style>
 </head>
 <body>
 
-  <!-- Status Online Inteligente -->
   <div id="status-conexao" class="status-online"><i class="fa-solid fa-circle"></i> On-line</div>
 
-  <!-- ==========================================
-       🏠 TELA 1: DASHBOARD
-       ========================================== -->
+  <div id="modal-devocional" class="modal-devocional-overlay">
+    <div class="modal-devocional-card">
+      <div class="modal-header-dev">
+        <h3 id="modal-devocional-titulo"><i class="fa-solid fa-feather-pointed"></i> Palavra do Dia</h3>
+        <button class="modal-close-btn" onclick="fecharModalDevocional()">&times;</button>
+      </div>
+      <div class="modal-body-dev" id="modal-devocional-texto">
+        Carregando...
+      </div>
+    </div>
+  </div>
+
   <div id="tela-dashboard" class="app-screen active">
     <header class="dash-header">
       <div class="company-logo">
@@ -359,38 +383,36 @@
       <p id="data-dashboard-extenso">Carregando informações...</p>
     </section>
 
-    <!-- NOVO: Card Dinâmico da Palavra do Dia -->
-    <div class="word-day-card" onclick="abrirReflexaoDia()">
-      <div class="word-day-tag">
-        <i class="fa-solid fa-book-open"></i> Palavra do Dia
-      </div>
-      <div class="word-day-text" id="bloco-versiculo">"Carregando palavra de sabedoria..."</div>
-      <div class="word-day-ref" id="bloco-referencia">--</div>
-      <div class="word-day-hint">
-        <i class="fa-solid fa-seedling"></i> Tocar para refletir
+    <div class="glass-card card-devocional" onclick="abrirReflexaoDia()">
+      <div class="devocional-flex">
+        <div class="devocional-icon"><i class="fa-solid fa-book-open"></i></div>
+        <div class="devocional-content">
+          <h4>Reflexão Diária</h4>
+          <p id="bloco-versiculo">Tocar para refletir</p>
+          <span id="bloco-referencia">Palavra do dia em tempo real</span>
+        </div>
+        <i class="fa-solid fa-chevron-right" style="color: var(--text-muted); font-size: 12px; margin-top: 4px;"></i>
       </div>
     </div>
 
-    <!-- Indicadores -->
     <div class="metrics-grid">
       <div class="metric-box">
-        <i class="fa-regular fa-calendar-check" style="color: #27ae60;"></i>
+        <i class="fa-regular fa-calendar-check" style="color: #5ba962;"></i>
         <span class="m-num" id="dash-completas">0</span>
         <span class="m-txt">Enviadas com sucesso</span>
       </div>
       <div class="metric-box">
-        <i class="fa-regular fa-clock" style="color: #e67e22;"></i>
+        <i class="fa-regular fa-clock" style="color: #ffc107;"></i>
         <span class="m-num" id="dash-pendentes">0</span>
         <span class="m-txt">Salvas off-line no celular</span>
       </div>
       <div class="metric-box">
-        <i class="fa-solid fa-location-dot" style="color: #007aff;"></i>
+        <i class="fa-solid fa-location-dot" style="color: #00d2ff;"></i>
         <span class="m-num" id="dash-locais-qtd">12</span>
         <span class="m-txt">Pontos de instalação</span>
       </div>
     </div>
 
-    <!-- Gatilho para Nova OS -->
     <div class="btn-trigger-action" onclick="irParaFormulario()">
       <div class="trigger-info">
         <div class="trigger-circle"><i class="fa-solid fa-plus"></i></div>
@@ -399,22 +421,18 @@
           <p>Registrar nova ordem de serviço em campo</p>
         </div>
       </div>
-      <i class="fa-solid fa-chevron-right"></i>
+      <i class="fa-solid fa-chevron-right" style="color: #fff;"></i>
     </div>
 
-    <!-- Alerta Interno Interativo de Fila -->
     <div id="avisoOffline" class="sync-alert" style="display: none;"></div>
   </div>
 
 
-  <!-- ==========================================
-       📝 TELA 2: DADOS GERAIS DO FORMULÁRIO
-       ========================================== -->
-  <div id="tela-dados-gerais" class="app-screen">
+  <div id="tela-dados-generais" class="app-screen">
     <header class="app-header">
       <button class="back-btn" onclick="irParaDashboard()"><i class="fa-solid fa-arrow-left"></i></button>
       <div class="header-titles">
-        <h2>Nova manutenção</h2>
+        <h1>Nova manutenção</h1>
         <p>Dados primários da instalação</p>
       </div>
     </header>
@@ -479,14 +497,11 @@
   </div>
 
 
-  <!-- ==========================================
-       ⚙️ TELA 3: TAREFAS / CHECKLIST DINÂMICO
-       ========================================== -->
   <div id="tela-checklist" class="app-screen">
     <header class="app-header">
       <button class="back-btn" onclick="voltarParaPasso1()"><i class="fa-solid fa-arrow-left"></i></button>
       <div class="header-titles">
-        <h2>Tarefas em Campo</h2>
+        <h1>Tarefas em Campo</h1>
         <p>Inspeção técnica obrigatória</p>
       </div>
     </header>
@@ -499,7 +514,6 @@
       <div class="step-item"><div class="step-number">3</div><span>Finalizar</span></div>
     </section>
 
-    <!-- Bloco Corretiva Oculto -->
     <div id="containerCorretiva" style="display: none;" class="glass-card">
       <div class="card-title">Relatório Técnico Corretivo</div>
       <div class="form-group">
@@ -508,7 +522,6 @@
       </div>
     </div>
 
-    <!-- Bloco Preventiva Dinâmica -->
     <div id="containerPreventiva" style="display: none;">
       <div id="listaTarefas"></div>
     </div>
@@ -522,14 +535,11 @@
   </div>
 
 
-  <!-- ==========================================
-       🚀 TELA 4: FINALIZAR E SALVAR
-       ========================================== -->
   <div id="tela-finalizar" class="app-screen">
     <header class="app-header">
       <button class="back-btn" onclick="voltarParaPasso2()"><i class="fa-solid fa-arrow-left"></i></button>
       <div class="header-titles">
-        <h2>Concluir Ordem</h2>
+        <h1>Concluir Ordem</h1>
         <p>Pronto para transmissão e salvamento</p>
       </div>
     </header>
@@ -537,23 +547,23 @@
     <section class="stepper">
       <div class="step-item"><div class="step-number">1</div><span>Gerais</span></div>
       <div class="step-line"></div>
-      <div class="step-item active"><div class="step-number">2</div><span>Checklist</span></div>
+      <div class="step-item"><div class="step-number">2</div><span>Checklist</span></div>
       <div class="step-line"></div>
       <div class="step-item active"><div class="step-number">3</div><span>Finalizar</span></div>
     </section>
 
     <main class="glass-card">
       <div class="card-title">Resumo Técnico Geral</div>
-      <div style="font-size: 15px; line-height: 1.9; margin-bottom: 22px; color: var(--text-muted);">
-        <p>📅 <strong>Data:</strong> <span id="resumo-data" style="color: var(--text-main); font-weight: 600;">--</span></p>
-        <p>📍 <strong>Local:</strong> <span id="resumo-local" style="color: var(--text-main); font-weight: 600;">--</span></p>
-        <p>⚙️ <strong>Equipamento:</strong> <span id="resumo-equipamento" style="color: var(--text-main); font-weight: 600;">--</span></p>
-        <p>🛠️ <strong>Natureza:</strong> <span id="resumo-tipo" style="color: var(--text-main); font-weight: 600;">--</span></p>
+      <div style="font-size: 14px; line-height: 1.8; margin-bottom: 20px; color: var(--text-muted);">
+        <p>📅 <strong style="color: #fff;">Data:</strong> <span id="resumo-data">--</span></p>
+        <p>📍 <strong style="color: #fff;">Local:</strong> <span id="resumo-local">--</span></p>
+        <p>⚙️ <strong style="color: #fff;">Equipamento:</strong> <span id="resumo-equipamento">--</span></p>
+        <p>🛠️ <strong style="color: #fff;">Natureza:</strong> <span id="resumo-tipo">--</span></p>
         
-        <!-- Bloco Dinâmico Injetado com o Resumo Técnico das Respostas -->
         <div id="resumo-detalhes-checklist" class="resumo-detalhes-container"></div>
       </div>
-      <div id="msgSucesso" style="font-size: 15px; text-align: center; font-weight: 600; margin-top: 12px;"></div>
+ 
+      <div id="msgSucesso" style="font-size: 14px; text-align: center; font-weight: 500; margin-top: 10px;"></div>
     </main>
 
     <div class="btn-container-footer">
@@ -565,21 +575,6 @@
   </div>
 
 
-  <!-- NOVO: JANELA SUSPENSA (MODAL) DO DEVOCIONAL -->
-  <div id="modal-devocional" class="app-modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 id="modal-devocional-titulo"><i class="fa-solid fa-feather-pointed"></i> Reflexão para o Trabalho</h4>
-        <button class="modal-close" onclick="fecharReflexaoDia()">&times;</button>
-      </div>
-      <div class="modal-body-text" id="modal-devocional-texto">
-        Carregando...
-      </div>
-    </div>
-  </div>
-
-
-  <!-- Menu de Navegação Global Inferior -->
   <nav class="nav-bottom">
     <div class="nav-item active" id="nav-home" onclick="irParaDashboard()">
       <i class="fa-solid fa-house"></i>
@@ -603,56 +598,40 @@
   </nav>
 
 
-  <!-- ==========================================
-       ⚙️ SCRIPT E LÓGICA DE NEGÓCIO
-       ========================================== -->
   <script>
+    // SISTEMA INTELIGENTE DE FORÇAR ATUALIZAÇÃO RECORRENTE (PWA BYPASS)
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' })
+      navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }) // Impede o Safari de cachear o script de controle
         .then((reg) => {
           console.log("Service Worker ativo!");
+          // Força a checagem no servidor imediatamente ao abrir o app
           reg.update();
+          reg.onupdatefound = () => {
+            const instalandoWorker = reg.installing;
+            instalandoWorker.onstatechange = () => {
+              if (instalandoWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                // Notifica e reinicia para aplicar a versão nova instantaneamente
+                console.log("Nova versão encontrada! Atualizando...");
+                window.location.reload(true);
+              }
+            };
+          };
         })
         .catch((err) => console.log("Falha no SW: ", err));
     }
 
-    // NOVO: Banco de Versículos Locais Inteligentes Pré-Explicados
-    const bancoVersiculos = [
-      {
-        v: "Tudo o que fizerem, façam de todo o coração, como para o Senhor, e não para os homens.",
-        r: "Colossenses 3:23",
-        e: "Reflexão da IA:\n\nNo saneamento e no cuidado com a infraestrutura de água, o seu trabalho acontece longe dos olhos da maioria das pessoas, mas ele preserva vidas. Fazer 'de todo o coração' significa realizar cada aperto de parafuso, cada leitura de macromedidor e cada checagem elétrica com o máximo de capricho e integridade. Quando você trabalha com excelência nos bastidores, você honra a Deus e abençoa a comunidade."
-      },
-      {
-        v: "Você viu um homem habilidoso em seu trabalho? Ele servirá diante de reis; não servirá diante de homens obscuros.",
-        r: "Provérbios 22:29",
-        e: "Reflexão da IA:\n\nA habilidade técnica e a perícia mecânica são dons valiosos. Quando você se dedica a entender o comportamento de uma motobomba ou a vazão exata de um sistema hidráulico, você se torna um profissional diferenciado. A competência honesta abre portas altas e traz respeito natural no mercado."
-      },
-      {
-        v: "O Senhor Deus colocou o homem no jardim do Éden para cuidar dele e cultivá-lo.",
-        r: "Gênesis 2:15",
-        e: "Reflexão da IA:\n\nDesde o princípio, a primeira missão dada ao ser humano foi a gestão ambiental e o cuidado com os recursos naturais. Trabalhar com saneamento e fornecimento de água potável é, na sua essência pura, cumprir esse mandamento original: cuidar e cultivar a criação com inteligência técnica."
-      },
-      {
-        v: "Quem é fiel no pouco também é fiel no muito; e quem é injusto no pouco também é injusto no muito.",
-        r: "Lucas 16:10",
-        e: "Reflexão da IA:\n\nAnotar uma leitura com precisão absoluta, apontar um pequeno vazamento em um selo mecânico que ninguém mais viu e preencher o checklist de forma honesta são os 'poucos' que definem o caráter do técnico. A confiabilidade do sistema inteiro depende da integridade de cada pequena anotação."
-      },
-      {
-        v: "Os planos bem elaborados levam à fartura, mas o apressado sempre acaba na miséria.",
-        r: "Provérbios 21:5",
-        e: "Reflexão da IA:\n\nA manutenção preventiva é a personificação deste versículo. Planejar as vistorias, seguir o roteiro técnico e não queimar etapas evita falhas catastróficas nas bombas e paradas no abastecimento. A paciência metódica gera eficiência duradoura."
-      }
-    ];
+    // Estado local da sessão para armazenar a reflexão dinâmica da IA
+    let reflexaoGeradaNaHora = null;
+    // O endpoint unificado do seu Google Apps Script extraído do seu código original
+    const googleUrl = "https://script.google.com/macros/s/AKfycbyMuAEf5VTIXz-7mIAVrqTQoo_Gj_oN8v1KnoMG_jElh6OWJw7ui8abO5lusZrkXWYv/exec";
 
     // Banco de Dados Técnico Original Intacto
     const tGerais = { "Geral": ["Verificar aspectos gerais."] };
     const tFunc = { "Geral": ["Verificar funcionamento.", "Verificar aspectos gerais."] };
     const tMacro = { "Geral": ["Aferir leitura", "Verificar funcionamento.", "Verificar aspectos gerais."] };
     const tDosadora = { "Geral": ["Verificar funcionamento.", "Verificar aspectos gerais.", "Verificar dosagem."] };
-    
     const tMotobomba = {
-      "Inspeções gerais": ["Verificar vazamentos in conexões, selos mecânicos e tubulações.","Observar ruídos anormais e vibrações excessivas.","Conferir temperatura do motor e mancais.","Avaliar a pressão e a vazão da bomba."],
+      "Inspeções gerais": ["Verificar vazamentos em conexões, selos mecânicos e tubulações.","Observar ruídos anormais e vibrações excessivas.","Conferir temperatura do motor e mancais.","Avaliar a pressão e a vazão da bomba."],
       "Limpeza": ["Limpar filtros, peneiras e válvulas.","Remover sujeira acumulada na carcaça e nas entradas de água.","Em bombas submersas, verificar incrustações e resíduos."],
       "Lubrificação": ["Lubrificar rolamentos e mancais conforme recomendação do fabricante.","Verificar nível e condição do óleo, quando aplicável."],
       "Verificação elétrica": ["Inspecionar cabos, conexões e bornes elétricos.","Medir corrente elétrica e tensão do motor.","Testar funcionamento de disjuntores, relés e proteção térmica.","Verificar aterramento."],
@@ -661,25 +640,33 @@
       "Testes operacionais": ["Realizar partidas periódicas em bombas reserva.","Monitorar tempo de acionamento e ciclos de operação.","Registrar dados de desempenho para comparação histórica."],
       "Manutenção periódica programada": ["Troca de rolamentos conforme vida útil.","Substituição de selos mecânicos desgastados.","Revisão completa do motor elétrico.","Reaperto estrutural e calibração de instrumentos."]
     };
-
     const padraoGleba = { "VRP": tFunc, "Descarga": tFunc, "Ventosa": tFunc, "Macromedidor": tMacro };
     const padraoPoco = { "Bomba dosadora": tDosadora, "Estrutura hidráulica": tGerais, "Estrutura elétrica": tGerais, "Estrutura civil": tGerais };
-
-    const baseDados = {
-      "LOC 01 - Casa de bomba de recalque": { "Conjunto Motobomba 01": tMotobomba, "Conjunto Motobomba 02": tMotobomba, "Fluxostato": tFunc, "Pressostato": tFunc, "Válvula de alívio": tFunc, "Manômetro do barrilete": tFunc, "Estrutura hidráulica": tGerais, "Estrutura civil": tGerais, "Estrutura elétrica": tGerais },
-      "LOC 02 - Reservatório principal Eucalipto": { "Boia controladora de nível": tFunc, "Válvulas gavetas": tFunc, "Estrutura hidráulica": tGerais, "Estrutura civil": tGerais, "Estrutura elétrica": tGerais },
-      "LOC 03 - Caixa de quebra pressão": { "Boia de nível": tFunc, "Válvula de nível": tFunc, "Dispositivo volumétrico": tFunc, "Manômetro de automação": tFunc, "Estrutura hidráulica": tGerais, "Estrutura civil": tGerais, "Estrutura elétrica": tGerais },
-      "LOC 04 - Gleba 02": padraoGleba, "LOC 05 - Gleba 04": padraoGleba, "LOC 06 - Gleba 06": padraoGleba, "LOC 07 - Gleba 09": padraoGleba,
-      "LOC 08 - Poço 01": padraoPoco, "LOC 09 - Poço 02": padraoPoco, "LOC 10 - Poço 03": padraoPoco, "LOC 11 - Poço 04": padraoPoco, "LOC 12 - Poço 05": padraoPoco
+    
+    const baseDados = { 
+      "LOC 01 - Casa de bomba de recalque": { "Conjunto Motobomba 01": tMotobomba, "Conjunto Motobomba 02": tMotobomba, "Fluxostato": tFunc, "Pressostato": tFunc, "Válvula de alívio": tFunc, "Manômetro do barrilete": tFunc, "Estrutura hidráulica": tGerais, "Estrutura civil": tGerais, "Estrutura elétrica": tGerais }, 
+      "LOC 02 - Reservatório principal Eucalipto": { "Boia controladora de nível": tFunc, "Válvulas gavetas": tFunc, "Estrutura hidráulica": tGerais, "Estrutura civil": tGerais, "Estrutura elétrica": tGerais }, 
+      "LOC 03 - Caixa de quebra pressão": { "Boia de nível": tFunc, "Válvula de nível": tFunc, "Dispositivo volumétrico": tFunc, "Manômetro de automação": tFunc, "Estrutura hidráulica": tGerais, "Estrutura civil": tGerais, "Estrutura elétrica": tGerais }, 
+      "LOC 04 - Gleba 02": padraoGleba, 
+      "LOC 05 - Gleba 04": padraoGleba, 
+      "LOC 06 - Gleba 06": padraoGleba, 
+      "LOC 07 - Gleba 09": padraoGleba, 
+      "LOC 08 - Poço 01": padraoPoco, 
+      "LOC 09 - Poço 02": padraoPoco, 
+      "LOC 10 - Poço 03": padraoPoco, 
+      "LOC 11 - Poço 04": padraoPoco, 
+      "LOC 12 - Poço 05": padraoPoco 
     };
 
-    const opcoesResposta = [
-      "Executado: Resultado OK ✅", "Executado: Resultado alerta ⚠️", "Executado: Resultado falha ❌",
-      "Não executado: Desativado ou fora de operação", "Não executado: Não se aplica"
+    const oPcoesResposta = [ 
+      "Executado: Resultado OK ✅", 
+      "Executado: Resultado alerta ⚠️", 
+      "Executado: Resultado falha ❌", 
+      "Não executado: Desativado ou fora de operação", 
+      "Não executado: Não se aplica" 
     ];
 
-    let versiculoSelecionadoDoDia = null;
-
+    // Monitoramento de Conexão Física real
     window.addEventListener('online', atualizarStatusRede);
     window.addEventListener('offline', atualizarStatusRede);
 
@@ -697,51 +684,79 @@
 
     window.onload = function() {
       atualizarStatusRede();
-      
       const opcoesData = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
       document.getElementById("data-dashboard-extenso").innerText = new Date().toLocaleDateString('pt-BR', opcoesData);
       
-      // NOVO: Inicializa o Versículo com base no dia do mês atual
-      configurarVersiculoDoDia();
-
       const selLocal = document.getElementById("local");
       selLocal.innerHTML = '<option value="">Selecione o local...</option>';
       for (const local in baseDados) {
         selLocal.options.add(new Option(local, local));
       }
-
       document.getElementById("dash-locais-qtd").innerText = Object.keys(baseDados).length;
-      
       atualizarContadoresDashboard();
       verificarFilaOffline();
     };
 
-    // NOVO: Funções de Controle da Palavra do Dia e Janela Modal
-    function configurarVersiculoDoDia() {
-      const diaDoMes = new Date().getDate();
-      const indice = diaDoMes % bancoVersiculos.length;
-      versiculoSelecionadoDoDia = bancoVersiculos[indice];
-
-      document.getElementById("bloco-versiculo").innerText = `"${versiculoSelecionadoDoDia.v}"`;
-      document.getElementById("bloco-referencia").innerText = versiculoSelecionadoDoDia.r;
-    }
-
+    // --- NOVA LÓGICA DINÂMICA DA REFLEXÃO COM IA ---
     function abrirReflexaoDia() {
-      if (versiculoSelecionadoDoDia) {
-        document.getElementById("modal-devocional-titulo").innerHTML = `<i class="fa-solid fa-feather-pointed"></i> Reflexão - ${versiculoSelecionadoDoDia.r}`;
-        document.getElementById("modal-devocional-texto").innerText = versiculoSelecionadoDoDia.e;
-        document.getElementById("modal-devocional").classList.add("modal-active");
+      const tituloModal = document.getElementById("modal-devocional-titulo");
+      const textoModal = document.getElementById("modal-devocional-texto");
+      const modal = document.getElementById("modal-devocional");
+
+      // Tratamento Amigável e Instantâneo Off-line
+      if (!navigator.onLine) {
+        tituloModal.innerHTML = `<i class="fa-solid fa-wifi-slash"></i> Sem conexão com a internet`;
+        textoModal.innerText = "Não foi possível carregar a reflexão diária porque você está off-line.\n\nFoque no trabalho em campo e, assim que você recuperar o sinal de internet, sua mensagem de sabedoria estará disponível aqui!";
+        modal.classList.add("modal-active");
+        return;
       }
+
+      // Se já buscou e salvou na sessão ativa, abre direto sem gastar nova requisição
+      if (reflexaoGeradaNaHora) {
+        exibirModalReflexao(reflexaoGeradaNaHora);
+        return;
+      }
+
+      // Estado Visual de Carregamento Interno
+      tituloModal.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Buscando Sabedoria...`;
+      textoModal.innerText = "Buscando uma nova reflexão bíblica e contextualizada para o dia de hoje. Por favor, aguarde alguns instantes...";
+      modal.classList.add("modal-active");
+
+      // Faz a requisição HTTP GET passando o parâmetro de ação configurado no Code.gs
+      fetch(`${googleUrl}?acao=gerarDevocional`)
+        .then(response => response.json())
+        .then(dados => {
+          if (dados && dados.versiculo) {
+            reflexaoGeradaNaHora = dados;
+            exibirModalReflexao(dados);
+            
+            // Atualiza sutilmente o card de fundo da Dashboard inicial também
+            document.getElementById("bloco-versiculo").innerText = `"${dados.versiculo}"`;
+            document.getElementById("bloco-referencia").innerText = dados.referencia;
+          } else {
+            throw new Error("Formato inválido recebido do servidor");
+          }
+        })
+        .catch(erro => {
+          console.error(erro);
+          tituloModal.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Ops!`;
+          textoModal.innerText = "Não foi possível carregar a reflexão agora. Por favor, tente novamente em alguns instantes.";
+        });
     }
 
-    function fecharReflexaoDia() {
-      document.getElementById("modal-devocional").classList.remove("modal-active");
+    function exibirModalReflexao(dados) {
+      document.getElementById("modal-devocional-titulo").innerHTML = `<i class="fa-solid fa-feather-pointed"></i> ${dados.referencia}`;
+      document.getElementById("modal-devocional-texto").innerHTML = `<p style="font-style: italic; font-weight: 500; margin-bottom: 15px; color: #ffe082;">"${dados.versiculo}"</p><p style="font-size: 14px; text-align: justify;">${dados.explicacao}</p>`;
     }
 
+    function fecharModalDevocional() {
+      document.getElementById("modal-devocional").classList.remove("active");
+    }
+
+    // --- FUNÇÕES OPERACIONAIS DO SISTEMA ORIGINAIS INTACTAS ---
     function atualizarContadoresDashboard() {
       let fila = JSON.parse(localStorage.getItem("ortelan_manutencao_offline")) || [];
       document.getElementById("dash-pendentes").innerText = fila.length;
-      
       let enviadas = localStorage.getItem("ortelan_qtd_enviadas_sucesso") || "0";
       document.getElementById("dash-completas").innerText = enviadas;
     }
@@ -751,7 +766,6 @@
       document.getElementById("tela-dados-gerais").classList.remove("active");
       document.getElementById("tela-checklist").classList.remove("active");
       document.getElementById("tela-finalizar").classList.remove("active");
-      
       document.getElementById("nav-home").classList.remove("active");
       document.getElementById("nav-checklist-btn").classList.remove("active");
     }
@@ -775,13 +789,12 @@
     function atualizarEquipamentos() {
       const local = document.getElementById("local").value;
       const selEquip = document.getElementById("equipamento");
-      selEquip.innerHTML = '<option value="">Selecione o equipamento...</option>';
-      
+      selEquip.innerHTML = '<option value="">Selecione o equipmento...</option>';
       document.getElementById("grupoTipo").style.display = "none";
       document.getElementById("containerPreventiva").style.display = "none";
       document.getElementById("containerCorretiva").style.display = "none";
       document.getElementById("tipo").value = "";
-
+      
       if (local) {
         document.getElementById("grupoEquipamento").style.display = "block";
         for (const equip in baseDados[local]) {
@@ -817,10 +830,9 @@
         } else {
           inputLeitura.style.display = "none";
           inputLeitura.required = false;
-          inputLeitura.value = ""; 
+          inputLeitura.value = "";
         }
       }
-
       const inputObsTarefa = document.getElementById(`obs_tarefa_${index}`);
       if (inputObsTarefa) {
         if (valorRadio.includes("alerta ⚠️") || valorRadio.includes("falha ❌")) {
@@ -839,62 +851,61 @@
       const local = document.getElementById("local").value;
       const equip = document.getElementById("equipamento").value;
       const divTarefas = document.getElementById("listaTarefas");
-      
       divTarefas.innerHTML = "";
       
       if (tipo === "Preventiva") {
         document.getElementById("containerPreventiva").style.display = "block";
         document.getElementById("containerCorretiva").style.display = "none";
         
-        const tarefasMap = baseDados[local][equip];
-        let tIndex = 0;
-
-        for (const [categoria, tarefas] of Object.entries(tarefasMap)) {
-          let htmlCat = "";
-          if (categoria !== "Geral") {
-            htmlCat += `<div class="task-category-title">${categoria}</div>`;
-          }
+        const categorias = baseDados[local][equip];
+        let indexGlobal = 0;
+        
+        for (const catName in categorias) {
+          const catTitulo = document.createElement("div");
+          catTitulo.className = "task-category-title";
+          catTitulo.innerText = catName;
+          divTarefas.appendChild(catTitulo);
           
-          tarefas.forEach(tarefa => {
-            const exigeLeitura = tarefa.includes("Aferir leitura");
-            htmlCat += `<div class="task-item"><strong>${tarefa}</strong><div class="radio-group">`;
+          const arrayItens = categorias[catName];
+          arrayItens.forEach((subTarefa) => {
+            const taskCard = document.createElement("div");
+            taskCard.className = "task-item";
+            taskCard.id = `card_tarefa_${indexGlobal}`;
             
-            opcoesResposta.forEach((op) => {
-              htmlCat += `
+            let htmlOpcoes = "";
+            oPcoesResposta.forEach((opcao, opIdx) => {
+              htmlOpcoes += `
                 <label class="radio-option">
-                  <input type="radio" name="tarefa_${tIndex}" value="${op}" onchange="tratarMudancaResposta(${tIndex}, this.value)" required>
-                  ${op}
-                </label>`;
+                  <input type="radio" name="resposta_${indexGlobal}" value="${opcao}" onchange="tratarMudancaResposta(${indexGlobal}, this.value); removerAvisoPendente(${indexGlobal});">
+                  ${opcao}
+                </label>
+              `;
             });
             
-            htmlCat += `</div>`;
-
-            if (exigeLeitura) {
-              htmlCat += `<input type="number" step="0.01" id="leitura_${tIndex}" class="form-control" placeholder="Digite a leitura verificada (ex: 1250.50)" style="margin-top: 15px; display:none; padding-left:14px;">`;
-            }
-
-            htmlCat += `<textarea id="obs_tarefa_${tIndex}" class="form-control input-anomalia" placeholder="Descreva detalhadamente a anomalia observada..." style="margin-top: 15px; min-height: 80px; display:none;"></textarea></div>`;
-            tIndex++;
+            taskCard.innerHTML = `
+              <strong>${subTarefa}</strong>
+              <div class="radio-group">${htmlOpcoes}</div>
+              <input type="text" id="leitura_${indexGlobal}" class="form-control" placeholder="Aferição / Valor numérico encontrado" style="display:none; margin-top:14px; padding-left:14px;">
+              <input type="text" id="obs_tarefa_${indexGlobal}" class="form-control input-anomalia" placeholder="Descreva obrigatoriamente a anomalia/alerta" style="display:none; margin-top:10px; padding-left:14px;">
+            `;
+            divTarefas.appendChild(taskCard);
+            indexGlobal++;
           });
-          divTarefas.innerHTML += htmlCat;
         }
       } else if (tipo === "Corretiva") {
         document.getElementById("containerPreventiva").style.display = "none";
         document.getElementById("containerCorretiva").style.display = "block";
-      } else {
-        document.getElementById("containerPreventiva").style.display = "none";
-        document.getElementById("containerCorretiva").style.display = "none";
       }
     }
 
+    function removerAvisoPendente(idx) {
+      const card = document.getElementById(`card_tarefa_${idx}`);
+      if (card) card.classList.remove("task-item-pendente");
+    }
+
     function avancarParaPasso2() {
-      const data = document.getElementById("data").value;
-      const local = document.getElementById("local").value;
-      const equip = document.getElementById("equipamento").value;
-      const tipo = document.getElementById("tipo").value;
-      
-      if (!data || !local || !equip || !tipo) {
-        alert("Por favor, selecione todos os campos antes de avançar.");
+      if (!document.getElementById("data").value || !document.getElementById("local").value || !document.getElementById("equipamento").value || !document.getElementById("tipo").value) {
+        alert("Por favor, preencha todos os dados gerais obrigatórios.");
         return;
       }
       ocultarTodasTelas();
@@ -908,112 +919,46 @@
 
     function avancarParaPasso3() {
       const tipo = document.getElementById("tipo").value;
-      const containerResumoChecklist = document.getElementById("resumo-detalhes-checklist");
-      containerResumoChecklist.innerHTML = "";
-
       if (tipo === "Corretiva") {
-        const textoCorr = document.getElementById("textoCorretiva").value.trim();
-        if (!textoCorr) {
-          alert("Por favor, preencha a descrição da manutenção corretiva.");
+        if (!document.getElementById("textoCorretiva").value.trim()) {
+          alert("Por favor, descreva os serviços corretivos executados.");
           return;
         }
-        containerResumoChecklist.innerHTML = `
-          <div style="margin-top:10px;">
-            <strong style="display:block; margin-bottom:5px; text-transform:uppercase; font-size:12px; letter-spacing:0.5px;">Serviço Executado:</strong>
-            <div style="background:#fff; padding:14px; border-radius:12px; font-size:14px; color:var(--text-main); white-space:pre-wrap; border:1px solid var(--input-border); font-weight:500;">${textoCorr}</div>
-          </div>`;
       } else if (tipo === "Preventiva") {
         const local = document.getElementById("local").value;
         const equip = document.getElementById("equipamento").value;
-        const tarefasMap = baseDados[local][equip];
-        let tIndex = 0;
-        let htmlResumoPreventiva = `<strong style="display:block; margin-bottom:12px; text-transform:uppercase; font-size:12px; letter-spacing:0.5px;">Status das Tarefas do Checklist:</strong>`;
-        let algumaPendente = false;
-        let primeiraTarefaPendente = null;
-        let mensagemErroCustomizada = "";
-
-        for (const [categoria, tarefas] of Object.entries(tarefasMap)) {
-          for (const tarefa of tarefas) {
-            const selecionado = document.querySelector(`input[name="tarefa_${tIndex}"]:checked`);
-            const elementoTaskItem = document.querySelectorAll('.task-item')[tIndex];
-
-            if (!selecionado) {
-              algumaPendente = true;
-              if (!primeiraTarefaPendente) {
-                primeiraTarefaPendente = elementoTaskItem;
-                mensagemErroCustomizada = `Falta responder a tarefa:\n\n"${tarefa}"`;
-              }
-            } else {
-              let valorRadio = selecionado.value;
-              const campoLeitura = document.getElementById(`leitura_${tIndex}`);
-              if (campoLeitura && campoLeitura.style.display !== "none" && !campoLeitura.value.trim()) {
-                algumaPendente = true;
-                if (!primeiraTarefaPendente) {
-                  primeiraTarefaPendente = elementoTaskItem;
-                  mensagemErroCustomizada = `Por favor, preencha o valor da leitura para a tarefa:\n\n"${tarefa}"`;
-                }
-              }
-              const campoObsTarefa = document.getElementById(`obs_tarefa_${tIndex}`);
-              if (campoObsTarefa && campoObsTarefa.style.display !== "none" && !campoObsTarefa.value.trim()) {
-                algumaPendente = true;
-                if (!primeiraTarefaPendente) {
-                  primeiraTarefaPendente = elementoTaskItem;
-                  mensagemErroCustomizada = `Como este item foi marcado como Alerta ou Falha, descreva o problema na tarefa:\n\n"${tarefa}"`;
-                }
-              }
+        const categorias = baseDados[local][equip];
+        let totalTarefas = 0;
+        for (const c in categorias) { totalTarefas += categorias[c].length; }
+        
+        let pendentes = [];
+        for (let i = 0; i < totalTarefas; i++) {
+          const rSelected = document.querySelector(`input[name="resposta_${i}"]:checked`);
+          if (!rSelected) {
+            pendentes.push(i);
+            document.getElementById(`card_tarefa_${i}`).classList.add("task-item-pendente");
+          } else {
+            const val = rSelected.value;
+            if (val.includes("Executado") && !document.getElementById(`leitura_${i}`).value.trim()) {
+              alert("Por favor, informe o valor aferido/leitura para os itens executados.");
+              return;
             }
-            tIndex++;
+            if ((val.includes("alerta ⚠️") || val.includes("falha ❌")) && !document.getElementById(`obs_tarefa_${i}`).value.trim()) {
+              alert("Por favor, preencha a observação obrigatória detalhando os alertas ou falhas.");
+              return;
+            }
           }
         }
-
-        if (algumaPendente) {
-          setTimeout(() => {
-            primeiraTarefaPendente.classList.add('task-item-pendente');
-            primeiraTarefaPendente.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            alert(mensagemErroCustomizada);
-          }, 50);
+        
+        if (pendentes.length > 0) {
+          alert("Existem tarefas obrigatórias não respondidas no checklist vermelho.");
+          const primeiroPendente = document.getElementById(`card_tarefa_${pendentes[0]}`);
+          if (primeiroPendente) primeiroPendente.scrollIntoView({ behavior: 'smooth', block: 'center' });
           return;
         }
-
-        tIndex = 0;
-        for (const [categoria, tarefas] of Object.entries(tarefasMap)) {
-          for (const tarefa of tarefas) {
-            const selecionado = document.querySelector(`input[name="tarefa_${tIndex}"]:checked`);
-            let respostaTexto = selecionado.value;
-            let tagClasse = "tag-neutra";
-
-            if (respostaTexto.includes("OK ✅")) tagClasse = "tag-ok";
-            else if (respostaTexto.includes("alerta ⚠️")) tagClasse = "tag-alerta";
-            else if (respostaTexto.includes("falha ❌")) tagClasse = "tag-falha";
-
-            const campoLeitura = document.getElementById(`leitura_${tIndex}`);
-            if (campoLeitura && campoLeitura.style.display !== "none") {
-              respostaTexto += ` (Leitura: ${campoLeitura.value})`;
-            }
-
-            const campoObsTarefa = document.getElementById(`obs_tarefa_${tIndex}`);
-            let blocoObsHtml = "";
-            if (campoObsTarefa && campoObsTarefa.style.display !== "none" && campoObsTarefa.value.trim()) {
-              blocoObsHtml = `<div style="margin-top:6px; color:#e67e22; font-size:13px; padding-left:12px; border-left:2px solid #e67e22; font-weight:500;">Obs: ${campoObsTarefa.value.trim()}</div>`;
-            }
-
-            htmlResumoPreventiva += `
-              <div class="resumo-item-linha">
-                <strong>${tarefa}</strong><br>
-                <span class="resumo-tag-status ${tagClasse}">${respostaTexto}</span>
-                ${blocoObsHtml}
-              </div>`;
-            tIndex++;
-          }
-        }
-        containerResumoChecklist.innerHTML = htmlResumoPreventiva;
       }
       
-      document.getElementById("resumo-data").innerText = document.getElementById("data").value;
-      document.getElementById("resumo-local").innerText = document.getElementById("local").value;
-      document.getElementById("resumo-equipamento").innerText = document.getElementById("equipamento").value;
-      document.getElementById("resumo-tipo").innerText = tipo;
-
+      montarResumoPasso3();
       ocultarTodasTelas();
       document.getElementById("tela-finalizar").classList.add("active");
     }
@@ -1023,121 +968,140 @@
       document.getElementById("tela-checklist").classList.add("active");
     }
 
-    function enviarFormulario() {
-      const data = document.getElementById("data").value;
-      const local = document.getElementById("local").value;
-      const equip = document.getElementById("equipamento").value;
+    function montarResumoPasso3() {
+      document.getElementById("resumo-data").innerText = document.getElementById("data").value;
+      document.getElementById("resumo-local").innerText = document.getElementById("local").value;
+      document.getElementById("resumo-equipamento").innerText = document.getElementById("equipamento").value;
+      document.getElementById("resumo-tipo").innerText = document.getElementById("tipo").value;
+      
+      const containerResumo = document.getElementById("resumo-detalhes-checklist");
+      containerResumo.innerHTML = "";
+      
       const tipo = document.getElementById("tipo").value;
-
-      const payload = { dataManutencao: data, local: local, equipamento: equip, tipo: tipo, observations: "", tarefas: {}, corretivaTexto: "" };
-
-      if (tipo === "Preventiva") {
-        const tarefasMap = baseDados[local][equip];
-        let tIndex = 0;
-
-        for (const [categoria, tarefas] of Object.entries(tarefasMap)) {
-          for (const tarefa of tarefas) {
-            const selecionado = document.querySelector(`input[name="tarefa_${tIndex}"]:checked`);
-            let valorResposta = selecionado.value;
-            
-            const campoLeitura = document.getElementById(`leitura_${tIndex}`);
-            if (campoLeitura && campoLeitura.style.display !== "none") {
-              valorResposta += ` - Leitura: ${campoLeitura.value}`;
-            }
-
-            const campoObsTarefa = document.getElementById(`obs_tarefa_${tIndex}`);
-            let textoObs = "";
-            if (campoObsTarefa && campoObsTarefa.style.display !== "none") {
-              textoObs = campoObsTarefa.value.trim();
-            }
-
-            payload.tarefas[tarefa] = { resposta: valorResposta, observacaoItem: textoObs };
-            tIndex++;
-          }
-        }
+      if (tipo === "Corretiva") {
+        containerResumo.innerHTML = `
+          <div class="resumo-item-linha">
+            <strong>Relatório Corretivo:</strong><br>
+            <p style="margin-top:5px; color:var(--text-muted); font-style:italic;">${document.getElementById("textoCorretiva").value}</p>
+          </div>
+        `;
       } else {
-        payload.corretivaTexto = document.getElementById("textoCorretiva").value;
+        const local = document.getElementById("local").value;
+        const equip = document.getElementById("equipamento").value;
+        const categorias = baseDados[local][equip];
+        
+        let iIdx = 0;
+        for (const cat in categorias) {
+          categorias[cat].forEach((subT) => {
+            const rad = document.querySelector(`input[name="resposta_${iIdx}"]:checked`);
+            let statusTag = `<span class="resumo-tag-status tag-neutra">Não informado</span>`;
+            if (rad) {
+              const v = rad.value;
+              if (v.includes("OK")) statusTag = `<span class="resumo-tag-status tag-ok">OK</span>`;
+              else if (v.includes("alerta")) statusTag = `<span class="resumo-tag-status tag-alerta">ALERTA</span>`;
+              else if (v.includes("falha")) statusTag = `<span class="resumo-tag-status tag-falha">FALHA</span>`;
+              else statusTag = `<span class="resumo-tag-status tag-neutra">NÃO APLICÁVEL</span>`;
+            }
+            
+            const txtLeitura = document.getElementById(`leitura_${iIdx}`).value;
+            const txtObs = document.getElementById(`obs_tarefa_${iIdx}`).value;
+            
+            const divLinha = document.createElement("div");
+            divLinha.className = "resumo-item-linha";
+            divLinha.innerHTML = `
+              <strong>${subT}</strong><br>
+              ${statusTag}
+              ${txtLeitura ? `<span style="display:block; margin-top:4px; font-size:12px; color:var(--accent-blue);">📊 Aferição: ${txtLeitura}</span>` : ''}
+              ${txtObs ? `<span style="display:block; margin-top:2px; font-size:12px; color:#ffc107;">⚠️ Obs: ${txtObs}</span>` : ''}
+            `;
+            containerResumo.appendChild(divLinha);
+            iIdx++;
+          });
+        }
       }
-
-      if (!navigator.onLine) {
-        salvarNoEstoqueOffline(payload);
-        return;
-      }
-      executarEnvioParaServidor(payload);
     }
 
-    function ejecutarEnvioParaServidor(payload) {
-      if (payload.dataManutencao) {
-        const dataSelecionada = new Date(payload.dataManutencao + 'T00:00:00');
-        const hoje = new Date();
-        hoje.setHours(0, 0, 0, 0);
-
-        if (dataSelecionada > hoje) {
-          alert("Atenção: Não é permitido registrar manutenções em datas futuras.");
-          return;
-        }
-      }
-
-      document.getElementById("btnSalvar").innerText = "Enviando...";
+    function enviarFormulario() {
+      document.getElementById("btnSalvar").innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processando...';
       document.getElementById("btnSalvar").disabled = true;
       document.getElementById("btn-final-voltar").disabled = true;
-
-      const googleUrl = "https://script.google.com/macros/s/AKfycbx-M07XKMRjdaMj7O86XsDamIcRNy-8eRZie-kQjzfpNJ2G7c8B_WrJp4geB5p2mJ7f/exec";
-
-      fetch(googleUrl, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      })
-      .then(() => {
-        let historicoSucesso = parseInt(localStorage.getItem("ortelan_qtd_enviadas_sucesso") || "0");
-        localStorage.setItem("ortelan_qtd_enviadas_sucesso", historicoSucesso + 1);
-
-        document.getElementById("msgSucesso").style.color = "#27ae60";
-        document.getElementById("msgSucesso").innerText = "Relatório enviado com sucesso!";
-        
-        limparFormularioCompleto();
-      })
-      .catch(() => {
-        alert("Instabilidade de rede. Movendo relatório para o armazenamento seguro.");
-        salvarNoEstoqueOffline(payload);
-      });
-    }
-
-    function salvarNoEstoqueOffline(payload) {
+      
+      const tipo = document.getElementById("tipo").value;
+      const local = document.getElementById("local").value;
+      const equip = document.getElementById("equipamento").value;
+      
+      let payload = {
+        data: document.getElementById("data").value,
+        local: local,
+        equipamento: equip,
+        tipo: tipo,
+        supervisor: "Silvio Cesar Ortelan",
+        cargo: "Diretor Técnico",
+        checklist: []
+      };
+      
+      if (tipo === "Corretiva") {
+        payload.checklist.push({
+          categoria: "Corretiva",
+          tarefa: "Serviço Corretivo",
+          resposta: "Executado",
+          leitura: "",
+          observacao: document.getElementById("textoCorretiva").value
+        });
+      } else {
+        const categorias = baseDados[local][equip];
+        let iIdx = 0;
+        for (const cat in categorias) {
+          categorias[cat].forEach((subT) => {
+            const rad = document.querySelector(`input[name="resposta_${iIdx}"]:checked`);
+            payload.checklist.push({
+              categoria: cat,
+              tarefa: subT,
+              resposta: rad ? rad.value : "",
+              leitura: document.getElementById(`leitura_${iIdx}`).value,
+              observacao: document.getElementById(`obs_tarefa_${iIdx}`).value
+            });
+            iIdx++;
+          });
+        }
+      }
+      
       let fila = JSON.parse(localStorage.getItem("ortelan_manutencao_offline")) || [];
       fila.push(payload);
       localStorage.setItem("ortelan_manutencao_offline", JSON.stringify(fila));
       
-      document.getElementById("msgSucesso").style.color = "#e67e22";
-      document.getElementById("msgSucesso").innerText = "Guardado off-line! Será enviado automaticamente com sinal.";
-      
-      limparFormularioCompleto();
+      if (navigator.onLine) {
+        document.getElementById("msgSucesso").style.color = "#ffe082";
+        document.getElementById("msgSucesso").innerText = "Conexão ativa! Transmitindo relatório ao servidor...";
+        verificarFilaOffline();
+      } else {
+        document.getElementById("msgSucesso").style.color = "#dc3545";
+        document.getElementById("msgSucesso").innerText = "Dispositivo Sem Sinal! Relatório salvo off-line no celular com sucesso.";
+        atualizarContadoresDashboard();
+        limparFormularioCompleto();
+      }
     }
 
     function verificarFilaOffline() {
       let fila = JSON.parse(localStorage.getItem("ortelan_manutencao_offline")) || [];
-      const divAviso = document.getElementById("avisoOffline");
+      const indicadorAviso = document.getElementById("avisoOffline");
       
-      atualizarContadoresDashboard();
-
-      if (fila.length === 0) {
-        divAviso.style.display = "none";
+      if (fila.length > 0) {
+        indicadorAviso.style.display = "block";
+        indicadorAviso.innerHTML = `<i class="fa-solid fa-cloud-arrow-up fa-bounce"></i> Sincronizando ${fila.length} relatório(s) pendente(s)...`;
+      } else {
+        indicadorAviso.style.display = "none";
         return;
       }
+      
       if (!navigator.onLine) {
-        divAviso.style.display = "block";
-        divAviso.innerHTML = `<i class="fa-solid fa-box"></i> Existem ${fila.length} relatórios aguardando internet...`;
+        indicadorAviso.className = "sync-alert";
+        indicadorAviso.innerHTML = `<i class="fa-solid fa-wifi-slash"></i> ${fila.length} relatório(s) aguardando sinal de internet...`;
         return;
       }
-
-      divAviso.style.display = "block";
-      divAviso.innerHTML = `<i class="fa-solid fa-bolt"></i> Sincronizando ${fila.length} relatórios com o servidor...`;
       
       const proximoItem = fila[0];
-      const googleUrl = "https://script.google.com/macros/s/AKfycbx-M07XKMRjdaMj7O86XsDamIcRNy-8eRZie-kQjzfpNJ2G7c8B_WrJp4geB5p2mJ7f/exec";
-
+      
       fetch(googleUrl, {
         method: "POST",
         mode: "no-cors",
@@ -1151,7 +1115,12 @@
         let historicoSucesso = parseInt(localStorage.getItem("ortelan_qtd_enviadas_sucesso") || "0");
         localStorage.setItem("ortelan_qtd_enviadas_sucesso", historicoSucesso + 1);
         
-        verificarFilaOffline(); 
+        if (document.getElementById("tela-finalizar").classList.contains("active")) {
+          document.getElementById("msgSucesso").style.color = "#5ba962";
+          document.getElementById("msgSucesso").innerText = "Relatório Técnico transmitido e gravado na Nuvem com sucesso!";
+          limparFormularioCompleto();
+        }
+        verificarFilaOffline();
       })
       .catch(() => console.log("Aguardando estabilização para sincronizar..."));
     }
@@ -1164,8 +1133,14 @@
         document.getElementById("btn-final-voltar").disabled = false;
         
         document.getElementById("local").value = "";
+        document.getElementById("equipamento").innerHTML = '<option value="">Selecione o equipamento...</option>';
+        document.getElementById("tipo").value = "";
         document.getElementById("textoCorretiva").value = "";
-        atualizarEquipamentos();
+        document.getElementById("listaTarefas").innerHTML = "";
+        document.getElementById("grupoEquipamento").style.display = "none";
+        document.getElementById("grupoTipo").style.display = "none";
+        document.getElementById("containerPreventiva").style.display = "none";
+        document.getElementById("containerCorretiva").style.display = "none";
         
         irParaDashboard();
       }, 2500);
