@@ -329,6 +329,20 @@
     <div id="avisoOffline" class="sync-alert" style="display: none;"></div>
   </div>
 
+  <div class="glass-card" id="card-devocional" onclick="abrirDevocional()" style="cursor:pointer; margin-top: 20px; border: 1px solid var(--glass-border);">
+  <h3 style="color: #8fb198; margin-bottom: 10px;"><i class="fa-solid fa-book-open-reader"></i> Reflexão do Turno</h3>
+  <p id="resumo-devocional" style="font-size: 0.9em; font-style: italic;">Toque para ler a palavra de hoje...</p>
+</div>
+
+<div id="modalDevocional" class="app-screen" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:999; padding:20px; overflow-y:auto;">
+  <button onclick="document.getElementById('modalDevocional').style.display='none'" style="background:none; border:none; color:white; font-size:1.5em; float:right;"><i class="fa-solid fa-times"></i></button>
+  <div style="margin-top:50px; color:white; text-align:center;">
+    <h2 id="ref-versiculo" style="color:#8fb198;"></h2>
+    <p id="txt-versiculo" style="font-size:1.2em; margin:20px 0;"></p>
+    <hr style="border:0; border-top:1px solid #333;">
+    <p id="txt-explicacao" style="text-align:justify; line-height:1.6; color:#ccc;"></p>
+  </div>
+</div>
 
   <!-- ==========================================
        📝 TELA 2: DADOS GERAIS DO FORMULÁRIO
@@ -1044,6 +1058,35 @@
         irParaDashboard();
       }, 2500);
     }
+
+    function abrirDevocional() {
+      if (!navigator.onLine) {
+        alert("Sem conexão no momento. O devocional precisa de internet para carregar.");
+        return;
+      }
+      
+      const modal = document.getElementById('modalDevocional');
+      const resumo = document.getElementById('resumo-devocional');
+      resumo.innerText = "Carregando reflexão...";
+      
+      // URL do seu Web App (substitua pela sua)
+      const url = "https://script.google.com/macros/s/AKfycbx-M07XKMRjdaMj7O86XsDamIcRNy-8eRZie-kQjzfpNJ2G7c8B_WrJp4geB5p2mJ7f/exec?acao=gerarDevocional";
+      
+      fetch(url)
+        .then(r => r.json())
+        .then(data => {
+          document.getElementById('ref-versiculo').innerText = data.referencia;
+          document.getElementById('txt-versiculo').innerText = '"' + data.versiculo + '"';
+          document.getElementById('txt-explicacao').innerText = data.explicacao;
+          modal.style.display = 'block';
+          resumo.innerText = "Toque para ler a palavra de hoje...";
+        })
+        .catch(() => {
+          resumo.innerText = "Erro ao carregar. Tente novamente.";
+          alert("Não foi possível carregar a reflexão no momento.");
+        });
+    }
+    
   </script>
 </body>
 </html>
